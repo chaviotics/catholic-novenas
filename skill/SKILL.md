@@ -118,7 +118,7 @@ Each day has these fields:
 ```
 python3 tools/build.py                    # site/ (library + all novenas)
 python3 tools/build.py --artifact <slug>  # out/<slug>.html, one self-contained file
-python3 tools/og.py <slug>                # link-preview image, then build again
+python3 tools/og.py <slug>                # link-preview image (og.jpg), then build again. Optional "ogSaints": [left, right] in novena.json so both portraits face inward
 python3 tools/shots.py <slug>             # phone screenshots, light and dark, into out/shots/
 ```
 

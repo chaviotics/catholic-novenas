@@ -187,5 +187,6 @@
   "I know that it is well with your soul."
  ],
  "icon": "heartbeat",
- "cardTitle": "Healing of the Sick"
+ "cardTitle": "Healing of the Sick",
+ "ogSaints": ["bernadette", "raphael"]
 }

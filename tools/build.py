@@ -128,9 +128,11 @@ def page(n, mode):
             '<meta property="og:type" content="website">',
             '<meta property="og:site_name" content="Catholic Novenas">',
             '<meta property="og:url" content="%s">' % url,
-            '<meta property="og:title" content="%s">' % esc(n["barTitle"]),
-            '<meta property="og:description" content="%s">' % esc(n["kicker"] + ", through " + saint_line(n["saints"]).replace("&amp;", "&") + "."),
-            '<meta property="og:image" content="%sog.png">' % url,
+            '<meta property="og:title" content="%s">' % esc(og_title(n)),
+            '<meta property="og:description" content="%s">' % esc(n["description"]),
+            '<meta property="og:image" content="%sog.jpg?v=%s">' % (url, og_ver(os.path.join(ROOT, "novenas", slug, "og.jpg"))),
+            '<meta property="og:image:alt" content="%s">' % esc(n["barTitle"] + ": " + n["kicker"]),
+            '<meta property="og:image:type" content="image/jpeg">',
             '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
             '<meta name="twitter:card" content="summary_large_image">',
             '<link rel="canonical" href="%s">' % url,
@@ -170,6 +172,21 @@ def page(n, mode):
     return t
 
 
+def og_title(n):
+    """a fuller link-preview title: add the site name when it still fits in 60 characters"""
+    t = n["title"] + " | Catholic Novenas"
+    return t if len(t) <= 60 else n["title"]
+
+
+def og_ver(path):
+    """short content hash, so chat apps fetch a changed og.jpg instead of their cached copy"""
+    import hashlib
+    if not os.path.exists(path):
+        return "0"
+    with open(path, "rb") as f:
+        return hashlib.sha1(f.read()).hexdigest()[:8]
+
+
 def library(novenas):
     t = read(os.path.join(ROOT, "templates", "library.html"))
     cards, icons = [], []
@@ -193,6 +210,7 @@ def library(novenas):
             '<span class="go" aria-hidden="true"><span>Pray</span><svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>' % (
                 esc(n["storageKey"]), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
     t = t.replace("{{CARDS}}", "\n".join(cards))
+    t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
@@ -211,9 +229,9 @@ def build_site():
         os.makedirs(os.path.join(d, "img"))
         for f in os.listdir(os.path.join(ROOT, "novenas", n["slug"], "img")):
             shutil.copy(os.path.join(ROOT, "novenas", n["slug"], "img", f), os.path.join(d, "img", f))
-        og = os.path.join(ROOT, "novenas", n["slug"], "og.png")
+        og = os.path.join(ROOT, "novenas", n["slug"], "og.jpg")
         if os.path.exists(og):
-            shutil.copy(og, os.path.join(d, "og.png"))
+            shutil.copy(og, os.path.join(d, "og.jpg"))
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(page(n, "site"))
         print("built", n["slug"], n.get("status"))

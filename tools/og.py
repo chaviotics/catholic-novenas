@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
-"""Make the 1200x630 link-preview images (og.png) for the library and each novena.
+"""Make the 1200x630 link-preview images (og.jpg) for the library and each novena.
 
-  python3 tools/og.py            # every novena + the library (site/og.png)
-  python3 tools/og.py healing    # one novena -> novenas/healing/og.png
+  python3 tools/og.py            # every novena + the library (site/og.jpg)
+  python3 tools/og.py healing    # one novena -> novenas/healing/og.jpg
 
 Run tools/build.py afterwards so the images are copied into site/.
+
+Design for thumbnail size: chat apps show this image 300-500px wide, and WhatsApp
+may crop it to a centered square. So the title is huge and stacked inside the
+central 600px, and the two saint portraits sit at the edges, where a square crop
+loses them harmlessly. No URL or small print: every app already shows the domain.
+
+Portraits: novena.json may set "ogSaints": [left_id, right_id] so each saint faces
+inward; otherwise the first and last saints are used.
 """
 import asyncio, base64, json, os, sys
 
@@ -14,16 +22,36 @@ from shots import font_css  # noqa: E402
 
 CSS = """
 *{box-sizing:border-box}html,body{margin:0}
-body{width:1200px;height:630px;background:#FFFDF9;font-family:'EB Garamond',Georgia,serif;color:#2A2521;display:flex;align-items:center;justify-content:center}
-.card{width:1200px;height:630px;border-top:14px solid #94702A;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 90px}
-.cross{color:#6E1F2B;font-size:44px;line-height:1}
-.kick{margin:14px 0 0;font-size:22px;letter-spacing:.16em;font-weight:600;color:#94702A;text-transform:uppercase}
-h1{font-family:'Cormorant Garamond',Garamond,serif;font-weight:700;color:#6E1F2B;font-size:76px;line-height:1.02;margin:14px 0 14px;text-wrap:balance}
-.sub{font-family:'Cormorant Garamond',Garamond,serif;font-style:italic;font-weight:500;font-size:32px;color:#675E57;margin:0}
-.faces{display:flex;justify-content:center;margin-top:28px}
-.faces img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:4px solid #FFFDF9;margin:0 -8px;box-shadow:0 0 0 2px #9C8B70}
-.site{position:absolute;bottom:26px;left:0;right:0;font-size:20px;letter-spacing:.14em;color:#675E57;text-transform:uppercase}
+body{width:1200px;height:630px;overflow:hidden;font-family:'Cormorant Garamond',Garamond,Georgia,serif;
+  background:radial-gradient(ellipse 70% 90% at 50% 45%,#7A2433 0%,#5E1A26 55%,#45121B 100%);color:#FFF8EC}
+.frame{position:absolute;inset:22px;border:2px solid #C9A45C;border-radius:6px}
+.frame:after{content:"";position:absolute;inset:8px;border:1px solid rgba(201,164,92,.45);border-radius:3px}
+.arch{position:absolute;top:95px;width:236px;height:440px;border-radius:118px 118px 8px 8px;overflow:hidden;
+  border:4px solid #C9A45C;box-shadow:0 0 0 6px rgba(201,164,92,.18),0 14px 40px rgba(0,0,0,.45)}
+.arch img{width:100%;height:100%;object-fit:cover}
+.l{left:52px}.r{right:52px}
+.mid{position:absolute;left:300px;width:600px;top:0;bottom:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:30px 0 34px}
+.cross{color:#D9B86A;font-size:64px;line-height:1;margin-bottom:6px}
+.pre{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:.2em;
+  text-transform:uppercase;color:#E2C47E;margin:6px 0 0}
+h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#FFF8EC;
+  text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.rule{width:120px;height:2px;background:#C9A45C;margin:26px 0 20px}
+.sub{font-style:italic;font-weight:600;font-size:46px;line-height:1.08;color:#F1DDAE;margin:0;text-wrap:balance}
 """
+
+# shrink the title until it fits the column in at most 2 lines, then the subtitle if the stack is too tall.
+# Run after the web fonts load: measuring with the fallback font gives the wrong widths.
+FIT = """async () => {
+  await document.fonts.ready;
+  const h = document.querySelector('h1'), mid = document.querySelector('.mid'), sub = document.querySelector('.sub');
+  let s = 150;
+  const lines = () => Math.round(h.getBoundingClientRect().height / (s * 0.9));
+  while ((h.scrollWidth > 580 || lines() > 2) && s > 70) { s -= 4; h.style.fontSize = s + 'px'; }
+  let t = 46;
+  while (mid.scrollHeight > 630 && t > 34) { t -= 2; sub.style.fontSize = t + 'px'; }
+}"""
 
 
 def data(p):
@@ -31,11 +59,14 @@ def data(p):
         return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
 
-def card_html(kick, title, sub, faces):
-    imgs = "".join('<img src="%s">' % data(f) for f in faces)
-    return ("<html><head><style>%s%s</style></head><body><div class='card'><div class='cross'>&#10013;</div>"
-            "<p class='kick'>%s</p><h1>%s</h1><p class='sub'>%s</p><div class='faces'>%s</div>"
-            "<div class='site'>catholic-novenas.netlify.app</div></div></body></html>") % (font_css(), CSS, kick, title, sub, imgs)
+def card_html(pre, title, sub, left, right):
+    """left/right: (image path, CSS object-position)"""
+    arch = lambda cls, img: '<div class="arch %s"><img src="%s" style="object-position:%s"></div>' % (cls, data(img[0]), img[1])
+    return ("<html><head><meta charset='utf-8'><style>%s%s</style></head><body><div class='frame'></div>%s%s"
+            "<div class='mid'><div class='cross'>&#10013;</div>%s<h1>%s</h1><div class='rule'></div>"
+            "<p class='sub'>%s</p></div></body></html>") % (
+        font_css(), CSS, arch("l", left), arch("r", right),
+        "<p class='pre'>%s</p>" % pre if pre else "", title, sub)
 
 
 async def render(pairs):
@@ -44,32 +75,46 @@ async def render(pairs):
         b = await p.chromium.launch(executable_path="/usr/bin/google-chrome")
         pg = await b.new_page(viewport={"width": 1200, "height": 630})
         for htmlstr, out in pairs:
-            await pg.set_content(htmlstr); await pg.wait_for_timeout(400)
-            await pg.screenshot(path=out)
+            await pg.set_content(htmlstr); await pg.evaluate(FIT); await pg.wait_for_timeout(200)
+            await pg.screenshot(path=out, type="jpeg", quality=88)
             print("wrote", out)
         await b.close()
 
 
+def portrait(base, slug, sid, focus):
+    return (os.path.join(base, slug, "img", sid + ".jpg"), focus.get(sid, "50% 30%"))
+
+
+# where each face sits in its 480x600 portrait, so the arch crop keeps it
+FOCUS = {"joseph": "62% 30%", "jude": "45% 30%", "rita": "55% 30%",
+         "raphael": "55% 20%", "bernadette": "60% 25%", "camillus": "60% 25%"}
+
+
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None
-    pairs, all_faces = [], []
+    pairs, lib = [], {}
     base = os.path.join(ROOT, "novenas")
     for slug in sorted(os.listdir(base)):
         p = os.path.join(base, slug, "novena.json")
         if not os.path.exists(p):
             continue
         n = json.load(open(p, encoding="utf-8"))
-        faces = [os.path.join(base, slug, "img", s["id"] + "_face.jpg") for s in n["saints"]]
+        ids = n.get("ogSaints") or [n["saints"][0]["id"], n["saints"][-1]["id"]]
         if n.get("status") == "published":
-            all_faces += faces
+            for sid in ids:
+                lib[sid] = portrait(base, slug, sid, FOCUS)
         if only and slug != only:
             continue
-        names = [s["name"] for s in n["saints"]]
-        sub = "through " + (names[0] if len(names) == 1 else ", ".join(names[:-1]) + " &amp; " + names[-1])
-        pairs.append((card_html(n["kicker"], n["barTitle"], sub, faces), os.path.join(base, slug, "og.png")))
+        title = n["barTitle"]
+        pre, word = ("Novena for", title[len("Novena for "):]) if title.startswith("Novena for ") else ("", title)
+        sub = n["kicker"][0].upper() + n["kicker"][1:]
+        pairs.append((card_html(pre, word, sub, portrait(base, slug, ids[0], FOCUS), portrait(base, slug, ids[1], FOCUS)),
+                      os.path.join(base, slug, "og.jpg")))
     if not only:
-        pairs.append((card_html("9 days of prayer", "Catholic Novenas",
-                                "Pray with your family, one day at a time", all_faces[:6]), os.path.join(ROOT, "site", "og.png")))
+        left = lib.get("joseph") or next(iter(lib.values()))
+        right = lib.get("raphael") or list(lib.values())[-1]
+        pairs.append((card_html("", "Catholic<br>Novenas", "Pray with your family, one day at a time", left, right),
+                      os.path.join(ROOT, "site", "og.jpg")))
     asyncio.run(render(pairs))
 
 
