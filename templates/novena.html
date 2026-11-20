@@ -199,6 +199,7 @@ body{font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
 details.prayer{border-color:var(--rule-strong)}
 #prayer{scroll-margin-top:124px}
 .home{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;min-height:44px}
+.home .back-ic{font-size:16px;color:var(--gold);margin-right:-6px}
 .days{position:sticky;top:53px;z-index:4;background:var(--paper);border-bottom:1px solid var(--rule)}
 .days .track{margin:0;padding:6px 0 7px}
 .dcap{display:none;margin:0;padding-top:7px;font-size:13px;letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
@@ -282,7 +283,7 @@ blockquote.passage{margin:0}
 {{SPRITE}}
 <header class="bar">
   <div class="wrap barwrap">
-    <a class="home" href="#top" id="homeLink" aria-label="Back to top"><svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name"><span class="long">{{BAR_TITLE}}</span><span class="short">{{BAR_SHORT}}</span></span></a>
+    <a class="home" {{HOME_ATTRS}} id="homeLink">{{HOME_ARROW}}<svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name"><span class="long">{{BAR_TITLE}}</span><span class="short">{{BAR_SHORT}}</span></span></a>
     <button class="iconbtn" id="sizeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <button class="iconbtn" id="themeBtn" title="Switch light or dark"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
     <div class="sizer" id="sizer" role="group" aria-label="Text size">
@@ -453,7 +454,7 @@ blockquote.passage{margin:0}
   function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
   function paintTheme(){
     var gm = null; try{ gm = localStorage.getItem(MODEKEY); }catch(e){}
-    var md = state.mode || gm;
+    var md = gm || state.mode;
     if (md) root.setAttribute("data-mode", md); else root.removeAttribute("data-mode");
     var d = isDark();
     $("themeIcon").firstElementChild.setAttribute("href", d ? "#i-sun" : "#i-moon");
@@ -467,13 +468,14 @@ blockquote.passage{margin:0}
   /* text size */
   var SCALES = [1, 1.15, 1.35], sizeBtns = [].slice.call(document.querySelectorAll("#sizer button"));
   function paintScale(){
-    var s = SCALES.indexOf(state.scale) >= 0 ? state.scale : 1;
+    var gs = null; try{ gs = parseFloat(localStorage.getItem("novenas-scale")); }catch(e){}
+    var s = SCALES.indexOf(gs) >= 0 ? gs : (SCALES.indexOf(state.scale) >= 0 ? state.scale : 1);
     root.style.setProperty("--scale", s);
     sizeBtns.forEach(function(b){ b.setAttribute("aria-pressed", String(+b.dataset.scale === s)); });
   }
   function closeSizer(){ $("sizer").classList.remove("open"); $("sizeBtn").setAttribute("aria-expanded", "false"); }
   $("sizeBtn").addEventListener("click", function(e){ e.stopPropagation(); var o = $("sizer").classList.toggle("open"); $("sizeBtn").setAttribute("aria-expanded", String(o)); });
-  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); state.scale = +b.dataset.scale; save(state); paintScale(); }); });
+  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); state.scale = +b.dataset.scale; save(state); try{ localStorage.setItem("novenas-scale", state.scale); }catch(e){} paintScale(); }); });
   document.addEventListener("click", closeSizer);
   document.addEventListener("keydown", function(e){ if (e.key === "Escape" && $("sizer").classList.contains("open")){ closeSizer(); $("sizeBtn").focus(); } });
 
@@ -545,7 +547,7 @@ blockquote.passage{margin:0}
   function goPrayer(){ $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"}); }
 
   $("beginBtn").addEventListener("click", goPrayer);
-  $("homeLink").addEventListener("click", function(e){ e.preventDefault(); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); });
+  if ($("homeLink").getAttribute("href") === "#top") $("homeLink").addEventListener("click", function(e){ e.preventDefault(); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); });
   $("prevBtn").addEventListener("click", function(){ if (sel > 1){ choose(sel-1); $("prayer").scrollIntoView(); } });
   $("nextBtn").addEventListener("click", function(){ if (sel < 9){ choose(sel+1); $("prayer").scrollIntoView(); } });
   $("markBtn").addEventListener("click", function(){

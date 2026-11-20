@@ -142,12 +142,15 @@ def page(n, mode):
                 'All novenas</a>\n')
         foot = '<p class="more"><a href="../index.html">More novenas</a></p>\n'
         title_tag = esc(n["barTitle"])
+        home = ('href="../index.html" aria-label="All novenas"', '<svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>')
     else:
+        home = ('href="#top" aria-label="Back to top"', "")
         head, back, foot, title_tag = "", "", "", esc(n["barTitle"])
+        home = ('href="#top" aria-label="Back to top"', "")
 
     vals = {
         "TITLE_TAG": title_tag, "HEAD_META": head, "BAR_TITLE": esc(n["barTitle"]), "BAR_SHORT": esc(n["barShort"]),
-        "BACK_LINK": back, "FOOT_LINK": foot, "KICKER": esc(n["kicker"]), "TITLE": esc(n["title"]),
+        "BACK_LINK": back, "FOOT_LINK": foot, "HOME_ATTRS": home[0], "HOME_ARROW": home[1], "KICKER": esc(n["kicker"]), "TITLE": esc(n["title"]),
         "SAINT_LINE": saint_line(n["saints"]), "EPI_TEXT": scripture(n["epigraph"]["text"]), "EPI_REF": esc(n["epigraph"]["ref"]),
         "FACES": faces, "DAY1_TITLE": esc(n["days"][0]["title"]), "OPENING_PRAYER": esc(n["openingPrayer"]),
         "INTENT_PH": esc(n.get("intentionPlaceholder", "Write the intention you are praying for.")),
@@ -176,17 +179,20 @@ def library(novenas):
         icons.append(n.get("icon", "cross"))
         faces = "".join('<img src="%s/img/%s_face.jpg" alt="" width="36" height="36">' % (n["slug"], s["id"]) for s in n["saints"])
         title = n.get("cardTitle") or re.sub(r"^Novena for (the )?", "", n["title"])
+        names = ['<span class="nb">%s</span>' % esc(x["name"]) for x in n["saints"]]
+        through = names[0] if len(names) == 1 else ", ".join(names[:-1]) + " &amp;&nbsp;" + names[-1]
+        blurb = re.sub(r"(\d) ", r"\1&nbsp;", esc(n["card"]))
+        sl = n["slug"]
         cards.append(
-            '<li class="card" data-key="%s"><a href="%s/index.html" aria-label="Novena for %s">'
+            '<li class="card" data-key="%s"><a href="%s/index.html" aria-labelledby="t-%s p-%s">'
             '<div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-%s"/></svg></span>'
             '<div class="faces" aria-hidden="true">%s</div></div>'
-            '<h3>%s</h3><p class="through">through %s</p>'
+            '<h3 id="t-%s">%s</h3><p class="through">through %s</p>'
             '<p class="blurb">%s</p>'
-            '<div class="foot"><p class="prog" aria-live="polite"></p>'
-            '<span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>' % (
-                esc(n["storageKey"]), n["slug"], esc(title), n.get("icon", "cross"), faces, esc(title),
-                saint_line(n["saints"]), esc(n["card"])))
-    t = t.replace("{{CARDS}}", "\n".join(cards)).replace("{{COUNT}}", "%d NOVENA%s" % (len(cards), "" if len(cards) == 1 else "S"))
+            '<div class="foot"><p class="prog" id="p-%s"></p>'
+            '<span class="go" aria-hidden="true"><span>Pray</span><svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>' % (
+                esc(n["storageKey"]), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
+    t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left

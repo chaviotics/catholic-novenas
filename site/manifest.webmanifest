@@ -1,7 +1,7 @@
 {
   "name": "Catholic Novenas",
   "short_name": "Novenas",
-  "description": "Nine-day Catholic novenas to pray with your family, one day at a time.",
+  "description": "9-day Catholic novenas to pray with your family, one day at a time.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFDF9",

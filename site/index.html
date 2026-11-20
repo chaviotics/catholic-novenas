@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Catholic Novenas</title>
 <meta name="description" content="9-day Catholic novenas to pray with your family, one day at a time, with Scripture, reflections and the prayers of the saints.">
 <meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">
@@ -28,69 +28,76 @@
   --rule:#E3D8C6; --wash:#F6F0E6; --gold-text:#896725; --rule-strong:#9C8B70;
   --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
   --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;
+  --scale:1;
+  --card-shadow:0 1px 2px rgb(42 37 33 / .05),0 4px 14px rgb(42 37 33 / .05);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-mode="light"]){
     --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A;
-    --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; color-scheme:dark;
+    --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; --card-shadow:none; color-scheme:dark;
   }
 }
 :root[data-mode="dark"]{
   --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A;
-  --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; color-scheme:dark;
+  --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; --card-shadow:none; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.55;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
 a{color:var(--wine)}
 svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+.nb{white-space:nowrap}
 
 .bar{position:sticky;top:0;z-index:5;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .bar .wrap{display:flex;align-items:center;gap:10px;height:52px}
 .bar .mark{color:var(--wine);font-size:22px}
 .bar .name{font-family:var(--display);font-weight:600;font-size:19px;color:var(--wine);flex:1}
+.bar .spacer{flex:1}
 .iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font:inherit;font-size:15px}
 .iconbtn svg{font-size:19px;color:var(--gold)}
 .iconbtn:hover{border-color:var(--gold)}
-@media (max-width:480px){#themeLabel{display:none}.iconbtn{padding:0;width:44px}}
+@media (max-width:600px){.bar .name{display:none}.bar .mark{font-size:26px}#themeLabel{display:none}.iconbtn{padding:0;width:44px}}
 
-.hero{padding:44px 0 8px;text-align:center}
+.hero{padding:28px 0 4px;text-align:center}
 .cross{color:var(--wine);font-size:28px;line-height:1}
-.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase}
+.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
 h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(40px,10vw,56px);line-height:1;margin:10px 0 10px}
 .lede{font-family:var(--display);font-style:italic;font-size:clamp(18px,5vw,21px);line-height:1.35;color:var(--muted);margin:0 auto;max-width:30ch}
-.epi{margin:20px auto 0;font-style:italic;font-size:17px;max-width:36ch}
-.cite{display:block;font-style:normal;font-size:11.5px;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase}
 
-.h2{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--display);font-weight:700;font-size:26px;color:var(--wine);margin:40px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.h2 .n{font-family:var(--body);font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:600}
+.h2{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--display);font-weight:700;font-size:calc(27px * var(--scale));color:var(--wine);margin:36px 0 16px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
 
 .cards{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.card a{display:block;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;transition:border-color .15s,box-shadow .15s}
-.card a:hover{border-color:var(--gold);box-shadow:0 2px 14px rgba(42,37,33,.06)}
-.card a:active{transform:scale(.995)}
+.card a{display:block;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;box-shadow:var(--card-shadow);transition:border-color .15s,background-color .15s}
+.card a:hover{border-color:var(--gold)}
+.card a:active{background:var(--wash);border-color:var(--gold)}
+.card.started a{border-top:3px solid var(--gold);padding-top:14px}
 .card .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-.card .ic{flex:none;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:23px;background:var(--paper)}
+.card .ic{flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:21px;background:var(--paper)}
 .card .faces{display:flex;padding-left:9px}
-.card .faces img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--sheet);margin-left:-9px;box-shadow:0 0 0 1px var(--rule-strong);background:var(--wash)}
-.card h3{font-family:var(--display);font-weight:700;font-size:clamp(23px,6vw,27px);line-height:1.12;color:var(--wine);margin:0 0 4px;text-wrap:balance}
-.card .through{margin:0;font-style:italic;color:var(--muted);font-size:16px;line-height:1.35}
-.card .blurb{margin:10px 0 0;font-size:16.5px;line-height:1.45}
+.card .faces img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--sheet);margin-left:-9px;box-shadow:0 0 0 1px var(--gold);background:var(--wash)}
+.card h3{font-family:var(--display);font-weight:700;font-size:calc(clamp(23px,6vw,27px) * var(--scale));line-height:1.12;color:var(--wine);margin:0 0 4px;text-wrap:balance}
+.card .through{margin:0;font-style:italic;color:var(--muted);font-size:calc(17px * var(--scale));line-height:1.35}
+.card .blurb{margin:10px 0 0;font-size:calc(17.5px * var(--scale));line-height:1.45}
 .card .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:10px;border-top:1px solid var(--rule)}
-.card .prog{margin:0;font-size:14px;font-weight:600;letter-spacing:.03em;color:var(--gold-text)}
-.card .go{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:16px;color:var(--wine)}
+.card .prog{margin:0;font-size:calc(15.5px * var(--scale));font-weight:600;letter-spacing:.02em;color:var(--gold-text)}
+.card .go{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:calc(16.5px * var(--scale));color:var(--wine);white-space:nowrap}
 .card .go .i{font-size:18px}
 
-.how{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.how{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .how li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
 .how .ic{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:20px}
-.how h3{margin:0;font-family:var(--display);font-size:21px;font-weight:700;color:var(--ink)}
-.how p{margin:2px 0 0;font-size:16.5px;color:var(--ink)}
-.note{font-size:13px;color:var(--muted);line-height:1.5;text-align:center;max-width:56ch;margin:14px auto 0}
-footer{padding:32px 0 calc(88px + env(safe-area-inset-bottom));text-align:center}
+.how h3{margin:0;font-family:var(--display);font-size:calc(22px * var(--scale));font-weight:700;color:var(--ink);line-height:1.2}
+.how p{margin:3px 0 0;font-size:calc(17.5px * var(--scale));color:var(--ink)}
+
+.close{text-align:center;padding:40px 0 4px}
+.close .cross{font-size:22px}
+.close blockquote{margin:10px auto 0;max-width:30ch;font-family:var(--display);font-style:italic;color:var(--wine);font-size:23px;line-height:1.35;text-wrap:balance}
+.cite{display:block;font-style:normal;font-family:var(--body);font-size:12px;letter-spacing:.12em;color:var(--muted);margin-top:8px;text-transform:uppercase}
+.note{font-size:13px;color:var(--muted);line-height:1.5;text-align:center;max-width:56ch;margin:0 auto}
+footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
@@ -99,6 +106,7 @@ footer{padding:32px 0 calc(88px + env(safe-area-inset-bottom));text-align:center
   <div class="wrap">
     <svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg>
     <span class="name">Catholic Novenas</span>
+    <span class="spacer"></span>
     <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
   </div>
 </header>
@@ -109,30 +117,36 @@ footer{padding:32px 0 calc(88px + env(safe-area-inset-bottom));text-align:center
     <p class="kicker">9 days of prayer</p>
     <h1>Catholic Novenas</h1>
     <p class="lede">Pray with your family, one day at a time, with the saints beside you.</p>
-    <p class="epi">“Ask, and it will be given you; seek, and you will find; knock, and it will be opened to you.”<span class="cite">Matthew 7:7</span></p>
   </div>
 
-  <h2 class="h2" id="listHead">Choose a novena <span class="n">2 NOVENAS</span></h2>
+  <h2 class="h2" id="listHead">Choose a novena</h2>
   <ul class="cards" aria-labelledby="listHead">
-<li class="card" data-key="novena-relief-from-debt"><a href="relief-from-debt/index.html" aria-label="Novena for Relief from Debt and Financial Hardship"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hand-coins"/></svg></span><div class="faces" aria-hidden="true"><img src="relief-from-debt/img/joseph_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/rita_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/jude_face.jpg" alt="" width="36" height="36"></div></div><h3>Relief from Debt and Financial Hardship</h3><p class="through">through St. Joseph, St. Rita of Cascia &amp; St. Jude Thaddeus</p><p class="blurb">For a family carrying debt or money worries: 9 days of trust, honest work and wise stewardship.</p><div class="foot"><p class="prog" aria-live="polite"></p><span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
-<li class="card" data-key="novena-healing"><a href="healing/index.html" aria-label="Novena for Healing of the Sick"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-heartbeat"/></svg></span><div class="faces" aria-hidden="true"><img src="healing/img/raphael_face.jpg" alt="" width="36" height="36"><img src="healing/img/camillus_face.jpg" alt="" width="36" height="36"><img src="healing/img/bernadette_face.jpg" alt="" width="36" height="36"></div></div><h3>Healing of the Sick</h3><p class="through">through St. Raphael, St. Camillus de Lellis &amp; St. Bernadette</p><p class="blurb">For a friend or loved one who is ill: 9 days asking for healing, strength for caregivers and peace in God’s will.</p><div class="foot"><p class="prog" aria-live="polite"></p><span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
+<li class="card" data-key="novena-relief-from-debt"><a href="relief-from-debt/index.html" aria-labelledby="t-relief-from-debt p-relief-from-debt"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hand-coins"/></svg></span><div class="faces" aria-hidden="true"><img src="relief-from-debt/img/joseph_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/rita_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/jude_face.jpg" alt="" width="36" height="36"></div></div><h3 id="t-relief-from-debt">Relief from Debt and Financial Hardship</h3><p class="through">through <span class="nb">St. Joseph</span>, <span class="nb">St. Rita of Cascia</span> &amp;&nbsp;<span class="nb">St. Jude Thaddeus</span></p><p class="blurb">For a family carrying debt or money worries: 9&nbsp;days of trust, honest work and wise stewardship.</p><div class="foot"><p class="prog" id="p-relief-from-debt"></p><span class="go" aria-hidden="true"><span>Pray</span><svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
+<li class="card" data-key="novena-healing"><a href="healing/index.html" aria-labelledby="t-healing p-healing"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-heartbeat"/></svg></span><div class="faces" aria-hidden="true"><img src="healing/img/raphael_face.jpg" alt="" width="36" height="36"><img src="healing/img/camillus_face.jpg" alt="" width="36" height="36"><img src="healing/img/bernadette_face.jpg" alt="" width="36" height="36"></div></div><h3 id="t-healing">Healing of the Sick</h3><p class="through">through <span class="nb">St. Raphael</span>, <span class="nb">St. Camillus de Lellis</span> &amp;&nbsp;<span class="nb">St. Bernadette</span></p><p class="blurb">For a friend or loved one who is ill: 9&nbsp;days asking for healing, strength for caregivers and peace in God’s will.</p><div class="foot"><p class="prog" id="p-healing"></p><span class="go" aria-hidden="true"><span>Pray</span><svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
   </ul>
 
   <h2 class="h2">How a novena works</h2>
   <ul class="how">
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>9 days, 1 intention</h3><p>A novena is prayer for 1 intention over 9 days, after the Apostles and Mary, who prayed together in the days before Pentecost (Acts 1:14).</p></div></li>
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About 10 minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>9&nbsp;days, 1&nbsp;intention</h3><p>A novena is 9&nbsp;days of prayer for a single intention, after the Apostles and Mary, who prayed together before Pentecost (Acts 1:14).</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About 10&nbsp;minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-users"/></svg></span><div><h3>Together or alone</h3><p>Someone leads and everyone responds. Your progress, start date and intention stay only on your phone.</p></div></li>
   </ul>
+
+  <div class="close">
+    <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
+    <blockquote>“Ask, and it will be given you; seek, and you will find; knock, and it will be opened to you.”</blockquote>
+    <span class="cite">Matthew 7:7</span>
+  </div>
 </main>
 <footer class="wrap">
   <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
 </footer>
 <script>
 (function(){
-  var root = document.documentElement, MODEKEY = "novenas-mode";
+  var root = document.documentElement, MODEKEY = "novenas-mode", SCALEKEY = "novenas-scale";
   function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
+  var sc = parseFloat(get(SCALEKEY)); if ([1, 1.15, 1.35].indexOf(sc) >= 0) root.style.setProperty("--scale", sc);
   function paint(){
     var m = get(MODEKEY); if (m) root.setAttribute("data-mode", m); else root.removeAttribute("data-mode");
     var d = isDark();
@@ -150,14 +164,25 @@ footer{padding:32px 0 calc(88px + env(safe-area-inset-bottom));text-align:center
 
   /* show where each novena stands, from what that novena saved on this phone */
   function today(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+  function fmt(iso){ try{ return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {weekday:"short", month:"short", day:"numeric"}); }catch(e){ return iso; } }
   [].forEach.call(document.querySelectorAll(".card"), function(c){
     var s = null; try{ s = JSON.parse(get(c.getAttribute("data-key")) || "null"); }catch(e){}
-    var p = c.querySelector(".prog"); if (!s || !p) return;
-    var done = Array.isArray(s.done) ? s.done.length : 0, n = null;
+    var p = c.querySelector(".prog"), go = c.querySelector(".go span");
+    if (!s || !p) return;
+    var done = Array.isArray(s.done) ? s.done.length : 0, n = null, next = 1;
+    for (var k = 1; k <= 9; k++){ if (!Array.isArray(s.done) || s.done.indexOf(k) < 0){ next = k; break; } }
     if (s.start){ n = Math.round((new Date(today() + "T00:00:00") - new Date(s.start + "T00:00:00")) / 86400000) + 1; }
-    if (done >= 9) p.textContent = "All 9 days prayed";
-    else if (n !== null && n >= 1 && n <= 9) p.textContent = "Today is Day " + n + " · " + done + " of 9 prayed";
-    else if (done > 0) p.textContent = done + " of 9 days prayed";
+    if (done >= 9){ p.textContent = "All 9 days prayed"; go.textContent = "Pray again"; return; }
+    if (n !== null && n < 1){ p.textContent = "Begins " + fmt(s.start); return; }
+    if (done === 0 && n === null) return;
+    c.classList.add("started");
+    if (n !== null && n >= 1 && n <= 9){
+      p.textContent = done ? "Today is Day " + n + " · " + done + " of 9 prayed" : "Today is Day " + n;
+      go.textContent = "Continue Day " + Math.min(n, next);
+    } else {
+      p.textContent = done + " of 9 days prayed";
+      go.textContent = "Continue Day " + next;
+    }
   });
 })();
 </script>
