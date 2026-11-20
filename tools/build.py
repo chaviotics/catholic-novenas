@@ -138,9 +138,9 @@ def page(n, mode):
             '<link rel="apple-touch-icon" href="../apple-touch-icon.png">',
             '<link rel="manifest" href="../manifest.webmanifest">',
         ])
-        back = ('    <a class="back" href="../"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
+        back = ('    <a class="back" href="../index.html"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
                 'All novenas</a>\n')
-        foot = '<p class="more"><a href="../">More novenas</a></p>\n'
+        foot = '<p class="more"><a href="../index.html">More novenas</a></p>\n'
         title_tag = esc(n["barTitle"])
     else:
         head, back, foot, title_tag = "", "", "", esc(n["barTitle"])
@@ -175,7 +175,7 @@ def library(novenas):
             continue
         faces = "".join('<img src="%s/img/%s_face.jpg" alt="" width="56" height="56">' % (n["slug"], s["id"]) for s in n["saints"])
         cards.append(
-            '<li class="card" data-key="%s"><a href="%s/">'
+            '<li class="card" data-key="%s"><a href="%s/index.html">'
             '<div class="faces" aria-hidden="true">%s</div>'
             '<div class="body"><p class="kick">%s</p><h3>%s</h3>'
             '<p class="through">through %s</p><p class="blurb">%s</p>'

@@ -155,7 +155,7 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
 ## 9. Publish
 
 1. Set `"status": "published"`, then run `python3 tools/build.py`.
-2. Deploy `site/` to the Netlify site `catholic-novenas` (Netlify MCP `deploy-site`, run from the repo root; `netlify.toml` publishes `site/`).
+2. Deploy `site/` to the Netlify site `catholic-novenas`: call the Netlify MCP `deploy-site`, then run the `npx @netlify/mcp …` command it returns from the repo root (`netlify.toml` publishes `site/`). That command may need the user's approval. If nobody is there to approve it, publish `site/` as a Claude artifact instead (every file, keeping its path) so the user can review the novena, and deploy when they are back. Once the site is linked to GitHub in Netlify, a push to its branch deploys it on its own.
 3. Open the live page to confirm it works.
 4. Commit and push. Commit messages carry no Co-Authored-By trailer.
 
