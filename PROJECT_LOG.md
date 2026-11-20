@@ -28,7 +28,7 @@ Two phases, so the new name can go live before the domain exists:
 - [x] Library link-preview image `site/og.jpg` ("Pray a / Novena", tagline). Rendered with Node Playwright (no Python Playwright here)
 - [x] README, `skill/SKILL.md`, `templates/sw.js` comment, this log
 - [x] Print docs: template, debt and healing docs have no headers, footers, site name or URL (images are embedded copies), so nothing to change
-- [ ] Artifact preview → Chav approves → merge to `main` and push
+- [x] Artifact preview (https://claude.ai/artifact/5dfk9wJodJV49qkKKSfSqt) → Chav approved 2026-11-20 → pushed to `main`
 
 **Phase B: the domain (only after prayanovena.com is bought and working)**
 - [ ] Chav buys prayanovena.com (check the renewal price; skip hosting add-ons)
@@ -110,7 +110,7 @@ Two phases, so the new name can go live before the domain exists:
 - **Footer and Privacy follow-ups** (Chav): footer privacy line removed (warning kept for browsers that cannot save); About credit "made by Chav" with hey.there.chav@gmail.com for corrections and questions; Privacy page "Visits and hosting" now says Netlify logs each request (time, page, referring site, browser type, IP address) and we see only totals; "No accounts, ads or cookies" replaces "…or tracking" in the Privacy page's description and link preview.
 - **New app icon** (Chav): the old icon was a white cross on a full wine square, the "too red" look already turned down for link previews, with no gold. 3 cream-and-gold options previewed; Chav chose "9 days" (ring of 9 gold segments around the wine cross). Added a dark-mode tab version, `favicon.ico` for older browsers and crawlers, and a separate maskable icon so Android's crop never cuts the ring.
 
-- **Rename to Pray a Novena, phase A** (Chav; branch `rename-pray-a-novena`, not on `main` yet): the name, tagline, titles, link previews, manifest, library og.jpg, README, skill and this log now say Pray a Novena; `SITE_URL` deliberately still points at catholic-novenas.netlify.app until the domain works. Plan and checklist in "Rename" above.
+- **Rename to Pray a Novena, phase A** (Chav approved the preview; pushed to `main`): the name, tagline, titles, link previews, manifest, library og.jpg, README, skill and this log now say Pray a Novena; `SITE_URL` deliberately still points at catholic-novenas.netlify.app until the domain works. Plan and checklist in "Rename" above.
 
 ## Open items
 
