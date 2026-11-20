@@ -150,7 +150,7 @@ def page(n, mode):
             '<meta property="og:site_name" content="Catholic Novenas">',
             '<meta property="og:url" content="%s">' % url,
             '<meta property="og:title" content="%s">' % esc(og_title(n)),
-            '<meta property="og:description" content="%s">' % esc(n["description"]),
+            '<meta property="og:description" content="%s">' % esc(n.get("ogDescription") or n["description"]),
             '<meta property="og:image" content="%sog.jpg?v=%s">' % (url, og_ver(os.path.join(ROOT, "novenas", slug, "og.jpg"))),
             '<meta property="og:image:alt" content="%s">' % esc(n["barTitle"] + ": " + n["kicker"]),
             '<meta property="og:image:type" content="image/jpeg">',
@@ -235,7 +235,7 @@ def library(novenas):
     t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
     t = t.replace("{{FONTS}}", local_fonts("")).replace("{{SW}}", sw_register(""))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t

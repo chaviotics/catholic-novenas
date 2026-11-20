@@ -60,6 +60,7 @@ Copy an example's shape. Field rules:
 | `kicker` | "9 days of …", up to 45 characters |
 | `card` | One sentence for the library card, up to 140 characters |
 | `description` | Meta description, up to 160 characters |
+| `ogDescription` | Link-preview description, under 125 characters: "9 days of prayer for …, through …" with short saint names |
 | `status` | `"draft"` (page builds, no library card) until the user approves, then `"published"` |
 | `order` | Position on the library page |
 | `epigraph`, `closingVerse` | RSV-CE text, up to about 25 words each: `{"text", "ref"}` |
@@ -68,7 +69,7 @@ Copy an example's shape. Field rules:
 | `litany[]` | `{"img", "text"}`, Marian title first. `img` is optional and points to `img/<img>_face.jpg` |
 | `openingPrayer` | 85–110 words. Addresses the Father, names the burden plainly, names each intercessor with a short role, ends "through Christ our Lord." The template adds "Amen." |
 | `closingPrayer` | 25–40 words, addressed to Jesus. The template adds "Amen." |
-| `tips` | Keep the "As a family" text from the examples word for word. "Alongside prayer" names the sacraments that fit (Confession, Mass, Anointing of the Sick…) and one prudent action for this intention, plus a warning against false shortcuts if relevant (loan sharks, "sure cures") |
+| `tips` | Keep the "Praying with others" text from the examples word for word. "Alongside prayer" names the sacraments that fit (Confession, Mass, Anointing of the Sick…) and one prudent action for this intention, plus a warning against false shortcuts if relevant (loan sharks, "sure cures") |
 | `icons` | 9 Phosphor "regular" icon names, one per day. They must exist in `tools/icons/`. Add new ones from `@phosphor-icons/core` (npm, assets/regular) |
 | `credits` | Image credits: artist, *title*, date, collection, then "Public domain, via Wikimedia Commons." |
 | `days[9]` | See below |
@@ -88,7 +89,7 @@ Each day has these fields:
 **Numbers:** in everything the reader scans (kickers, card text, headings, labels, tips, how-to text), write numbers as digits: "9 days", "Day 3", "10 minutes", "The 3 Intercessors". Prayers, reflections and steps, which are read aloud, keep words ("these nine days", "on this ninth day").
 
 **Voice and faith rules:**
-- Write in warm, plain US English, saying "we" for the family. Use the honorific capitals of the examples: You, Your, Him.
+- Write in warm, plain US English, saying "we". Keep the framing general: don't address the reader as a family or as praying alone (cards, kickers, previews). Use the honorific capitals of the examples: You, Your, Him.
 - **Never promise outcomes.** No "this novena never fails" and no prosperity-gospel framing. Ask boldly, then trust God's will. For healing, also pray for strength, peace, the doctors' skill and the caregivers, and for the grace to unite suffering with Christ. Say plainly that healing which doesn't come is never a sign of weak faith (CCC 1508), and keep the hope of eternal life in view.
 - When the person prayed for is unknown, write "N." and "them", and tell readers how to pray it for themselves.
 - Rotate the saints across the days so each gets about three days.

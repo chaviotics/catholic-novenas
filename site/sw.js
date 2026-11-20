@@ -1,7 +1,7 @@
 /* Catholic Novenas service worker: keeps the whole library on this device so it opens without signal.
    Pages: network first (corrections arrive right away), the saved copy when offline or after 4000 ms.
    Everything else (images, fonts, icons): saved once and reused. Built by tools/build.py; do not edit site/sw.js. */
-var VERSION = "8226077a734a";
+var VERSION = "7fc8a72b84f6";
 var CACHE = "novenas-" + VERSION;
 var FILES = ["apple-touch-icon.png", "favicon.svg", "icon-192.png", "icon-512.png", "index.html", "./", "manifest.webmanifest", "fonts/cormorant-garamond-italic.woff2", "fonts/cormorant-garamond.woff2", "fonts/eb-garamond-italic.woff2", "fonts/eb-garamond.woff2", "fonts/fonts.css", "healing/index.html", "healing/", "healing/img/bernadette.jpg", "healing/img/bernadette_face.jpg", "healing/img/camillus.jpg", "healing/img/camillus_face.jpg", "healing/img/mary_face.jpg", "healing/img/raphael.jpg", "healing/img/raphael_face.jpg", "relief-from-debt/index.html", "relief-from-debt/", "relief-from-debt/img/joseph.jpg", "relief-from-debt/img/joseph_face.jpg", "relief-from-debt/img/jude.jpg", "relief-from-debt/img/jude_face.jpg", "relief-from-debt/img/mary_face.jpg", "relief-from-debt/img/rita.jpg", "relief-from-debt/img/rita_face.jpg"];
 var TIMEOUT = 4000;

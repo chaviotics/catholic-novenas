@@ -114,7 +114,7 @@ def main():
     if not only:
         left = lib.get("joseph") or next(iter(lib.values()))
         right = lib.get("raphael") or list(lib.values())[-1]
-        pairs.append((card_html("", "Catholic<br>Novenas", "Pray with your family, one day at a time", left, right),
+        pairs.append((card_html("", "Catholic<br>Novenas", "Pray one day at a time,<br>with the saints", left, right),
                       os.path.join(ROOT, "site", "og.jpg")))
     asyncio.run(render(pairs))
 

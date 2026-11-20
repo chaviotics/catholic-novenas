@@ -8,6 +8,7 @@
  "barShort": "Healing Novena",
  "kicker": "9 days of hope in Christ who heals",
  "card": "For a friend or loved one who is ill: 9 days asking for healing, strength for caregivers and peace in God’s will.",
+ "ogDescription": "9 days of prayer for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus and St. Bernadette.",
  "description": "A 9-day Catholic novena for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis and St. Bernadette.",
  "epigraph": {
   "text": "Heal me, O LORD, and I shall be healed; save me, and I shall be saved; for thou art my praise.",
@@ -74,8 +75,8 @@
  },
  "tips": [
   {
-   "h": "As a family",
-   "p": "One person leads each part; all respond <span class=\"resp\">pray for us</span> and <span class=\"resp\">Amen</span>, and say the closing prayers together. The prayers say “we” for the family; if you pray alone, say “I”."
+   "h": "Praying with others",
+   "p": "One person leads each part; all respond <span class=\"resp\">pray for us</span> and <span class=\"resp\">Amen</span>, and say the closing prayers together. The prayers say “we”; if you pray alone, say “I”."
   },
   {
    "h": "Alongside prayer",
