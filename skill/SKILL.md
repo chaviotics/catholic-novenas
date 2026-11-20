@@ -18,7 +18,7 @@ Every novena uses the same prayer structure and design. Only the content changes
 
 - **Repo:** `chaviotics/catholic-novenas` (branch `main`; Netlify deploys every push). Never push to `chaviotics/novena-finances`: it is the family's live debt novena.
 - **Netlify:** site `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`). Never deploy to `novena-finances` unless the user asks.
-- **Read first:** `novenas/relief-from-debt/novena.json` and `novenas/healing/novena.json`. They are the approved examples: match their tone, lengths and polish.
+- **Read first:** `PROJECT_LOG.md` (decisions, history, open items), then `novenas/relief-from-debt/novena.json` and `novenas/healing/novena.json`. They are the approved examples: match their tone, lengths and polish.
 - **Tools:** `tools/build.py` (site and artifact), `tools/print_fill.py` (print doc requests), `tools/check_print.py` (print text check), `tools/shots.py` (screenshots), `tools/og.py` (link-preview images), `tools/wm_images.py` (Wikimedia images). Read each one's docstring before using it.
 
 ## 1. Intention → saints
@@ -54,6 +54,8 @@ Copy an example's shape. Field rules:
 | Field | Rule |
 |---|---|
 | `title` | "Novena for …", up to about 60 characters |
+| `cardTitle` | The title without "Novena for", for the library card |
+| `icon` | One Phosphor "regular" icon for the library card |
 | `barTitle` / `barShort` | Shown in the top bar: up to 28 and up to 14 characters |
 | `kicker` | "9 days of …", up to 45 characters |
 | `card` | One sentence for the library card, up to 140 characters |
