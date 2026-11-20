@@ -1,7 +1,7 @@
 {
   "name": "Catholic Novenas",
   "short_name": "Novenas",
-  "description": "9-day Catholic novenas to pray one day at a time, with the saints.",
+  "description": "9-day Catholic novenas to pray one day at a time.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFDF9",
