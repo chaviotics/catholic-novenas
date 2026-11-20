@@ -34,6 +34,7 @@ Read this at the start of a work session. Update it at the end when something ch
 - **Theme and text size** are shared across the whole site (`novenas-mode`, `novenas-scale`); progress is saved per novena (`novena-<slug>`).
 - **Offline:** every build regenerates `site/sw.js` with a new version, so phones pick up changes on their next online visit. Never edit `site/sw.js` by hand; change `templates/sw.js`. Fonts live in `site/fonts/` (no Google Fonts on the site; artifact previews still use Google Fonts).
 - **Layout:** phone first. 601–1023px: one column with the 9 days in a sticky strip. 1024px and up: sidebar + prayer column. Phones: 9 days in a bottom bar.
+- **Share button:** shares only the novena's public link (`share()` in `tools/build.py`: URL, title, one short message), never the page's own address, so the day, intention and progress never travel. Touch screens open the phone's share sheet; computers copy the link ("Link copied"). It sits in the top bar on every size (icon only on phones) and as "Share this novena" at the end of each day's prayer. Not in the hero (on small phones it pushes "Pray Day N" under the day bar) and not on library cards (each card is one link).
 - **Workflow:** finish new work as a Claude artifact preview first; commit and push only after approval.
 - **Commits:** no Co-Authored-By lines.
 
@@ -62,6 +63,8 @@ Read this at the start of a work session. Update it at the end when something ch
 - Link previews: `tools/og.py` needs Python Playwright, which this workspace lacks; the og images for the new novenas were rendered with Node Playwright using the same HTML.
 - About page (`/about/`, `templates/about.html`, images and sources in `pages/about/`, built by `about()` in `tools/build.py`): what a novena is, where it began, how to pray, "Not a formula", why we ask the saints (worship God alone; CCC 956, 2683, 2132, 970), "Unlikely saints" (Paul, Augustine, Bartolo Longo, Camillus, Aquinas, Joseph of Cupertino) and every intercessor. Scripture verified (`pages/about/sources.md`); independent Catholic review applied. Navigation: "About" text link in the library top bar beside Text and Dark; novena pages keep their bar and link About in the footer. Library: "Common questions" accordion under "How a novena works" (2 novenas at once, missing a day, praying to saints, guarantees). Approved by Chav.
 
+- **Share button** on every novena page (Chav): Web Share API on touch screens (WhatsApp, Messenger, texts), copy link with a "Link copied" note on computers, URL shown in the note if copying is blocked. Message: "Sharing this novena with you: <title>. 9 days of prayer, one day at a time." Top bar on every size plus "Share this novena" under the day buttons at the end of each day. Phosphor `paper-plane-tilt` icon. Tested on 3 phone sizes, tablet and desktop, light and dark; checked that a typed intention, a marked day and a `#day-3` link never reach the shared text. Approved by Chav.
+
 ## Open items
 
 1. **Go live:** link the Netlify project `catholic-novenas` to the repo (branch `main`, build command blank, publish directory `site`), then check catholic-novenas.netlify.app on a phone.
@@ -73,5 +76,4 @@ Read this at the start of a work session. Update it at the end when something ch
 ## Ideas to weigh (not decided)
 
 - When the family finishes their current round, point novena-finances to the library's debt novena so there is one version to maintain.
-- A share button on each novena page.
 - Next intentions to consider: see the roadmap doc (https://claude.ai/artifact/Nuhwhpne8JEqxcwkwA9nDA). Print docs for the 4 new novenas are still to make.

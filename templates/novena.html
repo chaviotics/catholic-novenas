@@ -74,6 +74,7 @@ section{padding:30px 0 8px}
 /* ---- hero ---- */
 .hero{padding:40px 0 12px;text-align:center}
 .back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px;margin:-8px 0 6px;color:var(--gold-text);font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:600}
+button.back{background:none;border:0;cursor:pointer;font-family:var(--body)}
 .back .i{width:16px;height:16px}
 .back:hover,.back:focus-visible{text-decoration:underline;text-underline-offset:3px}
 .cross{color:var(--wine);font-size:26px;line-height:1}
@@ -170,6 +171,8 @@ details.prayer .read{padding:0 14px 14px;font-size:calc(18px * var(--scale))}
 .daynav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
 .daynav button{flex:1;border:1px solid var(--rule);background:var(--sheet);border-radius:10px;padding:10px;cursor:pointer;font-size:15.5px;color:var(--ink)}
 .daynav button:disabled{opacity:.4;cursor:default;visibility:hidden}
+.sharerow{display:flex;justify-content:center;margin:18px 0 0;padding-top:12px;border-top:1px solid var(--rule)}
+.sharerow .back{margin:0}
 
 /* ---- guide: how to pray, tips, intercessors, close ---- */
 ol.how{margin:0;padding-left:1.3em}
@@ -199,7 +202,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
 .sizer.open{display:flex}
 .sizer button{min-width:48px;height:40px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);cursor:pointer;font-family:var(--display);font-weight:700;color:var(--wine)}
 .sizer button[aria-pressed="true"]{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine) inset}
-.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:15px;white-space:nowrap;max-width:calc(100vw - 32px);opacity:0;pointer-events:none;transition:opacity .25s}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:15px;width:max-content;max-width:calc(100vw - 32px);text-align:center;overflow-wrap:anywhere;opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.show{opacity:1}
 
 /* ---- phones ---- */
@@ -209,7 +212,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   #prayer{scroll-margin-top:64px}
   .bar .name{display:none}
   .bar .mark{font-size:26px}
-  #sizeBtn>span,#themeLabel{display:none}
+  #sizeBtn>span,#themeLabel,.barshare>span{display:none}
   .bar .iconbtn{width:44px;min-width:44px;padding:0}
   .bar .iconbtn svg{font-size:21px}
   /* a shorter hero, so today's card and its button come into view sooner; the bar's arrow leads back */
@@ -287,7 +290,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   details.prayer summary:hover{color:var(--wine)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-@media print{.bar,.days,.toc,.today .cta,.markdone,.daynav,.intent,.startrow{display:none}}
+@media print{.bar,.days,.toc,.today .cta,.markdone,.daynav,.intent,.startrow,.barshare,.sharerow{display:none}}
 </style>
 </head>
 <body>
@@ -295,6 +298,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
 <header class="bar">
   <div class="wrap">
     <a class="home" {{HOME_ATTRS}} id="homeLink">{{HOME_ARROW}}<svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name"><span class="long">{{BAR_TITLE}}</span><span class="short">{{BAR_SHORT}}</span></span></a>
+    <button class="iconbtn barshare" type="button" data-share aria-label="Share this novena" title="Share this novena"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-paper-plane-tilt"/></svg><span>Share</span></button>
     <button class="iconbtn" id="sizeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <button class="iconbtn" id="themeBtn" title="Switch light or dark"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
     <div class="sizer" id="sizer" role="group" aria-label="Text size">
@@ -426,6 +430,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
           <button type="button" id="prevBtn">‹ Day 0</button>
           <button type="button" id="nextBtn">Day 2 ›</button>
         </div>
+        <p class="sharerow"><button class="back" type="button" data-share><svg class="i" aria-hidden="true" focusable="false"><use href="#i-paper-plane-tilt"/></svg>Share this novena</button></p>
       </li>
     </ol>
   </section>
@@ -469,6 +474,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
 (function(){
   var DAYS = {{DAYS}};
   var ICONS = {{ICONS}};
+  var SHARE = {{SHARE}}; /* the novena's public link and a short message: never the intention or progress */
   var KEY = {{KEY}}, MODEKEY = "novenas-mode", canStore = true;
   function load(){ try{ var v = localStorage.getItem(KEY); return v ? JSON.parse(v) : {}; }catch(e){ canStore = false; return {}; } }
   function save(s){ if (!canStore) return; try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){ canStore = false; noteStore(); } }
@@ -579,7 +585,7 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   function esc(t){ return t.replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
   function fmtVerse(t){ var h = esc(t).replace(/LORD/g, '<span class="sc">Lord</span>'); var parts = h.split(" / "); return parts.length > 1 ? parts.map(function(l){ return '<span class="ln">' + l + '</span>'; }).join("") : h; }
   function choose(k){ sel = k; render(); }
-  function toast(msg){ var el = $("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove("show"); }, 2400); }
+  function toast(msg, ms){ var el = $("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove("show"); }, ms || 2400); }
   function goPrayer(){ $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"}); }
 
   $("beginBtn").addEventListener("click", goPrayer);
@@ -606,6 +612,30 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   });
   var it = $("intention"); it.value = state.intention || "";
   it.addEventListener("input", function(){ state.intention = it.value; save(state); });
+  /* share: the phone's share sheet (WhatsApp, Messenger, texts…) on touch screens; on a computer, copy the link */
+  function copyText(t){
+    var viaApi = navigator.clipboard && window.isSecureContext ? navigator.clipboard.writeText(t) : Promise.reject();
+    return viaApi.catch(function(){
+      var ta = document.createElement("textarea"), ok = false;
+      ta.value = t; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      try{ ok = document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+      if (!ok) throw new Error("copy failed");
+    });
+  }
+  function copyLink(){
+    copyText(SHARE.url).then(function(){ toast("Link copied. Paste it in a message to share."); },
+      function(){ toast("Copy this link: " + SHARE.url.replace(/^https:\/\//, ""), 6000); });
+  }
+  var useSheet = !!navigator.share && !!window.matchMedia && matchMedia("(pointer: coarse)").matches;
+  [].forEach.call(document.querySelectorAll("[data-share]"), function(b){
+    b.addEventListener("click", function(){
+      if (!useSheet) return copyLink();
+      navigator.share({title: SHARE.title, text: SHARE.text, url: SHARE.url})
+        .catch(function(e){ if (!e || e.name !== "AbortError") copyLink(); });
+    });
+  });
   window.addEventListener("hashchange", function(){ var h = /^#day-([1-9])$/.exec(location.hash); if (h) choose(+h[1]); });
 
   /* a page left open overnight moves to the new day */

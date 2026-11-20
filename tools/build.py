@@ -12,7 +12,7 @@ import base64, hashlib, html, json, os, re, shutil, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_URL = "https://catholic-novenas.netlify.app"
 ICON_DIRS = [os.path.join(ROOT, "tools", "icons")]
-BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open"]
+BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
 NUMWORD = {1: "The Intercessor", 2: "The 2 Intercessors", 3: "The 3 Intercessors"}
 MARIAN_MEMORARE = ("Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to your protection, "
                    "implored your help, or sought your intercession was left unaided. Inspired by this confidence, I fly unto you, "
@@ -207,6 +207,7 @@ def page(n, mode):
         "SPRITE": sprite(BASE_ICONS + n["icons"]),
         "FONTS": local_fonts("../") if mode == "site" else GOOGLE_FONTS,
         "SW": sw_register("../") if mode == "site" else "",
+        "SHARE": json.dumps(share(n), ensure_ascii=False),
     }
     t = read(os.path.join(ROOT, "templates", "novena.html"))
     for k, v in vals.items():
@@ -214,6 +215,13 @@ def page(n, mode):
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t
+
+
+def share(n):
+    """what the Share button sends: the novena's public link (never the page's own address, so no day, intention
+    or progress can ride along), its title and a short message"""
+    return {"url": "%s/%s/" % (SITE_URL, n["slug"]), "title": n["title"],
+            "text": "Sharing this novena with you: %s. 9 days of prayer, one day at a time." % n["title"]}
 
 
 def og_title(n):
