@@ -129,17 +129,10 @@ q,.q{font-style:italic}
 .people .nv{display:block;margin-top:2px;font-size:calc(14.5px * var(--scale));font-weight:600;color:var(--gold-text)}
 
 /* ---- unlikely saints ---- */
-/* ---- about this site: the saints who inspired it ---- */
-.inspire{list-style:none;margin:12px 0 4px;padding:0;display:grid;gap:10px}
-.inspire li{display:grid;grid-template-columns:22px 1fr;column-gap:12px;padding:14px 16px 14px 14px;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--card-shadow)}
-.inspire .i{grid-row:1 / span 2;font-size:22px;color:var(--gold);margin-top:2px}
-.inspire h4{margin:0;font-family:var(--display);font-weight:700;font-size:calc(21px * var(--scale));line-height:1.2;color:var(--wine)}
-.inspire .dt{font-family:var(--body);font-weight:500;font-size:calc(14.5px * var(--scale));color:var(--muted);white-space:nowrap;margin-left:6px}
-.inspire p{grid-column:2;margin:4px 0 0;font-size:calc(17px * var(--scale));line-height:1.5}
-
 .stories{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
 .stories li{display:grid;grid-template-columns:104px 1fr;gap:14px;align-items:start;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:12px;box-shadow:var(--card-shadow)}
 .stories img{display:block;width:104px;height:104px;object-fit:cover;border-radius:10px;background:var(--wash)}
+.stories .ph{display:grid;place-items:center;width:104px;height:104px;border-radius:10px;background:var(--wash);color:var(--gold);font-size:34px}
 .stories .lbl{display:block;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
 .stories h3{margin:2px 0 6px;font-family:var(--display);font-size:calc(24px * var(--scale));font-weight:700;line-height:1.15;color:var(--wine)}
 .stories p{margin:0;font-size:calc(17px * var(--scale));line-height:1.5}
@@ -148,7 +141,7 @@ q,.q{font-style:italic}
 .stories .by{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.4}
 .after{margin:26px auto 0;text-align:center;font-family:var(--display);font-style:italic;font-size:calc(23px * var(--scale));line-height:1.35;color:var(--wine);max-width:28ch;text-wrap:balance}
 @media (max-width:759px){.art{max-width:300px}.art.wide{max-width:none}}
-@media (max-width:480px){.stories li{grid-template-columns:1fr}.stories img{width:100%;height:auto;aspect-ratio:2/1}
+@media (max-width:480px){.stories li{grid-template-columns:1fr}.stories img{width:100%;height:auto;aspect-ratio:2/1}.stories .ph{width:64px;height:64px;font-size:28px}
   .people a{grid-template-columns:44px 1fr;gap:12px;padding:8px 12px 8px 8px}.people img{width:44px;height:44px}.people .pt{display:none}.people .nm{font-size:calc(19px * var(--scale))}}
 
 /* ---- close ---- */
@@ -178,7 +171,7 @@ q,.q{font-style:italic}
   .people{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
   .stories{grid-template-columns:repeat(3,1fr);gap:20px}
   .stories li{grid-template-columns:1fr;padding:0;overflow:hidden;align-content:start}
-  .stories img{width:100%;height:auto;aspect-ratio:3/2;border-radius:0}
+  .stories img,.stories .ph{width:100%;height:auto;aspect-ratio:3/2;border-radius:0}
   .stories .txt{padding:4px 20px 18px}
   .close{padding-top:72px}
   .close blockquote{font-size:calc(27px * var(--scale));max-width:34ch}
@@ -306,7 +299,7 @@ q,.q{font-style:italic}
     <h2 class="h2">Unlikely saints</h2>
     <div class="body">
       <p class="lead">Saints are not born with halos. Many began far from God, and a few began about as far away as a person can get.</p>
-      <p>The saints include a persecutor, a gambler and a man who served Satan, but also a woman sold into slavery as a child (St.&nbsp;Josephine Bakhita) and a teenager who loved video games (St.&nbsp;Carlo Acutis). What they share is not a perfect start in life but a heart that turned to God and let His grace do the rest.</p>
+      <p>The saints include a persecutor, a gambler and a man who served Satan, but also a woman sold into slavery as a child (St.&nbsp;Josephine Bakhita) and a teenager who loved video games. What they share is not a perfect start in life but a heart that turned to God and let His grace do the rest.</p>
     </div>
     <ul class="stories">
       <li><img src="{{IMG:paul}}" width="720" height="480" alt="Detail of Caravaggio’s Conversion of Saint Paul: Saul lies on the ground beneath his horse, arms raised, struck by light." loading="lazy"><div class="txt"><span class="lbl">The persecutor</span><h3>St. Paul</h3><p>He approved the stoning of Stephen and dragged Christians off to prison <span class="ref">(Acts 8:1–3)</span>. Then the risen Christ stopped him on the road to Damascus, and he became the apostle who carried the Gospel across the Roman world.</p>{{PRAY:paul}}<p class="by">Caravaggio, <i>The Conversion on the Way to Damascus</i>, 1601</p></div></li>
@@ -315,6 +308,9 @@ q,.q{font-style:italic}
       <li><img src="{{IMG:camillus}}" width="480" height="320" alt="Detail of a painting of St. Camillus de Lellis, eyes lowered in prayer." loading="lazy"><div class="txt"><span class="lbl">The gambler</span><h3>St. Camillus de Lellis</h3><p>A soldier with a quick temper, a gambling habit and a diseased leg that never healed. After his conversion in 1575 he gave his life to the sick and founded the Camillians, the Ministers of the Sick.</p>{{PRAY:camillus}}<p class="by">Cristóbal Lozano, <i>Ecstasy of Saint Camillus de Lellis</i></p></div></li>
       <li><img src="{{IMG:aquinas}}" width="720" height="480" alt="Detail of Carlo Crivelli’s Saint Thomas Aquinas: a Dominican friar with a halo, looking out thoughtfully." loading="lazy"><div class="txt"><span class="lbl">The genius</span><h3>St. Thomas Aquinas</h3><p>One of the greatest minds the Church has known. When he set out to become a Dominican friar, his own family held him captive. Near the end of his life, after an experience at prayer, he said all he had written seemed like straw compared with what had been revealed to him.</p>{{PRAY:aquinas}}<p class="by">Carlo Crivelli, <i>Saint Thomas Aquinas</i>, 1476</p></div></li>
       <li><img src="{{IMG:cupertino}}" width="720" height="480" alt="Detail of an oil sketch of St. Joseph of Cupertino, a bearded friar looking upward." loading="lazy"><div class="txt"><span class="lbl">The misfit</span><h3>St. Joseph of Cupertino</h3><p>Slow at his studies and so clumsy that the Capuchins sent him away. The Conventual Franciscans took him in as a servant. He became a priest anyway, and was known for ecstasies in prayer so deep that witnesses said he rose off the ground.</p>{{PRAY:cupertino}}<p class="by">Placido Costanzi, oil sketch, 1750</p></div></li>
+      <li><div class="ph" aria-hidden="true"><svg class="i" focusable="false"><use href="#i-cross"/></svg></div><div class="txt"><span class="lbl">The juggler</span><h3>St. John Bosco</h3><p>A poor farm boy who lost his father as a toddler, he learned juggling and conjuring tricks to gather other children, then led them in prayer. As a priest in Turin he gave his life to abandoned young people and founded the Salesians.</p>{{PRAY:bosco}}</div></li>
+      <li><div class="ph" aria-hidden="true"><svg class="i" focusable="false"><use href="#i-cross"/></svg></div><div class="txt"><span class="lbl">The schoolboy</span><h3>St. Dominic Savio</h3><p>No dramatic conversion and no great deeds: a cheerful student at Don Bosco’s school in Turin who did ordinary things well. At his First Communion he resolved that he would rather die than sin. He died at 14, one of the youngest saints who were not martyrs.</p>{{PRAY:savio}}</div></li>
+      <li><div class="ph" aria-hidden="true"><svg class="i" focusable="false"><use href="#i-cross"/></svg></div><div class="txt"><span class="lbl">The gamer</span><h3>St. Carlo Acutis</h3><p>A teenager from Milan who loved video games and computers. He went to Mass every day and used his computer skills to build a website about Eucharistic miracles. He died of leukemia at 15 and was canonized in 2025.</p>{{PRAY:acutis}}</div></li>
     </ul>
     <p class="after">If God could make saints of them, He is not finished with any of us.</p>
   </section>
@@ -334,12 +330,6 @@ q,.q{font-style:italic}
       <h3 class="h3">Why I made this</h3>
       <p>I’m Chav, a grateful Roman Catholic. My faith took root at Don Bosco Technical Center in Cebu, Philippines, so I am a Bosconian at heart, and today I serve at The Feast, a Catholic prayer gathering of the Light of Jesus Family.</p>
       <p>I teach computer science, software engineering and AI at a college, and I also build software as a freelancer. Inspired by St.&nbsp;Carlo Acutis, I want to use those gifts to help people pray, and to give all the glory to God.</p>
-      <h3 class="h3">Saints who inspired this site</h3>
-      <ul class="inspire">
-        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. John Bosco <span class="dt">1815–1888</span></h4><p>A priest in Turin who gave his life to poor and abandoned young people and founded the Salesians. He taught through reason, religion and loving kindness.</p></li>
-        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. Dominic Savio <span class="dt">1842–1857</span></h4><p>A student of Don Bosco in Turin who resolved at his First Communion that he would rather die than sin. He died at 14, one of the youngest saints who were not martyrs.</p></li>
-        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. Carlo Acutis <span class="dt">1991–2006</span></h4><p>A teenager from Milan who loved the Eucharist and used his computer skills to build a website about Eucharistic miracles. He died at 15 and was canonized in 2025.</p></li>
-      </ul>
       <h3 class="h3">About these prayers</h3>
       <p>The traditional prayers here, such as the Our Father, the Hail Mary, the Glory Be and the Memorare, are the Church’s own. Scripture is quoted from the Revised Standard Version, Catholic Edition, and checked word for word.</p>
       <p>The opening prayers, reflections and daily prayers are new, written for this site with the help of AI. They aim to be faithful to Scripture and the teaching of the Church, but no priest has reviewed them yet, and they carry no imprimatur (a bishop’s approval to publish). Pray them as a private devotion, and take any question to your parish priest.</p>
