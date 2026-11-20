@@ -10,6 +10,7 @@ Live at https://catholic-novenas.netlify.app
 - `tools/print_fill.py`, `tools/check_print.py`: fill and check the Google Docs print layout
 - `tools/shots.py`, `tools/og.py`: phone screenshots and link-preview images
 - `skill/SKILL.md`: the step-by-step guide for making a new novena
+- `PROJECT_LOG.md`: decisions, history and open items; read it first
 
 ## Print docs (Google Drive, folder "[12] 🙏 Faith")
 
