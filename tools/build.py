@@ -7,7 +7,7 @@
 Each novena lives in novenas/<slug>/ as novena.json plus img/<id>.jpg (portrait, 480x600)
 and img/<id>_face.jpg (round avatar, 112x112) for every saint and litany image.
 """
-import base64, html, json, os, re, shutil, sys
+import base64, hashlib, html, json, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_URL = "https://catholic-novenas.netlify.app"
@@ -18,6 +18,27 @@ MARIAN_MEMORARE = ("Remember, O most gracious Virgin Mary, that never was it kno
                    "implored your help, or sought your intercession was left unaided. Inspired by this confidence, I fly unto you, "
                    "O Virgin of virgins, my Mother. To you do I come; before you I stand, sinful and sorrowful. O Mother of the Word "
                    "Incarnate, despise not my petitions, but in your mercy hear and answer me.")
+
+
+GOOGLE_FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+                '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+                '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500'
+                '&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">')
+PAGE_TIMEOUT_MS = 4000  # how long a page waits for the network before showing the saved copy
+
+
+def local_fonts(up):
+    """the site's own copies of the fonts (site/fonts), so pages look right offline"""
+    return ('<link rel="preload" href="{0}fonts/eb-garamond.woff2" as="font" type="font/woff2" crossorigin>\n'
+            '<link rel="preload" href="{0}fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>\n'
+            '<link rel="stylesheet" href="{0}fonts/fonts.css">').format(up)
+
+
+def sw_register(up):
+    """register the service worker, and say so once the library is saved on this device"""
+    return ('<script>\nif ("serviceWorker" in navigator && window.isSecureContext){\n'
+            '  try{ navigator.serviceWorker.register("%ssw.js").then(function(){ return navigator.serviceWorker.ready; })'
+            '.then(function(){ var n = document.getElementById("offlineNote"); if (n) n.hidden = false; }).catch(function(){}); }catch(e){}\n}\n</script>') % up
 
 
 def read(p):
@@ -163,6 +184,8 @@ def page(n, mode):
         "ICONS": json.dumps(n["icons"]), "KEY": json.dumps(n["storageKey"] + ("-artifact" if mode == "artifact" else "")),
         "DAYS": json.dumps(n["days"], ensure_ascii=False),
         "SPRITE": sprite(BASE_ICONS + n["icons"]),
+        "FONTS": local_fonts("../") if mode == "site" else GOOGLE_FONTS,
+        "SW": sw_register("../") if mode == "site" else "",
     }
     t = read(os.path.join(ROOT, "templates", "novena.html"))
     for k, v in vals.items():
@@ -211,6 +234,7 @@ def library(novenas):
                 esc(n["storageKey"]), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
     t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
+    t = t.replace("{{FONTS}}", local_fonts("")).replace("{{SW}}", sw_register(""))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
@@ -238,6 +262,27 @@ def build_site():
     with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
         f.write(library(novenas))
     print("built library with", sum(1 for n in novenas if n.get("status") == "published"), "published novenas")
+    build_sw(site)
+
+
+def build_sw(site):
+    """site/sw.js: precache every page, image, font and icon (not the link-preview images); the version is a hash of them"""
+    files, h = [], hashlib.sha256()
+    for d, _, fs in sorted(os.walk(site)):
+        for f in sorted(fs):
+            rel = os.path.relpath(os.path.join(d, f), site).replace(os.sep, "/")
+            if f in ("sw.js", "og.png", "og.jpg", "_headers", "_redirects"):
+                continue
+            files.append(rel)
+            with open(os.path.join(d, f), "rb") as fh:
+                h.update(rel.encode() + fh.read())
+            if f == "index.html":
+                files.append(rel[:-len("index.html")] or "./")
+    t = read(os.path.join(ROOT, "templates", "sw.js"))
+    t = t.replace("{{VERSION}}", h.hexdigest()[:12]).replace("{{FILES}}", json.dumps(files)).replace("{{TIMEOUT}}", str(PAGE_TIMEOUT_MS))
+    with open(os.path.join(site, "sw.js"), "w", encoding="utf-8") as f:
+        f.write(t)
+    print("built sw.js:", len(files), "files cached for offline use")
 
 
 if __name__ == "__main__":

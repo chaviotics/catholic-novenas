@@ -5,282 +5,281 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{TITLE_TAG}}</title>
 {{HEAD_META}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+{{FONTS}}
 <style>
-/* Layout idea: one prayer-book column; a "today" card, a nine-day strip, then the day's prayers in the order you pray them. */
+/* Novena page. Phone first: one prayer-book column (a "today" card, the 9 days, then the day's prayers
+   in the order you pray them). Phones put the 9 days in a bottom bar; from 1024px a sidebar holds them.
+   Sections: tokens · base · top bar · hero · today card · day buttons · prayer steps · guide · overlays
+   · phones (600px, 420px) · desktop (1024px) · hover · motion · print. */
+
+/* ---- tokens ---- */
 :root{
   --paper:#FFFDF9;      /* page */
   --sheet:#FFFFFF;      /* raised surfaces */
   --ink:#2A2521;        /* text */
   --muted:#675E57;      /* secondary text */
   --wine:#6E1F2B;       /* spoken responses, headings */
-  --gold:#94702A;       /* labels, icons, rules of emphasis */
+  --gold:#94702A;       /* icons, rules of emphasis */
+  --gold-text:#896725;  /* gold for small text (4.5:1) */
   --rule:#E3D8C6;       /* hairlines */
+  --rule-strong:#9C8B70;/* control borders (3:1) */
   --wash:#F6F0E6;       /* soft fills */
+  --frame:var(--gold);  /* rings around saint images */
   --cta:#6E1F2B; --on-cta:#FFFDF9;
-  --gold-text:#896725; --rule-strong:#9C8B70;
   --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
   --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;
-  --scale:1;
+  --scale:1;            /* text size: 1, 1.15 or 1.35, shared across the site */
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]):not([data-mode="light"]){
-    --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2;
-    --wine:#EBCF95; --gold:#C9A45A; --rule:#26324C; --wash:#1B2740; --cta:#C9A45A; --on-cta:#0E1524; --gold-text:#D0AD66; --rule-strong:#5E6E90; --frame:color-mix(in srgb,#C9A45A 75%,transparent); color-scheme:dark;
+    --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A; --gold-text:#D0AD66;
+    --rule:#26324C; --rule-strong:#5E6E90; --wash:#1B2740; --frame:color-mix(in srgb,#C9A45A 75%,transparent); --cta:#C9A45A; --on-cta:#0E1524; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]:not([data-mode="light"]),:root[data-mode="dark"]{
-  --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2;
-    --wine:#EBCF95; --gold:#C9A45A; --rule:#26324C; --wash:#1B2740; --cta:#C9A45A; --on-cta:#0E1524; --gold-text:#D0AD66; --rule-strong:#5E6E90; --frame:color-mix(in srgb,#C9A45A 75%,transparent); color-scheme:dark;
+  --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A; --gold-text:#D0AD66;
+  --rule:#26324C; --rule-strong:#5E6E90; --wash:#1B2740; --frame:color-mix(in srgb,#C9A45A 75%,transparent); --cta:#C9A45A; --on-cta:#0E1524; color-scheme:dark;
 }
 
+/* ---- base ---- */
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html{scroll-padding-top:124px}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1} /* modern numerals, so "1" never reads as Roman "I" */
 button,input,textarea{font:inherit;color:inherit}
 a{color:var(--wine)}
 svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+section{padding:30px 0 8px}
+#prayer{scroll-margin-top:124px}
+/* small gold caps labels */
+.kicker,.ref,.sub-h,.intent label,.tip h3,.h2 .n,.daynum small,.dayicon,.toc-h,.todaystep .tslabel{font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text)}
+.daynum,.track button,.step .num,.h2 .n,.dcap,.daynum small,.toc .num{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
 
-/* top bar */
+/* ---- top bar ---- */
 .bar{position:sticky;top:0;z-index:5;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.bar .wrap{position:relative;display:flex;align-items:center;gap:12px;height:52px}
+.home{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;min-height:44px}
+.home .back-ic{font-size:16px;color:var(--gold);margin-right:-6px}
 .bar .mark{color:var(--wine);font-size:22px;line-height:1}
 .bar .name{font-family:var(--display);font-weight:600;font-size:18px;color:var(--wine);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.name .short{display:none}
 .iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font-size:15px}
 .iconbtn svg{font-size:19px;color:var(--gold)}
 .iconbtn:hover{border-color:var(--gold)}
 
-/* hero */
+/* ---- hero ---- */
 .hero{padding:40px 0 12px;text-align:center}
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px;margin:-8px 0 6px;color:var(--gold-text);font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:600}
+.back .i{width:16px;height:16px}
+.back:hover,.back:focus-visible{text-decoration:underline;text-underline-offset:3px}
 .cross{color:var(--wine);font-size:26px;line-height:1}
-.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase}
+.cross svg{font-size:30px}
+.kicker{margin:10px 0 0;font-size:12px}
 h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(34px,8vw,46px);line-height:1.05;margin:10px 0 8px;text-wrap:balance}
 .sub{font-family:var(--display);font-style:italic;font-size:clamp(16.5px,4.6vw,20px);line-height:1.35;color:var(--muted);margin:0 auto}
 .sub .l2{white-space:nowrap}
 .epi{margin:18px auto 0;font-style:italic;font-size:17px;max-width:34ch}
 .cite{display:block;font-style:normal;font-size:11.5px;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+.faces{display:flex;justify-content:center;gap:10px;margin:20px 0 0}
+.faces img{width:56px;height:56px;border-radius:50%;object-fit:cover;margin:0;border:0;box-shadow:0 0 0 1px var(--frame)}
 
-/* today card */
-.today{margin:28px 0 8px;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:14px;padding:20px 20px 18px}
+/* ---- today card ---- */
+.today{margin:24px 0 8px;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:14px;padding:20px 20px 18px}
 .today-top{display:flex;align-items:flex-start;gap:16px}
 .daynum{font-family:var(--display);font-weight:700;color:var(--wine);font-size:60px;line-height:.85;min-width:56px;text-align:center}
-.daynum small{display:block;white-space:nowrap;font-family:var(--body);font-weight:600;font-size:11px;letter-spacing:.14em;color:var(--gold);margin-top:6px}
-.today h2{font-family:var(--display);font-weight:700;font-size:25px;line-height:1.15;margin:2px 0 4px;color:var(--ink);text-wrap:balance}
-.today .status{margin:0;color:var(--muted);font-size:16px}
-.track{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:18px 0 4px;padding:0;list-style:none}
-.track button{width:100%;aspect-ratio:1;max-width:44px;margin:0 auto;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--rule);background:transparent;color:var(--muted);cursor:pointer;font-size:14px;font-weight:600;padding:0;font-variant-numeric:tabular-nums}
+.daynum small{display:block;white-space:nowrap;font-family:var(--body);font-size:11px;margin-top:6px}
+.today h2{font-family:var(--display);font-weight:700;font-size:calc(25px * var(--scale));line-height:1.15;margin:2px 0 4px;color:var(--ink);text-wrap:balance}
+.today .status{margin:0;color:var(--muted);font-size:calc(16px * var(--scale))}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:16px;border:0;border-radius:12px;background:var(--cta);color:var(--on-cta);font-size:18px;font-weight:600;padding:14px 18px;cursor:pointer}
+.cta svg{font-size:22px}
+.startrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:15px;color:var(--muted)}
+.startrow input{border:1px solid var(--rule-strong);border-radius:8px;background:var(--paper);padding:6px 10px;font-size:16px;min-height:44px}
+.startrow .link{background:none;border:0;color:var(--wine);text-decoration:underline;cursor:pointer;min-height:44px;padding:0 6px;font-size:16px}
+#resetAll{margin-left:auto}
+
+/* ---- the 9 day buttons: a strip under the bar (tablet), a bottom bar (phone), a grid in the sidebar (desktop) ---- */
+.days{position:sticky;top:53px;z-index:4;background:var(--paper);border-bottom:1px solid var(--rule)}
+.dcap{display:none;margin:0;padding-top:7px;font-size:13px;letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.dcap b{color:var(--gold-text);font-weight:600;letter-spacing:.14em}
+.track{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:18px 0 4px;padding:0;list-style:none}
+.days .track{margin:0;padding:6px 0 7px}
+.track button{position:relative;width:100%;height:44px;margin:0 auto;display:grid;place-items:center;border-radius:12px;border:1.5px solid var(--rule-strong);background:transparent;color:var(--muted);cursor:pointer;font-size:15px;font-weight:600;padding:0}
 .track button.done{background:var(--gold);border-color:var(--gold);color:var(--sheet)}
 .track button.sel{border-color:var(--wine);box-shadow:0 0 0 2px var(--wine) inset;color:var(--wine)}
 .track button.done.sel{color:var(--sheet);box-shadow:0 0 0 2px var(--sheet) inset,0 0 0 2px var(--wine)}
-.startrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:15px;color:var(--muted)}
-.startrow input{border:1px solid var(--rule);border-radius:8px;background:var(--paper);padding:6px 10px;font-size:15px}
-.startrow .link{background:none;border:0;color:var(--wine);text-decoration:underline;cursor:pointer;padding:4px 0}
-.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:16px;border:0;border-radius:12px;background:var(--cta);color:var(--on-cta);font-size:18px;font-weight:600;padding:14px 18px;cursor:pointer}
-.cta svg{font-size:22px}
+.track button.now::after{content:"";position:absolute;left:50%;bottom:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:currentColor}
+.track button.now:not(.sel):not(.done){color:var(--wine);border-color:var(--wine)}
+.toc,.grid9{display:none}
 
-/* sections */
-section{padding:30px 0 8px}
-.h2{display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:700;color:var(--wine);font-size:27px;margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
-.h2 .n{font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--gold);margin-left:auto}
-.flow{font-size:14.5px;color:var(--muted);margin:-6px 0 18px}
-
-/* prayer steps */
+/* ---- prayer steps ---- */
+.h2{display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:700;color:var(--wine);font-size:calc(27px * var(--scale));margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
+.h2 .n{font-family:var(--body);font-size:12px;margin-left:auto}
+.wake{margin:-4px 0 14px;font-size:15px}
+.wake[aria-pressed="true"]{border-color:var(--gold);background:var(--wash)}
+.flow{font-size:calc(14.5px * var(--scale));color:var(--muted);margin:-6px 0 18px}
 .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
-.step{position:relative;padding:18px 0 20px 40px;border-bottom:1px solid var(--rule)}
+.step{position:relative;padding:18px 0 20px 46px;border-bottom:1px solid var(--rule)}
 .step:last-child{border-bottom:0}
-.step .num{position:absolute;left:0;top:19px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
-.label{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:2px 0 8px;display:flex;align-items:center;gap:8px}
-.label svg{font-size:17px}
+.step .num{position:absolute;left:0;top:15px;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:var(--body);font-size:15px;font-weight:600;letter-spacing:0}
+.label{display:flex;align-items:center;gap:12px;margin:0 0 12px;font-family:var(--display);font-weight:700;font-size:calc(24px * var(--scale));line-height:1.15;color:var(--ink)}
 .read{font-size:calc(19px * var(--scale));line-height:1.6}
 .read p{margin:0 0 .6em}
 .read p:last-child{margin-bottom:0}
+.pray .read{font-size:calc(21px * var(--scale))}
 .resp{color:var(--wine);font-style:italic}
 .rubric{color:var(--wine);font-style:italic;font-size:calc(17px * var(--scale))}
-.verse{font-style:italic;font-size:calc(20px * var(--scale));line-height:1.5;margin:0}
-.ref{font-size:12.5px;letter-spacing:.12em;color:var(--gold);margin:6px 0 12px}
+.dayicon{display:inline-flex;align-items:center;gap:8px;font-size:12.5px}
+.dayicon svg{font-size:20px;color:var(--gold)}
+.dayicon span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.daytitle{font-family:var(--display);font-weight:700;color:var(--wine);font-size:calc(27px * var(--scale));line-height:1.15;margin:0 0 14px;text-wrap:balance}
+.passage{margin:0;font-style:italic;font-size:calc(19.5px * var(--scale));line-height:1.55;padding-left:14px;border-left:2px solid var(--gold);text-wrap:pretty}
+.passage .ln{display:block;padding-left:1.5em;text-indent:-1.5em;text-wrap:balance}
+.passage .ln:nth-child(even){padding-left:2.6em}
+.sc{font-variant:small-caps;letter-spacing:.02em}
+.ref{font-size:calc(12.5px * var(--scale));letter-spacing:.12em;font-weight:400;margin:6px 0 12px}
 .refl{font-size:calc(20px * var(--scale));line-height:1.6;margin:0}
 .refl2{margin-top:.75em}
-.daytitle{font-family:var(--display);font-weight:700;color:var(--wine);font-size:calc(27px * var(--scale));line-height:1.15;margin:0 0 10px;text-wrap:balance}
-.dayicon{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold)}
-.dayicon svg{font-size:20px}
-.pray .read{font-size:calc(21px * var(--scale));line-height:1.6}
-.litany p{margin:0 0 .25em}
-.sub-h{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:16px 0 6px}
-
-details.prayer{border:1px solid var(--rule);border-radius:10px;background:var(--sheet);margin:8px 0}
+.litany p{position:relative;margin:0 0 .25em;padding-left:calc(38px * var(--scale))}
+.litany .resp{white-space:nowrap}
+.av{position:absolute;left:0;top:.15em;width:calc(28px * var(--scale));height:calc(28px * var(--scale));border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 0 0 1px var(--frame)}
+.sub-h{font-size:calc(12.5px * var(--scale));margin:16px 0 6px}
+.intent{background:var(--wash);border-radius:12px;padding:14px 16px;margin-top:6px}
+.intent label{display:block;font-size:calc(12.5px * var(--scale));margin-bottom:6px}
+.intent textarea{width:100%;min-height:76px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--sheet);padding:10px 12px;font-size:17px;line-height:1.5;resize:vertical}
+.hint{font-size:calc(14.5px * var(--scale));color:var(--muted);margin:4px 0 0}
+.intent .hint{margin-top:6px}
+details.prayer{border:1px solid var(--rule-strong);border-radius:10px;background:var(--sheet);margin:8px 0}
 details.prayer summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:600;font-size:calc(18px * var(--scale))}
 details.prayer summary::-webkit-details-marker{display:none}
 details.prayer summary svg{margin-left:auto;color:var(--gold);transition:transform .2s}
 details.prayer[open] summary svg{transform:rotate(180deg)}
 details.prayer .read{padding:0 14px 14px;font-size:calc(18px * var(--scale))}
-.hint{font-size:14px;color:var(--muted);margin:4px 0 0}
-
+.todaystep{margin:22px 0 0;background:var(--wash);border-radius:12px;padding:12px 16px 14px;border-left:3px solid var(--gold)}
+.todaystep .tslabel{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:calc(12.5px * var(--scale))}
+.todaystep .tslabel svg{font-size:18px;color:var(--gold)}
+.todaystep p:last-child{margin:0;font-size:calc(18px * var(--scale));line-height:1.5}
 .markdone{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:22px 0 0;border:1.5px solid var(--gold);border-radius:12px;background:transparent;color:var(--ink);font-size:18px;font-weight:600;padding:13px 16px;cursor:pointer}
 .markdone svg{color:var(--gold);font-size:22px}
 .markdone.is-done{background:var(--gold);color:var(--sheet)}
 .markdone.is-done svg{color:var(--sheet)}
 .daynav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
 .daynav button{flex:1;border:1px solid var(--rule);background:var(--sheet);border-radius:10px;padding:10px;cursor:pointer;font-size:15.5px;color:var(--ink)}
-.daynav button:disabled{opacity:.4;cursor:default}
+.daynav button:disabled{opacity:.4;cursor:default;visibility:hidden}
 
-/* intention */
-.intent{background:var(--wash);border-radius:12px;padding:14px 16px;margin-top:6px}
-.intent label{display:block;font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
-.intent textarea{width:100%;min-height:76px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);padding:10px 12px;font-size:17px;line-height:1.5;resize:vertical}
-.intent .hint{margin-top:6px}
-
-/* guide sections */
+/* ---- guide: how to pray, tips, intercessors, close ---- */
 ol.how{margin:0;padding-left:1.3em}
 ol.how li{margin:0 0 6px;padding-left:4px}
 ol.how li::marker{color:var(--gold);font-weight:600}
-.saints{display:grid;gap:12px}
-.saint{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 16px}
-.saint h3{font-family:var(--display);font-weight:700;color:var(--wine);font-size:22px;margin:0}
-.saint .meta{font-size:13px;color:var(--muted);margin:2px 0 0}
-.saint .pat{font-style:italic;color:var(--gold);margin:2px 0 6px;font-size:16px}
-.saint p{margin:0;font-size:16.5px}
 .tips{display:grid;gap:14px}
-.tip h3{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:0 0 4px}
-.tip p{margin:0;font-size:17px}
+.tip h3{font-size:calc(12.5px * var(--scale));margin:0 0 4px}
+.tip p{margin:0;font-size:calc(17px * var(--scale))}
+.saints{display:grid;gap:12px}
+.saint{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:start;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 16px}
+.portrait{width:92px;height:115px;object-fit:cover;border-radius:46px 46px 8px 8px;border:1px solid var(--frame);background:var(--wash)}
+.saint h3{font-family:var(--display);font-weight:700;color:var(--wine);font-size:22px;margin:0}
+.saint .meta{font-size:calc(13px * var(--scale));color:var(--muted);margin:2px 0 0}
+.saint .pat{font-style:italic;color:var(--gold-text);margin:2px 0 6px;font-size:16px}
+.saint p{margin:0;font-size:calc(16.5px * var(--scale))}
 .close{text-align:center;padding:36px 0 18px}
 .close blockquote{margin:0;font-family:var(--display);font-style:italic;color:var(--wine);font-size:23px;line-height:1.35;text-wrap:balance}
 .note{font-size:13px;font-style:italic;color:var(--muted);margin:14px 0 0}
+.credits{font-size:12px}
+.more{text-align:center;margin:8px 0 0;font-size:16px}
+.more a{display:inline-flex;align-items:center;min-height:44px;color:var(--wine);font-weight:600;text-underline-offset:3px}
 footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
+.offline{margin:12px 0 0;text-align:center;font-size:13px;color:var(--muted)}
 
-/* text size popover */
+/* ---- overlays: text size popover, toast ---- */
 .sizer{display:none;position:absolute;right:20px;top:56px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px;gap:6px;box-shadow:0 8px 24px rgb(0 0 0 / .12)}
 .sizer.open{display:flex}
 .sizer button{min-width:48px;height:40px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);cursor:pointer;font-family:var(--display);font-weight:700;color:var(--wine)}
 .sizer button[aria-pressed="true"]{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine) inset}
-.bar{position:sticky}
-.barwrap{position:relative}
-
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:15px;white-space:nowrap;max-width:calc(100vw - 32px);opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.show{opacity:1}
 
-@media (max-width:420px){
-  body{font-size:calc(17px * var(--scale))}
-  .wrap{padding:0 16px}
-  .step{padding-left:0}
-  .step .num{position:static;display:inline-grid;flex:none}
-  .daynum{font-size:52px}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-@media print{.bar,.today .cta,.markdone,.daynav,.intent,.startrow{display:none}}
-
-/* review fixes: readable gold, 3:1 control borders, scalable text, 44px targets */
-.kicker,.label,.ref,.sub-h,.intent label,.tip h3,.saint .pat,.daynum small,.dayicon,.h2 .n{color:var(--gold-text)}
-.label svg,.dayicon svg{color:var(--gold)}
-.status{font-size:calc(16px * var(--scale))}
-.label,.ref,.sub-h,.intent label,.tip h3{font-size:calc(12.5px * var(--scale))}
-.tip p{font-size:calc(17px * var(--scale))}
-.saint p{font-size:calc(16.5px * var(--scale))}
-.saint .meta{font-size:calc(13px * var(--scale))}
-.hint,.flow{font-size:calc(14.5px * var(--scale))}
-.today h2{font-size:calc(25px * var(--scale))}
-.h2{font-size:calc(27px * var(--scale))}
-.step .num{letter-spacing:0}
-/* modern (lining) numerals for counters, so "1" never reads as Roman "I" */
-body{font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
-.daynum,.track button,.step .num,.h2 .n,.dcap,.daynum small{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
-.cross svg{font-size:30px}
-.name .short{display:none}
-.track{gap:4px}
-.track button{aspect-ratio:auto;height:44px;max-width:none;border-radius:12px;border-color:var(--rule-strong);font-size:15px}
-.startrow input{font-size:16px;min-height:44px;border-color:var(--rule-strong)}
-.startrow .link{min-height:44px;padding:0 6px;font-size:16px}
-#resetAll{margin-left:auto}
-.intent textarea{border-color:var(--rule-strong)}
-details.prayer{border-color:var(--rule-strong)}
-#prayer{scroll-margin-top:124px}
-.home{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;min-height:44px}
-.home .back-ic{font-size:16px;color:var(--gold);margin-right:-6px}
-.days{position:sticky;top:53px;z-index:4;background:var(--paper);border-bottom:1px solid var(--rule)}
-.days .track{margin:0;padding:6px 0 7px}
-.dcap{display:none;margin:0;padding-top:7px;font-size:13px;letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
-.dcap b{color:var(--gold-text);font-weight:600;letter-spacing:.14em}
-/* phones: the nine days become a bottom tab bar, in thumb reach */
+/* ---- phones ---- */
 @media (max-width:600px){
+  html{scroll-padding-top:64px;scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  #prayer{scroll-margin-top:64px}
+  .bar .name{display:none}
+  .bar .mark{font-size:26px}
+  #sizeBtn>span,#themeLabel{display:none}
+  .bar .iconbtn{width:44px;min-width:44px;padding:0}
+  .bar .iconbtn svg{font-size:21px}
+  /* a shorter hero, so today's card and its button come into view sooner; the bar's arrow leads back */
+  .hero{padding-top:20px}
+  .hero .back{display:none}
+  .epi{margin-top:12px}
+  .faces{margin-top:14px}
+  .faces img{width:48px;height:48px}
+  .today{margin-top:18px}
+  /* the 9 days become a bottom tab bar, in thumb reach */
   .days{position:fixed;top:auto;bottom:0;left:0;right:0;border-bottom:0;border-top:1px solid var(--rule);box-shadow:0 -6px 18px rgb(0 0 0 / .06);padding-bottom:env(safe-area-inset-bottom)}
   .dcap{display:block}
   .days .track{padding:5px 0 8px}
-  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
-  #prayer{scroll-margin-top:64px}
   .toast{bottom:calc(108px + env(safe-area-inset-bottom))}
 }
-.track button{position:relative}
-.track button.today::after{content:"";position:absolute;left:50%;bottom:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:currentColor}
-.track button.today:not(.sel):not(.done){color:var(--wine);border-color:var(--wine)}
-.today{margin-top:24px}
-.wake{margin:-4px 0 14px;font-size:15px}
-.wake[aria-pressed="true"]{border-color:var(--gold);background:var(--wash)}
-@media (max-width:600px){.bar .name{display:none}.bar .mark{font-size:26px}#sizeBtn>span,#themeLabel{display:none}.bar .iconbtn{width:44px;min-width:44px;padding:0}.bar .iconbtn svg{font-size:21px}}
-@media (max-width:420px){.today{padding:18px 14px}.name .long{display:none}.name .short{display:inline}}
+@media (max-width:420px){
+  body{font-size:calc(17px * var(--scale))}
+  .wrap{padding:0 16px}
+  .today{padding:18px 14px}
+  .daynum{font-size:52px}
+  .step{padding-left:0}
+  .step .num{position:static;display:inline-grid;flex:none}
+  .sub .l2{white-space:normal} /* long saint lines may wrap on the narrowest phones */
+}
 
-/* step headings: readable wayfinding while praying aloud */
-.step>.label{font-family:var(--display);font-weight:700;font-size:calc(24px * var(--scale));letter-spacing:0;text-transform:none;color:var(--ink);line-height:1.15;margin:0 0 12px;gap:12px}
-.step .num{width:32px;height:32px;font-family:var(--body);font-size:15px;top:15px}
-.step{padding-left:46px}
-@media (max-width:420px){.step{padding-left:0}}
+/* ---- desktop: a prayer column with a sidebar ---- */
+@media (min-width:1024px){
+  html{scroll-padding-top:80px}
+  #prayer{scroll-margin-top:80px;padding-top:0}
+  .wrap{max-width:1120px;padding:0 40px}
+  .days,.flow,.today .cta,.hero .cross{display:none}
+  /* the page is a grid: the sidebar on the left, and the title opens the prayer column like a book page */
+  main.wrap{display:grid;grid-template-columns:300px minmax(0,660px);grid-template-areas:"side hero" "side col" "close close";column-gap:64px;justify-content:center;align-items:start}
+  .layout{display:contents}
+  .side{grid-area:side;position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;padding:4px;margin:32px -4px -4px;scrollbar-width:thin}
+  .col{grid-area:col}
+  .close{grid-area:close}
+  .hero{grid-area:hero;text-align:left;padding:28px 0 36px;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:16px}
+  .hero>*{grid-column:1 / -1}
+  .hero .back{grid-row:1;justify-self:start;margin:0 0 2px -4px}
+  .kicker{grid-row:2;margin:0}
+  h1{grid-row:3;font-size:clamp(44px,4vw,54px);margin:8px 0 14px}
+  .faces{grid-column:1;grid-row:4;margin:0;gap:0;padding-left:10px}
+  .faces img{width:52px;height:52px;margin-left:-10px;border:2px solid var(--paper)}
+  .sub{grid-column:2;grid-row:4;font-size:20px;margin:0}
+  .sub .l2{white-space:normal}
+  .epi{grid-row:5;margin:20px 0 0;max-width:none;font-size:18px;padding-left:14px;border-left:2px solid var(--gold)}
+  .epi .cite{margin-top:6px}
+  .today{margin:0;padding:18px 18px 14px}
+  .today-top{gap:14px}
+  .daynum{font-size:52px;min-width:44px}
+  .today h2{font-size:calc(22px * var(--scale))}
+  .today .status{font-size:calc(15px * var(--scale))}
+  .grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 0}
+  .grid9 button{height:40px}
+  .startrow{gap:4px 10px}
+  .startrow input{flex:1 1 130px}
+  .toc{display:block;margin:20px 0 0;padding:0 4px}
+  .toc-h{margin:0 0 6px;font-size:calc(12px * var(--scale))}
+  .toc ol,.toc ul{list-style:none;margin:0 0 16px;padding:0}
+  .toc a{display:flex;align-items:center;gap:10px;min-height:38px;padding:4px 10px;margin:0 -10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:calc(16.5px * var(--scale));line-height:1.25}
+  .toc a:hover{background:var(--wash)}
+  .toc a[aria-current]{color:var(--wine);font-weight:600;background:var(--wash)}
+  .toc ul a{padding-left:44px}
+  .toc .num{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold-text);display:grid;place-items:center;font-size:12.5px;font-weight:600}
+  .toc a[aria-current] .num{background:var(--gold);color:var(--sheet)}
+  .wake{margin:0 0 6px}
+  .close{padding-top:60px;max-width:640px;margin:0 auto;justify-self:center}
+}
 
-/* v2: passage, go deeper, today's step, portraits */
-.passage{font-style:italic;font-size:calc(19.5px * var(--scale));line-height:1.55;margin:0;padding-left:14px;border-left:2px solid var(--gold)}
-.sc{font-variant:small-caps;letter-spacing:.02em}
-.passage .ln{display:block;padding-left:1.1em;text-indent:-1.1em}
-.ref{text-transform:uppercase}
-details.deeper{margin:14px 0 0;border-top:1px solid var(--rule)}
-details.deeper summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;color:var(--gold-text);font-weight:600;font-size:calc(15px * var(--scale));letter-spacing:.08em;text-transform:uppercase}
-details.deeper summary::-webkit-details-marker{display:none}
-details.deeper summary svg{font-size:18px;color:var(--gold)}
-details.deeper summary .caret{margin-left:auto;transition:transform .2s}
-details.deeper[open] summary .caret{transform:rotate(180deg)}
-details.deeper p{margin:4px 0 6px;font-size:calc(18px * var(--scale));line-height:1.6}
-.todaystep{margin:14px 0 0;background:var(--wash);border-radius:12px;padding:12px 16px 14px;border-left:3px solid var(--gold)}
-.todaystep .tslabel{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:calc(12.5px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
-.todaystep .tslabel svg{font-size:18px;color:var(--gold)}
-.todaystep p:last-child{margin:0;font-size:calc(18px * var(--scale));line-height:1.5}
-.faces{display:flex;justify-content:center;margin:20px 0 0}
-.faces img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2.5px solid var(--paper);margin:0 -5px;box-shadow:0 0 0 1px var(--rule-strong)}
-.av{width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin:-3px 10px 0 0;box-shadow:0 0 0 1px var(--rule-strong)}
-.saint{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:start}
-.portrait{width:92px;height:115px;object-fit:cover;border-radius:46px 46px 8px 8px;border:1px solid var(--rule-strong);background:var(--wash)}
-.credits{font-size:12px}
-@media print{details.deeper{display:none}}
-
-/* review fixes v2 */
-.todaystep{margin:22px 0 0}
-details.deeper summary{color:var(--muted);font-weight:400;font-style:italic;letter-spacing:0;text-transform:none;font-size:calc(17px * var(--scale))}
-:root{--frame:var(--gold)}
-.portrait{border-color:var(--frame)}
-.av,.faces img{box-shadow:0 0 0 1px var(--frame)}
-.faces{gap:10px}.faces img{margin:0;border:0}
-.litany p{position:relative;padding-left:calc(38px * var(--scale))}
-
-.litany .av{position:absolute;left:0;top:.15em;margin:0;width:calc(28px * var(--scale));height:calc(28px * var(--scale))}
-.litany .resp{white-space:nowrap}
-html{scroll-padding-top:124px}
-@media (max-width:600px){html{scroll-padding-top:64px;scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom))}}
-blockquote.passage{margin:0}
-.passage{text-wrap:pretty}
-.passage .ln{text-wrap:balance;padding-left:1.5em;text-indent:-1.5em}
-.passage .ln:nth-child(even){padding-left:2.6em}
-.dayicon span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.daytitle{margin-bottom:14px}
-/* library links (site build only) */
-.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px;margin:-8px 0 6px;color:var(--gold-text);font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:600}
-.back .i{width:16px;height:16px}
-.back:hover,.back:focus-visible{text-decoration:underline;text-underline-offset:3px}
-.more{text-align:center;margin:8px 0 0;font-size:16px}
-.more a{display:inline-flex;align-items:center;min-height:44px;color:var(--wine);font-weight:600;text-underline-offset:3px}
-
-/* ---- layout v3: phone first; a prayer column with a sidebar from 1024px ---- */
-.toc,.grid9{display:none}
-.daynav button:disabled{visibility:hidden}
+/* ---- hover (mouse only), motion, print ---- */
 @media (hover:hover){
   .track button:not(.sel):not(.done):hover{border-color:var(--wine);color:var(--wine)}
   .daynav button:not(:disabled):hover,.startrow input:hover{border-color:var(--gold)}
@@ -288,56 +287,14 @@ blockquote.passage{margin:0}
   .markdone:not(.is-done):hover{background:var(--wash)}
   details.prayer summary:hover{color:var(--wine)}
 }
-/* phones: the hero is shorter, so today's card and its button come into view sooner */
-@media (max-width:600px){
-  .hero{padding-top:20px}
-  .hero .back{display:none}
-  .epi{margin-top:12px}
-  .faces{margin-top:14px}
-  .faces img{width:48px;height:48px}
-  .today{margin-top:18px}
-}
-@media (min-width:1024px){
-  .wrap{max-width:1120px;padding:0 40px}
-  .days{display:none}
-  html{scroll-padding-top:80px}
-  #prayer{scroll-margin-top:80px;padding-top:0}
-  .hero{padding:44px 0 8px}
-  .hero .back{margin-bottom:10px}
-  h1{font-size:clamp(46px,4.2vw,58px)}
-  .sub{font-size:21px}
-  .epi{font-size:18px;max-width:40ch}
-  .layout{display:grid;grid-template-columns:300px minmax(0,660px);gap:64px;justify-content:center;align-items:start;margin-top:36px}
-  .side{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;padding:4px;margin:-4px;scrollbar-width:thin}
-  .today{margin:0;padding:18px 18px 14px}
-  .today-top{gap:14px}
-  .daynum{font-size:52px;min-width:44px}
-  .today h2{font-size:calc(22px * var(--scale))}
-  .today .status{font-size:calc(15px * var(--scale))}
-  .grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 0}
-  .today .cta{display:none}
-  .grid9 button{height:40px}
-  .startrow{gap:4px 10px;font-size:15px}
-  .startrow input{flex:1 1 130px}
-  .toc{display:block;margin:20px 0 0;padding:0 4px}
-  .toc-h{margin:0 0 6px;font-size:calc(12px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
-  .toc ol,.toc ul{list-style:none;margin:0 0 16px;padding:0}
-  .toc a{display:flex;align-items:center;gap:10px;min-height:38px;padding:4px 10px;margin:0 -10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:calc(16.5px * var(--scale));line-height:1.25}
-  .toc a:hover{background:var(--wash)}
-  .toc a[aria-current]{color:var(--wine);font-weight:600;background:var(--wash)}
-  .toc .num{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold-text);display:grid;place-items:center;font-size:12.5px;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
-  .toc a[aria-current] .num{background:var(--gold);color:var(--sheet)}
-  .toc ul a{padding-left:44px}
-  .flow{display:none}
-  .wake{margin:0 0 6px}
-  .close{padding-top:60px;max-width:640px;margin:0 auto}
-}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.bar,.days,.toc,.today .cta,.markdone,.daynav,.intent,.startrow{display:none}}
 </style>
 </head>
 <body>
 {{SPRITE}}
 <header class="bar">
-  <div class="wrap barwrap">
+  <div class="wrap">
     <a class="home" {{HOME_ATTRS}} id="homeLink">{{HOME_ARROW}}<svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name"><span class="long">{{BAR_TITLE}}</span><span class="short">{{BAR_SHORT}}</span></span></a>
     <button class="iconbtn" id="sizeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <button class="iconbtn" id="themeBtn" title="Switch light or dark"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
@@ -505,7 +462,8 @@ blockquote.passage{margin:0}
     <p class="note credits">{{CREDITS}}</p>
   </div>
 </main>
-{{FOOT_LINK}}<footer id="storeFoot">Your progress, start date and intention are kept only on this device.</footer>
+{{FOOT_LINK}}<p class="offline" id="offlineNote" hidden>Saved on this device, so it opens even without signal.</p>
+<footer id="storeFoot">Your progress, start date and intention are kept only on this device.</footer>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -614,7 +572,7 @@ blockquote.passage{margin:0}
     $("startDate").value = state.start || "";
     chips.forEach(function(c){
       var k = +c.getAttribute("data-day"), j = k - 1, dn = isDone(k);
-      c.classList.toggle("done", dn); c.classList.toggle("sel", k === sel); c.classList.toggle("today", k === n);
+      c.classList.toggle("done", dn); c.classList.toggle("sel", k === sel); c.classList.toggle("now", k === n);
       c.setAttribute("aria-label", "Day " + k + ": " + DAYS[j].title + (k === n ? ", today" : "") + (dn ? ", prayed" : ""));
       if (k === sel) c.setAttribute("aria-current", "step"); else c.removeAttribute("aria-current");
     });
@@ -687,5 +645,6 @@ blockquote.passage{margin:0}
   paintTheme(); paintScale(); render();
 })();
 </script>
+{{SW}}
 </body>
 </html>

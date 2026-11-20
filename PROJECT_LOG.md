@@ -32,6 +32,8 @@ Read this at the start of a work session. Update it at the end when something ch
 - **Link previews:** made by `tools/og.py` from each novena's title, kicker and 2 saints (`"ogSaints": [left, right]` in novena.json so they face inward). Cream background, wine and gold accents; no URL or call to action on the image.
 - **Library cards:** title without "Novena for" (the section heading already says it), icon on the left, saints' faces top right, progress line and "Pray" / "Continue Day N" button.
 - **Theme and text size** are shared across the whole site (`novenas-mode`, `novenas-scale`); progress is saved per novena (`novena-<slug>`).
+- **Offline:** every build regenerates `site/sw.js` with a new version, so phones pick up changes on their next online visit. Never edit `site/sw.js` by hand; change `templates/sw.js`. Fonts live in `site/fonts/` (no Google Fonts on the site; artifact previews still use Google Fonts).
+- **Layout:** phone first. 601–1023px: one column with the 9 days in a sticky strip. 1024px and up: sidebar + prayer column. Phones: 9 days in a bottom bar.
 - **Workflow:** finish new work as a Claude artifact preview first; commit and push only after approval.
 - **Commits:** no Co-Authored-By lines.
 
@@ -51,7 +53,8 @@ Read this at the start of a work session. Update it at the end when something ch
 - Print docs (template, debt v2, healing) updated to match: "9 DAYS OF …" kickers, no "· RSV-CE" on cites, "The 9 Days", "End with an Our Father, a Hail Mary and a Glory Be", "these 9 days" in the tip. Healing print still 4 pages, all text present.
 - Skill updated with the digit and reference rules; `print_fill.py` no longer adds the version label.
 - Link previews redesigned to read at chat size (`tools/og.py` → `og.jpg`): cream with a gold frame, a big wine title, one short line, 2 saints in arched frames, text kept in the centre square for apps that crop. One per novena plus the library. Fuller og:title and og:description, og:image:alt, and a `?v=` hash on og:image so chat apps refetch. JPEG about 110 KB (WhatsApp often drops images over about 300 KB). Chav tried wine as the background and found it too red; kept the Wine & Gold palette.
-- UI/UX review 2 (7.0 → 8.5) and a desktop layout, still phone first. Library: 1080px wide from 760px, cards side by side, "How a novena works" in 3 columns, Text size button. Novena pages from 1024px: sidebar (today card, 3 × 3 day grid, start date, "Today's prayers" list that follows the part on screen) beside a ~66-character prayer column; tablets and phones keep the one-column layout. Phone fixes: shorter hero so "Pray Day N" clears the bottom day bar, no empty prev/next box, `viewport-fit=cover` so the safe-area padding works, "this device" instead of "this phone". Left for later: offline mode (service worker) and a cleanup of the layered CSS in `templates/novena.html`.
+- UI/UX review 2 (7.0 → 8.5) and a desktop layout, still phone first. Library: 1080px wide from 760px, cards side by side, "How a novena works" in 3 columns, Text size button. Novena pages from 1024px: sidebar (today card, 3 × 3 day grid, start date, "Today's prayers" list that follows the part on screen) beside a ~66-character prayer column; tablets and phones keep the one-column layout. Phone fixes: shorter hero so "Pray Day N" clears the bottom day bar, no empty prev/next box, `viewport-fit=cover` so the safe-area padding works, "this device" instead of "this phone".
+- Round 2 (→ 9.0): `templates/novena.html` styles rewritten as one sectioned stylesheet (checked identical by computed styles at 6 widths, both themes, 2 text sizes; only change: the day card's status line now scales with text size). Laptop hero now opens the prayer column beside the sidebar. Offline mode: `tools/build.py` writes `site/sw.js` from `templates/sw.js` (pages network first with a 4 s fallback to the saved copy; images, fonts, icons saved once). Fonts are self-hosted in `site/fonts/` (latin subset). "Saved on this device, so it opens even without signal" shows once the library is cached.
 
 ## Open items
 
@@ -64,6 +67,5 @@ Read this at the start of a work session. Update it at the end when something ch
 ## Ideas to weigh (not decided)
 
 - When the family finishes their current round, point novena-finances to the library's debt novena so there is one version to maintain.
-- Offline use: add a service worker so the app works without signal (the manifest is already there).
 - A share button on each novena page.
 - Next intentions to consider: a family's thanksgiving novena, a novena for a job or vocation decision, one for exams or a new school year.
