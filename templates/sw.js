@@ -36,12 +36,13 @@ self.addEventListener("fetch", function(e){
   if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
   if (isPage(req)){
     e.respondWith(caches.open(CACHE).then(function(c){
-      var net = fetch(req).then(clean).then(function(r){ if (r && r.ok) c.put(req.url.split("#")[0], r.clone()); return r; });
-      var saved = c.match(req, {ignoreSearch: true}).then(function(m){
+      var u = new URL(req.url), key = u.origin + u.pathname;
+      var net = fetch(req).then(clean).then(function(r){ if (r && r.ok) c.put(key, r.clone()); return r; });
+      var saved = c.match(key).then(function(m){
         if (m) return m;
-        var u = new URL(req.url); if (/\/$/.test(u.pathname)) return c.match(u.origin + u.pathname + "index.html");
-        return null;
-      });
+        var dir = /\/$/.test(u.pathname) ? u.pathname : (/\.html$/.test(u.pathname) ? null : u.pathname + "/");
+        return dir ? c.match(u.origin + dir + "index.html") : null;
+      }).then(function(m){ return m || c.match(url("index.html")); });
       return new Promise(function(resolve){
         var done = false;
         function give(r){ if (!done && r){ done = true; resolve(r); } }

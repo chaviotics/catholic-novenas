@@ -45,6 +45,9 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
+html{scroll-padding-top:68px}
+.skip{position:absolute;left:12px;top:-60px;z-index:20;padding:10px 16px;border-radius:999px;background:var(--wine);color:var(--paper);font-weight:600;text-decoration:none}
+.skip:focus{top:8px}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.55;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
 a{color:var(--wine)}
 svg.i{width:1em;height:1em;fill:currentColor;flex:none}
@@ -52,14 +55,15 @@ svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 .wrap{max-width:680px;margin:0 auto;padding:0 20px}
 .nb{white-space:nowrap}
 
-.bar{position:sticky;top:0;z-index:5;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
 .bar .wrap{position:relative;display:flex;align-items:center;gap:10px;height:52px}
 .bar .mark{color:var(--wine);font-size:22px}
 .bar .name{font-family:var(--display);font-weight:600;font-size:19px;color:var(--wine);flex:1}
 .bar .spacer{flex:1}
 .navlink{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:999px;color:var(--wine);font-weight:600;font-size:16px;text-decoration:none}
 .navlink:hover{background:var(--wash)}
-.h2 .more{font-family:var(--body);font-size:calc(15.5px * var(--scale));font-weight:600;white-space:nowrap;text-underline-offset:3px}
+.h2row h2{font:inherit;color:inherit;margin:0}
+.h2 .more{display:inline-flex;align-items:center;min-height:44px;margin:-10px 0;font-family:var(--body);font-size:calc(15.5px * var(--scale));font-weight:600;white-space:nowrap;text-underline-offset:3px}
 .faq-h{font-family:var(--display);font-weight:700;font-size:calc(22px * var(--scale));color:var(--ink);margin:28px 0 8px}
 .faq{border-top:1px solid var(--rule)}
 .faq details{border-bottom:1px solid var(--rule)}
@@ -69,8 +73,6 @@ svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 .faq details[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .faq summary:hover{color:var(--wine)}
 .faq p{margin:0 0 14px;padding-right:24px;font-size:calc(17px * var(--scale));line-height:1.5}
-.foot-links{margin:0 0 14px;font-size:15px}
-.foot-links a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;text-underline-offset:3px}
 .iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font:inherit;font-size:15px}
 .iconbtn svg{font-size:19px;color:var(--gold)}
 .iconbtn:hover{border-color:var(--gold)}
@@ -78,11 +80,11 @@ svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 
 .hero{padding:28px 0 4px;text-align:center}
 .cross{color:var(--wine);font-size:28px;line-height:1}
-.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
+.kicker{margin:10px 0 0;font-size:calc(12px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
 h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(40px,10vw,56px);line-height:1;margin:10px 0 10px}
-.lede{text-wrap:balance;font-family:var(--display);font-style:italic;font-size:clamp(18px,5vw,21px);line-height:1.35;color:var(--muted);margin:0 auto;max-width:30ch}
+.lede{text-wrap:balance;font-family:var(--display);font-style:italic;font-size:calc(clamp(18px,5vw,21px) * var(--scale));line-height:1.35;color:var(--muted);margin:0 auto;max-width:30ch}
 
-.h2{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--display);font-weight:700;font-size:calc(27px * var(--scale));color:var(--wine);margin:36px 0 16px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
+.h2{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;font-family:var(--display);font-weight:700;font-size:calc(27px * var(--scale));color:var(--wine);margin:36px 0 16px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
 
 .cards{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .card a{display:block;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;box-shadow:var(--card-shadow);transition:border-color .15s,background-color .15s}
@@ -102,18 +104,17 @@ h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(
 .card .go .i{font-size:18px}
 
 .how{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.how li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
+.how li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;align-content:start}
 .how .ic{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:20px}
 .how h3{margin:0;font-family:var(--display);font-size:calc(22px * var(--scale));font-weight:700;color:var(--ink);line-height:1.2}
 .how p{margin:3px 0 0;font-size:calc(17.5px * var(--scale));color:var(--ink)}
+.how p a{text-underline-offset:3px}
 
 .close{text-align:center;padding:40px 0 4px}
 .close .cross{font-size:22px}
 .close blockquote{margin:10px auto 0;max-width:30ch;font-family:var(--display);font-style:italic;color:var(--wine);font-size:calc(23px * var(--scale));line-height:1.35;text-wrap:balance}
-.cite{display:block;font-style:normal;font-family:var(--body);font-size:12px;letter-spacing:.12em;color:var(--muted);margin-top:8px;text-transform:uppercase}
-.note{font-size:13px;color:var(--muted);line-height:1.5;text-align:center;max-width:56ch;margin:0 auto}
-.offline{margin-bottom:12px}
-footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+.cite{display:block;font-style:normal;font-family:var(--body);font-size:calc(12px * var(--scale));letter-spacing:.12em;color:var(--muted);margin-top:8px;text-transform:uppercase}
+{{FOOTER_CSS}}
 
 /* filters: intention chips (and a search box once the library is large) */
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
@@ -121,7 +122,7 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
 .chips{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:20px;margin:0 -20px;padding:2px 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent)}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 16px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);font:inherit;font-size:calc(16px * var(--scale));font-weight:500;cursor:pointer;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
+.chip{position:relative;flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 16px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);font:inherit;font-size:calc(16px * var(--scale));font-weight:500;cursor:pointer;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
 .chip .n{font-size:.82em;font-weight:600;color:var(--gold-text);font-variant-numeric:tabular-nums}
 .chip:hover{border-color:var(--gold)}
 .chip[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:var(--paper)}
@@ -164,17 +165,27 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
 }
 @media (min-width:960px){
   .how{grid-template-columns:repeat(3,1fr);gap:32px}
-  .faq,.faq-h{max-width:780px}
-  .faq-h{margin-top:40px}
   .how li{grid-template-columns:1fr;gap:12px}
   .how .ic{width:48px;height:48px;font-size:24px}
   .close{padding-top:64px}
   .close blockquote{font-size:calc(27px * var(--scale));max-width:34ch}
-  footer.wrap{padding-bottom:64px}
+}
+/* wide screens: 3 novenas to a row, so the whole library shows at once */
+@media (min-width:1200px){
+  .wrap{max-width:1200px}
+  .hero{padding-top:44px}
+  .cards{grid-template-columns:repeat(3,1fr)}
+}
+/* common questions: heading on the left, answers on the right, using the full width */
+@media (min-width:960px){
+  .faq-block{display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:0 48px;align-items:start;margin-top:44px}
+  .faq-block .faq-h{margin:10px 0 0;max-width:none}
+  .faq-block .faq{max-width:none}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#listHead">Skip to the novenas</a>
 {{SPRITE}}
 <header class="bar">
   <div class="wrap">
@@ -182,13 +193,13 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     <span class="name">Catholic Novenas</span>
     <span class="spacer"></span>
     <a class="navlink" href="about/index.html">About</a>
-    <button class="iconbtn" id="sizeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
-    <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
+    <button class="iconbtn" id="sizeBtn" type="button" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <div class="sizer" id="sizer" role="group" aria-label="Text size">
       <button type="button" data-scale="1" aria-label="Normal text" style="font-size:15px">A</button>
       <button type="button" data-scale="1.15" aria-label="Larger text" style="font-size:19px">A</button>
       <button type="button" data-scale="1.35" aria-label="Largest text" style="font-size:24px">A</button>
     </div>
+    <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
   </div>
 </header>
 
@@ -200,27 +211,29 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     <p class="lede">Pray one day at a time.</p>
   </div>
 
-  <h2 class="h2" id="listHead">Choose a novena</h2>
+  <h2 class="h2" id="listHead" tabindex="-1">Choose a novena</h2>
   {{FILTERS}}
   <ul class="cards" id="cards" aria-labelledby="listHead">
 {{CARDS}}
   </ul>
   <p class="empty" id="empty" hidden>No novena matches “<span id="emptyQ"></span>”. Try another word, like a saint’s name or what you are praying for. <button type="button" class="linkbtn" id="showAll">Show all novenas</button></p>
 
-  <h2 class="h2">How a novena works <a class="more" href="about/index.html">Learn more</a></h2>
+  <div class="h2 h2row"><h2>How a novena works</h2><a class="more" href="about/index.html">Learn more</a></div>
   <ul class="how">
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>9&nbsp;days, 1&nbsp;intention</h3><p>A novena is 9&nbsp;days of prayer for a single intention, after the Apostles and Mary, who prayed together before Pentecost (Acts 1:14).</p></div></li>
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About 10&nbsp;minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-house-line"/></svg></span><div><h3>Stays on your device</h3><p>Your progress, start date and intention are saved only on your phone or computer, never uploaded.</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-house-line"/></svg></span><div><h3>Stays on your device</h3><p>Your progress, start date and intention are saved only on your phone or computer, never uploaded. <a href="privacy/index.html">Privacy</a></p></div></li>
   </ul>
 
+  <section class="faq-block" aria-labelledby="faqHead">
   <h3 class="faq-h" id="faqHead">Common questions</h3>
-  <div class="faq" aria-labelledby="faqHead">
+  <div class="faq">
     <details><summary>Can I pray more than 1 novena at a time?</summary><p>Yes. You can pray 2&nbsp;novenas side by side, say one for healing and one for finances, and each keeps its own progress here. Keep to what you can pray with attention. Or pray one novena and bring both intentions to it.</p></details>
     <details><summary>What if I miss a day?</summary><p>Simply pick up where you left off. A novena is a devotion, not a test.</p></details>
     <details><summary>Are we praying to the saints instead of God?</summary><p>No. We worship God alone. When we pray to a saint, we are asking that saint to pray for us, the way we ask a friend, because the saints are alive with God. <a href="about/index.html#saints">Why we ask the saints</a></p></details>
     <details><summary>Does a novena guarantee an answer?</summary><p>No novena comes with a guarantee. We bring our intention to God and trust His answer, which may be yes, not yet, or a grace we did not expect.</p></details>
   </div>
+  </section>
 
   <div class="close">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
@@ -228,15 +241,13 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     <span class="cite">Matthew 7:7</span>
   </div>
 </main>
-<footer class="wrap">
-  <p class="foot-links"><a href="about/index.html">What is a novena?</a></p>
-  <p class="note offline" id="offlineNote" hidden>Saved on this device, so it opens even without signal.</p>
-  <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
-</footer>
+{{FOOTER}}
 <script>
 (function(){
   var root = document.documentElement, MODEKEY = "novenas-mode", SCALEKEY = "novenas-scale";
-  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  var mem = {};
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k] || null; } }
+  function set(k, v){ mem[k] = v; try{ localStorage.setItem(k, v); }catch(e){} }
   function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
   /* text size, shared with every novena page */
   var sizeBtns = [].slice.call(document.querySelectorAll("#sizer button")), sizer = document.getElementById("sizer"), sizeBtn = document.getElementById("sizeBtn");
@@ -247,8 +258,9 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   }
   function closeSizer(){ sizer.classList.remove("open"); sizeBtn.setAttribute("aria-expanded", "false"); }
   sizeBtn.addEventListener("click", function(e){ e.stopPropagation(); sizeBtn.setAttribute("aria-expanded", String(sizer.classList.toggle("open"))); });
-  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); try{ localStorage.setItem(SCALEKEY, b.getAttribute("data-scale")); }catch(x){} paintScale(); }); });
+  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); set(SCALEKEY, b.getAttribute("data-scale")); paintScale(); }); });
   document.addEventListener("click", closeSizer);
+  document.addEventListener("focusin", function(e){ if (e.target !== sizeBtn && !sizer.contains(e.target)) closeSizer(); });
   document.addEventListener("keydown", function(e){ if (e.key === "Escape" && sizer.classList.contains("open")){ closeSizer(); sizeBtn.focus(); } });
   paintScale();
   function paint(){
@@ -257,10 +269,11 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     document.getElementById("themeIcon").firstElementChild.setAttribute("href", d ? "#i-sun" : "#i-moon");
     document.getElementById("themeLabel").textContent = d ? "Light" : "Dark";
     document.getElementById("themeBtn").setAttribute("aria-label", d ? "Switch to light mode" : "Switch to dark mode");
+    [].forEach.call(document.querySelectorAll('meta[name="theme-color"]'), function(m){ m.setAttribute("content", d ? "#0E1524" : "#FFFDF9"); });
   }
   document.getElementById("themeBtn").addEventListener("click", function(){
     var next = isDark() ? "light" : "dark";
-    try{ localStorage.setItem(MODEKEY, next); }catch(e){}
+    set(MODEKEY, next);
     paint();
   });
   if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", paint); }
@@ -291,7 +304,10 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     try{ history.replaceState(null, "", cat === "all" ? location.pathname + location.search : "#" + cat); }catch(e){}
     apply(announce);
   }
-  chips.forEach(function(b){ b.addEventListener("click", function(){ setCat(b.getAttribute("data-cat"), true); }); });
+  chips.forEach(function(b){ b.addEventListener("click", function(){
+    setCat(b.getAttribute("data-cat"), true);
+    try{ b.scrollIntoView({block:"nearest", inline:"center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }catch(e){}
+  }); });
   if (q){
     q.addEventListener("input", function(){ apply(true); });
     q.addEventListener("keydown", function(e){ if (e.key === "Escape" && q.value){ q.value = ""; apply(true); } });
@@ -307,25 +323,27 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   /* show where each novena stands, from what that novena saved on this phone */
   function today(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
   function fmt(iso){ try{ return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {weekday:"short", month:"short", day:"numeric"}); }catch(e){ return iso; } }
+  var started = [];
   [].forEach.call(document.querySelectorAll(".card"), function(c){
     var s = null; try{ s = JSON.parse(get(c.getAttribute("data-key")) || "null"); }catch(e){}
     var p = c.querySelector(".prog"), go = c.querySelector(".go span");
     if (!s || !p) return;
-    var done = Array.isArray(s.done) ? s.done.length : 0, n = null, next = 1;
-    for (var k = 1; k <= 9; k++){ if (!Array.isArray(s.done) || s.done.indexOf(k) < 0){ next = k; break; } }
+    var list = Array.isArray(s.done) ? s.done : [], done = list.length, n = null, next = 9;
+    for (var k = 1; k <= 9; k++){ if (list.indexOf(k) < 0){ next = k; break; } }
     if (s.start){ n = Math.round((new Date(today() + "T00:00:00") - new Date(s.start + "T00:00:00")) / 86400000) + 1; }
     if (done >= 9){ p.textContent = "All 9 days prayed"; go.textContent = "Pray again"; return; }
+    if (n !== null && n > 9 && done === 0) return;
     if (n !== null && n < 1){ p.textContent = "Begins " + fmt(s.start); return; }
     if (done === 0 && n === null) return;
     c.classList.add("started");
-    if (n !== null && n >= 1 && n <= 9){
-      p.textContent = done ? "Today is Day " + n + " · " + done + " of 9 prayed" : "Today is Day " + n;
-      go.textContent = "Continue Day " + Math.min(n, next);
-    } else {
-      p.textContent = done + " of 9 days prayed";
-      go.textContent = "Continue Day " + next;
-    }
+    started.push(c);
+    var day = n !== null && n >= 1 && n <= 9 ? n : next;   /* the novena page opens this day */
+    p.textContent = done ? done + " of 9 prayed" : "Day " + n + " today";
+    go.textContent = list.indexOf(day) >= 0 ? "Done for today" : (done ? "Continue Day " : "Pray Day ") + day;
   });
+  /* novenas in progress come first, so a returning visitor finds theirs at once */
+  var ul = document.getElementById("cards");
+  started.reverse().forEach(function(c){ ul.insertBefore(c, ul.firstChild); });
 })();
 </script>
 {{SW}}

@@ -44,10 +44,11 @@ svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
 .wrap{max-width:680px;margin:0 auto;padding:0 20px}
 .nb{white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 em{font-style:italic}
 
 /* ---- top bar: back to the library, then the 2 reading controls ---- */
-.bar{position:sticky;top:0;z-index:5;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
 .bar .wrap{position:relative;display:flex;align-items:center;gap:10px;height:52px}
 .home{display:flex;align-items:center;gap:10px;flex:1;min-width:0;min-height:44px;text-decoration:none}
 .home .back-ic{font-size:16px;color:var(--gold);margin-right:-4px}
@@ -71,7 +72,7 @@ em{font-style:italic}
 /* ---- hero ---- */
 .hero{padding:30px 0 6px;text-align:center}
 .cross{color:var(--wine);font-size:28px;line-height:1}
-.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
+.kicker{margin:10px 0 0;font-size:calc(12px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
 h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(40px,10.5vw,60px);line-height:1;margin:10px 0 12px;text-wrap:balance}
 .lede{text-wrap:balance;font-family:var(--display);font-style:italic;font-size:calc(clamp(19px,5vw,23px) * var(--scale));line-height:1.35;color:var(--muted);margin:0 auto;max-width:30ch}
 /* jump links */
@@ -149,8 +150,7 @@ q,.q{font-style:italic}
 .cite{display:block;font-style:normal;font-family:var(--body);font-size:12px;letter-spacing:.12em;color:var(--muted);margin-top:8px;text-transform:uppercase}
 .cta{display:inline-flex;align-items:center;gap:8px;margin-top:26px;min-height:48px;padding:0 24px;border-radius:999px;background:var(--cta);color:var(--on-cta);font-weight:600;font-size:calc(17px * var(--scale));text-decoration:none}
 .cta:hover{filter:brightness(1.08)}
-.note{font-size:13px;color:var(--muted);line-height:1.5;text-align:center;max-width:60ch;margin:0 auto 10px}
-footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+{{FOOTER_CSS}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* ---- wider screens ---- */
@@ -158,6 +158,8 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
   .wrap{max-width:1080px;padding:0 32px}
   .hero{padding:56px 0 12px}
   .lede{max-width:34ch}
+  .jump{max-width:720px}
+  .textonly{max-width:66ch;margin-left:auto;margin-right:auto}
   .body{max-width:66ch}
   .h2{margin-top:64px}
   .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:56px;align-items:start}
@@ -178,6 +180,7 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
   .split .art,.split.flip .art{position:static;order:0}
   .three{grid-template-columns:1fr}
   .stories{grid-template-columns:repeat(2,1fr)}
+  .art.wide{max-width:520px}
 }
 </style>
 </head>
@@ -185,14 +188,14 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
 {{SPRITE}}
 <header class="bar">
   <div class="wrap">
-    <a class="home" href="{{HOME_HREF}}" aria-label="All novenas"><svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg><svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name">Catholic Novenas</span></a>
-    <button class="iconbtn" id="sizeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
-    <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
+    <a class="home" href="{{HOME_HREF}}"><svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg><svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name">Catholic Novenas</span><span class="sr"> (all novenas)</span></a>
+    <button class="iconbtn" id="sizeBtn" type="button" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <div class="sizer" id="sizer" role="group" aria-label="Text size">
       <button type="button" data-scale="1" aria-label="Normal text" style="font-size:15px">A</button>
       <button type="button" data-scale="1.15" aria-label="Larger text" style="font-size:19px">A</button>
       <button type="button" data-scale="1.35" aria-label="Largest text" style="font-size:24px">A</button>
     </div>
+    <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
   </div>
 </header>
 
@@ -208,14 +211,17 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
       <li><a href="#pray">How to pray</a></li>
       <li><a href="#saints">Why the saints</a></li>
       <li><a href="#unlikely">Unlikely saints</a></li>
+      <li><a href="#site">This site</a></li>
     </ul>
   </div>
 
-  <section id="novena" class="body">
+  <section id="novena" class="textonly">
     <h2 class="h2">9&nbsp;days, 1&nbsp;intention</h2>
+    <div class="body">
     <p class="lead">The word <em>novena</em> comes from the Latin <em>novem</em>, “nine.” A novena is 9&nbsp;days of prayer for a single intention: someone who is sick, a hard decision, a need we cannot meet alone, or thanks for a gift received.</p>
     <p>Coming back day after day is the heart of it. Jesus taught His disciples <q>that they ought always to pray and not lose heart</q> <span class="ref">(Luke 18:1)</span>. Persevering does not wear God down. It opens us up, so that by Day&nbsp;9 we often ask with a quieter, more trusting heart.</p>
     <p>A novena is a devotion, not a sacrament. The Church welcomes devotions like this because they carry the prayer of the liturgy into ordinary days and lead us back to Mass and the sacraments, which they never replace <span class="ref">(CCC 1675)</span>.</p>
+    </div>
   </section>
 
   <section id="began">
@@ -313,6 +319,18 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
     </ul>
   </section>
 
+  <section id="site" class="textonly">
+    <h2 class="h2">About this site</h2>
+    <div class="body">
+      <p class="lead">Catholic Novenas is a small, free library of novenas, made by Chav so that anyone can pray one day at a time. It is a personal project, not an official Church publication, and it has no ads, no accounts and nothing to buy.</p>
+      <h3 class="h3">About these prayers</h3>
+      <p>The traditional prayers here, such as the Our Father, the Hail Mary, the Glory Be and the Memorare, are the Church’s own. Scripture is quoted from the Revised Standard Version, Catholic Edition, and checked word for word.</p>
+      <p>The opening prayers, reflections and daily prayers are new, written for this site with the help of AI. They aim to be faithful to Scripture and the teaching of the Church, but no priest has reviewed them yet, and they carry no imprimatur (a bishop’s approval to publish). Pray them as a private devotion, and take any question to your parish priest.</p>
+      <h3 class="h3">Found a mistake?</h3>
+      <p>If you notice an error in a prayer, a Scripture reference or a saint’s story, please email <a href="mailto:hey.there.chav@gmail.com?subject=Catholic%20Novenas">hey.there.chav@gmail.com</a> so it can be corrected. Questions and suggestions are welcome at the same address. How this site handles your data is on the <a href="{{UP}}privacy/index.html">privacy page</a>.</p>
+    </div>
+  </section>
+
   <div class="close">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
     <blockquote>“Since we are surrounded by so great a cloud of witnesses, … let us run with perseverance the race that is set before us.”</blockquote>
@@ -320,16 +338,13 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
     <a class="cta" href="{{HOME_HREF}}">Choose a novena<svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
   </div>
 </main>
-<footer class="wrap">
-  <p class="note offline" id="offlineNote" hidden>Saved on this device, so it opens even without signal.</p>
-  <p class="note">Images: El Greco, <i>Pentecost</i>, Museo del Prado; Jean-François Millet, <i>The Angelus</i>, Musée d’Orsay; Hubert and Jan van Eyck, <i>Ghent Altarpiece</i>, St. Bavo’s Cathedral; Caravaggio, <i>The Conversion on the Way to Damascus</i>, Santa Maria del Popolo; Philippe de Champaigne, <i>Saint Augustine</i>, Los Angeles County Museum of Art; Carlo Crivelli, <i>Saint Thomas Aquinas</i>, National Gallery, London; Cristóbal Lozano, <i>Ecstasy of Saint Camillus de Lellis</i>; Placido Costanzi, <i>A Miracle of Saint Joseph of Cupertino</i>, Metropolitan Museum of Art; photograph of Bartolo Longo. Public domain, via Wikimedia Commons.</p>
-  <p class="note">Catechism quotations are from the <i>Catechism of the Catholic Church</i>, 2nd edition, © Libreria Editrice Vaticana.</p>
-  <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
-</footer>
+{{FOOTER}}
 <script>
 (function(){
   var root = document.documentElement, MODEKEY = "novenas-mode", SCALEKEY = "novenas-scale";
-  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  var mem = {};
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k] || null; } }
+  function set(k, v){ mem[k] = v; try{ localStorage.setItem(k, v); }catch(e){} }
   function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
   /* text size, shared with every page */
   var sizeBtns = [].slice.call(document.querySelectorAll("#sizer button")), sizer = document.getElementById("sizer"), sizeBtn = document.getElementById("sizeBtn");
@@ -340,8 +355,9 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
   }
   function closeSizer(){ sizer.classList.remove("open"); sizeBtn.setAttribute("aria-expanded", "false"); }
   sizeBtn.addEventListener("click", function(e){ e.stopPropagation(); sizeBtn.setAttribute("aria-expanded", String(sizer.classList.toggle("open"))); });
-  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); try{ localStorage.setItem(SCALEKEY, b.getAttribute("data-scale")); }catch(x){} paintScale(); }); });
+  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); set(SCALEKEY, b.getAttribute("data-scale")); paintScale(); }); });
   document.addEventListener("click", closeSizer);
+  document.addEventListener("focusin", function(e){ if (e.target !== sizeBtn && !sizer.contains(e.target)) closeSizer(); });
   document.addEventListener("keydown", function(e){ if (e.key === "Escape" && sizer.classList.contains("open")){ closeSizer(); sizeBtn.focus(); } });
   paintScale();
   /* light or dark, shared with every page */
@@ -351,10 +367,10 @@ footer.wrap{text-align:center;padding-top:36px;padding-bottom:calc(64px + env(sa
     document.getElementById("themeIcon").firstElementChild.setAttribute("href", d ? "#i-sun" : "#i-moon");
     document.getElementById("themeLabel").textContent = d ? "Light" : "Dark";
     document.getElementById("themeBtn").setAttribute("aria-label", d ? "Switch to light mode" : "Switch to dark mode");
+    [].forEach.call(document.querySelectorAll('meta[name="theme-color"]'), function(m){ m.setAttribute("content", d ? "#0E1524" : "#FFFDF9"); });
   }
   document.getElementById("themeBtn").addEventListener("click", function(){
-    var next = isDark() ? "light" : "dark";
-    try{ localStorage.setItem(MODEKEY, next); }catch(e){}
+    set(MODEKEY, isDark() ? "light" : "dark");
     paint();
   });
   if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", paint); }

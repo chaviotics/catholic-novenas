@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy | Catholic Novenas</title>
+<meta name="apple-mobile-web-app-title" content="Catholic Novenas">
+<meta name="description" content="What Catholic Novenas keeps, and where: your progress and intentions stay on your device. No accounts, ads or tracking.">
+<meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1524" media="(prefers-color-scheme: dark)">
+{{HEAD_META}}
+{{FONTS}}
+<style>
+/* Privacy page: one short reading column. Tokens and top bar are the same as the About page. */
+:root{
+  --paper:#FFFDF9; --sheet:#FFFFFF; --ink:#2A2521; --muted:#675E57; --wine:#6E1F2B; --gold:#94702A;
+  --rule:#E3D8C6; --wash:#F6F0E6; --gold-text:#896725; --rule-strong:#9C8B70;
+  --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;
+  --scale:1;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-mode="light"]){
+    --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A;
+    --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; color-scheme:dark;
+  }
+}
+:root[data-mode="dark"]{
+  --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2; --wine:#EBCF95; --gold:#C9A45A;
+  --rule:#26324C; --wash:#1B2740; --gold-text:#D0AD66; --rule-strong:#5E6E90; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+a{color:var(--wine);text-underline-offset:3px}
+svg.i{width:1em;height:1em;fill:currentColor;flex:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---- top bar ---- */
+.bar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
+.bar .wrap{position:relative;display:flex;align-items:center;gap:10px;height:52px}
+.home{display:flex;align-items:center;gap:10px;flex:1;min-width:0;min-height:44px;text-decoration:none}
+.home .back-ic{font-size:16px;color:var(--gold);margin-right:-4px}
+.bar .mark{color:var(--wine);font-size:22px}
+.bar .name{font-family:var(--display);font-weight:600;font-size:19px;color:var(--wine);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font:inherit;font-size:15px}
+.iconbtn svg{font-size:19px;color:var(--gold)}
+.iconbtn:hover{border-color:var(--gold)}
+.sizer{display:none;position:absolute;right:20px;top:56px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px;gap:6px;box-shadow:0 8px 24px rgb(0 0 0 / .12);z-index:6}
+.sizer.open{display:flex}
+.sizer button{min-width:48px;height:44px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);cursor:pointer;font-family:var(--display);font-weight:700;color:var(--wine)}
+.sizer button[aria-pressed="true"]{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine) inset}
+@media (max-width:600px){
+  #themeLabel,#sizeBtn>span{display:none}
+  .iconbtn{padding:0;width:44px}
+  .bar .mark{font-size:24px}
+  .bar .name{font-size:18px}
+  .sizer{right:16px}
+}
+
+/* ---- page ---- */
+.hero{padding:30px 0 6px;text-align:center}
+.kicker{margin:0;font-size:calc(12px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(40px,10vw,56px);line-height:1.05;margin:10px 0 10px}
+.lede{text-wrap:balance;font-family:var(--display);font-style:italic;font-size:calc(clamp(19px,5vw,23px) * var(--scale));line-height:1.35;color:var(--muted);margin:0 auto;max-width:30ch}
+.h2{font-family:var(--display);font-weight:700;font-size:calc(clamp(25px,6.4vw,29px) * var(--scale));line-height:1.15;color:var(--wine);margin:36px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
+p{margin:0 0 12px}
+ul.list{margin:0 0 12px;padding-left:1.2em}
+ul.list li{margin:0 0 4px;padding-left:4px}
+ul.list li::marker{color:var(--gold)}
+.clear{margin:16px 0 4px;padding:18px 20px;background:var(--wash);border-left:3px solid var(--gold);border-radius:4px 12px 12px 4px}
+.clear p{margin:0 0 12px}
+.clearbtn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border:1.5px solid var(--wine);border-radius:999px;background:var(--sheet);color:var(--wine);font:inherit;font-size:calc(17px * var(--scale));font-weight:600;cursor:pointer}
+.clearbtn.armed{background:var(--wine);color:var(--paper)}
+.clearstatus{margin:12px 0 0;font-style:italic;color:var(--muted)}
+.clearstatus:empty{display:none}
+.updated{margin-top:28px;font-size:calc(14.5px * var(--scale));color:var(--muted)}
+@media (min-width:760px){
+  .wrap{max-width:1080px;padding:0 32px}
+  .hero{padding:56px 0 12px}
+  main .col{max-width:66ch;margin:0 auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+{{FOOTER_CSS}}
+</style>
+</head>
+<body>
+{{SPRITE}}
+<header class="bar">
+  <div class="wrap">
+    <a class="home" href="{{HOME_HREF}}"><svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg><svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name">Catholic Novenas</span><span class="sr"> (all novenas)</span></a>
+    <button class="iconbtn" id="sizeBtn" type="button" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
+    <div class="sizer" id="sizer" role="group" aria-label="Text size">
+      <button type="button" data-scale="1" aria-label="Normal text" style="font-size:15px">A</button>
+      <button type="button" data-scale="1.15" aria-label="Larger text" style="font-size:19px">A</button>
+      <button type="button" data-scale="1.35" aria-label="Largest text" style="font-size:24px">A</button>
+    </div>
+    <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="kicker">Privacy</p>
+    <h1>Your privacy</h1>
+    <p class="lede">What you pray here stays on your device.</p>
+  </div>
+
+  <div class="col">
+    <h2 class="h2">What this site keeps, and where</h2>
+    <p>So you can pick up where you left off, each novena remembers:</p>
+    <ul class="list">
+      <li>the days you mark as prayed, and your start date</li>
+      <li>the intention you type</li>
+      <li>your text size and light or dark choice</li>
+    </ul>
+    <p>These are saved in your browser’s storage on this device only. They are never sent to us or to anyone else. There are no accounts and no sign-in. On a shared phone or computer, someone using the same browser could see them.</p>
+
+    <h2 class="h2">What this site does not do</h2>
+    <p>No ads, no analytics or tracking, and no cookies. The fonts and pictures come from this site itself, not from Google or other services.</p>
+    <p>The Share button sends only the novena’s link, its title and a short line. It never includes your intention or your progress.</p>
+
+    <h2 class="h2">Offline copy</h2>
+    <p>So the novenas open without signal, your browser keeps a copy of this site’s pages, pictures and fonts. That copy holds nothing personal.</p>
+
+    <h2 class="h2">Hosting</h2>
+    <p>The site is hosted by Netlify. Like any web host, its servers handle basic technical details, such as your IP address and the page you asked for, to deliver pages and keep them secure. See <a href="https://www.netlify.com/privacy/">Netlify’s privacy policy</a>. Links to other websites follow those sites’ own policies.</p>
+
+    <h2 class="h2" id="clear">Clear what is saved here</h2>
+    <div class="clear">
+      <p>This deletes your progress, start dates, intentions and settings for every novena on this device. It cannot be undone.</p>
+      <button class="clearbtn" type="button" id="clearBtn">Clear my data on this device</button>
+      <p class="clearstatus" id="clearStatus" role="status"></p>
+    </div>
+    <p style="margin-top:12px">You can also clear this site’s data in your browser’s settings.</p>
+
+    <p class="updated">Questions about privacy: <a href="mailto:hey.there.chav@gmail.com?subject=Catholic%20Novenas%20privacy">hey.there.chav@gmail.com</a>. Last updated 20&nbsp;November&nbsp;2026.</p>
+  </div>
+</main>
+{{FOOTER}}
+<script>
+(function(){
+  var root = document.documentElement, MODEKEY = "novenas-mode", SCALEKEY = "novenas-scale";
+  var mem = {};
+  function get(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k] || null; } }
+  function set(k, v){ mem[k] = v; try{ localStorage.setItem(k, v); }catch(e){} }
+  function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
+  var sizeBtns = [].slice.call(document.querySelectorAll("#sizer button")), sizer = document.getElementById("sizer"), sizeBtn = document.getElementById("sizeBtn");
+  function paintScale(){
+    var sc = parseFloat(get(SCALEKEY)); if ([1, 1.15, 1.35].indexOf(sc) < 0) sc = 1;
+    root.style.setProperty("--scale", sc);
+    sizeBtns.forEach(function(b){ b.setAttribute("aria-pressed", String(+b.getAttribute("data-scale") === sc)); });
+  }
+  function closeSizer(){ sizer.classList.remove("open"); sizeBtn.setAttribute("aria-expanded", "false"); }
+  sizeBtn.addEventListener("click", function(e){ e.stopPropagation(); sizeBtn.setAttribute("aria-expanded", String(sizer.classList.toggle("open"))); });
+  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); set(SCALEKEY, b.getAttribute("data-scale")); paintScale(); }); });
+  document.addEventListener("click", closeSizer);
+  document.addEventListener("focusin", function(e){ if (e.target !== sizeBtn && !sizer.contains(e.target)) closeSizer(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && sizer.classList.contains("open")){ closeSizer(); sizeBtn.focus(); } });
+  paintScale();
+  function paint(){
+    var m = get(MODEKEY); if (m) root.setAttribute("data-mode", m); else root.removeAttribute("data-mode");
+    var d = isDark();
+    document.getElementById("themeIcon").firstElementChild.setAttribute("href", d ? "#i-sun" : "#i-moon");
+    document.getElementById("themeLabel").textContent = d ? "Light" : "Dark";
+    document.getElementById("themeBtn").setAttribute("aria-label", d ? "Switch to light mode" : "Switch to dark mode");
+    [].forEach.call(document.querySelectorAll('meta[name="theme-color"]'), function(m){ m.setAttribute("content", d ? "#0E1524" : "#FFFDF9"); });
+  }
+  document.getElementById("themeBtn").addEventListener("click", function(){
+    set(MODEKEY, isDark() ? "light" : "dark");
+    paint();
+  });
+  if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", paint); }
+  paint();
+
+  /* clear everything this site saved here: every novena's progress and intention ("novena-…") and the settings ("novenas-…") */
+  var btn = document.getElementById("clearBtn"), status = document.getElementById("clearStatus"), armed = null;
+  function ours(){ var out = []; try{ for (var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if (/^novenas?-/.test(k)) out.push(k); } }catch(e){} return out; }
+  btn.addEventListener("click", function(){
+    var keys = ours();
+    if (!keys.length){ status.textContent = "Nothing from this site is saved on this device."; return; }
+    if (!armed){
+      btn.textContent = "Tap again to clear everything"; btn.classList.add("armed");
+      armed = setTimeout(function(){ armed = null; btn.textContent = "Clear my data on this device"; btn.classList.remove("armed"); }, 4000);
+      return;
+    }
+    clearTimeout(armed); armed = null;
+    try{ keys.forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
+    btn.textContent = "Clear my data on this device"; btn.classList.remove("armed");
+    root.style.setProperty("--scale", 1); root.removeAttribute("data-mode"); paint(); paintScale();
+    status.textContent = "Cleared. Nothing from this site is saved on this device now.";
+  });
+})();
+</script>
+{{SW}}
+</body>
+</html>

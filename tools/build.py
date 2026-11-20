@@ -56,6 +56,45 @@ def sw_register(up):
             '.then(function(){ var n = document.getElementById("offlineNote"); if (n) n.hidden = false; }).catch(function(){}); }catch(e){}\n}\n</script>') % up
 
 
+RSV_NOTICE = ("Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 "
+              "National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.")
+CCC_NOTICE = "Catechism quotations are from the <i>Catechism of the Catholic Church</i>, 2nd edition, © Libreria Editrice Vaticana."
+FOOT_NAV = [("index.html", "All novenas"), ("about/index.html", "About"), ("privacy/index.html", "Privacy")]
+# one footer for every page (styles in FOOTER_CSS): site links, the offline note, a can't-save warning (novena pages), credits, and a closing line
+FOOTER_CSS = """
+/* ---- site footer (shared by every page; built by tools/build.py) ---- */
+.site-foot{margin-top:40px;border-top:1px solid var(--rule);text-align:center;color:var(--muted)}
+.site-foot .wrap{padding-top:22px;padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+.foot-nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:0 0 8px}
+.foot-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--wine);font-weight:600;font-size:calc(16px * var(--scale));text-underline-offset:3px}
+.foot-nav a[aria-current="page"]{text-decoration:none;color:var(--muted)}
+.foot-nav span{color:var(--rule-strong)}
+.fnote{font-size:calc(13.5px * var(--scale));line-height:1.5;color:var(--muted);max-width:62ch;margin:0 auto 10px}
+.fnote a{color:inherit;text-underline-offset:2px}
+.fnote.warn{font-size:calc(15px * var(--scale));color:var(--ink)}
+.fnote.credits{font-size:calc(13px * var(--scale))}
+.amdg{display:flex;align-items:center;justify-content:center;gap:14px;margin:30px 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:calc(20px * var(--scale));line-height:1.3;color:var(--wine)}
+.amdg::before,.amdg::after{content:"";flex:none;width:32px;height:1px;background:var(--gold)}
+"""
+
+
+def site_footer(up, current=None, credits=(), store_id=False, scripture=True):
+    """the footer every page shares. up: path to the site root; current: this page's FOOT_NAV href; credits: notes (HTML)"""
+    links = []
+    for href, label in FOOT_NAV:
+        cur = ' aria-current="page"' if href == current else ""
+        links.append('<a href="%s%s"%s>%s</a>' % (up, href, cur, label))
+    notes = "".join('\n    <p class="fnote credits">%s</p>' % c for c in credits)
+    return ('<footer class="site-foot">\n  <div class="wrap">\n'
+            '    <nav class="foot-nav" aria-label="Site">%s</nav>\n'
+            '%s'
+            '    <p class="fnote" id="offlineNote" hidden>Saved on this device, so it opens even without signal.</p>%s\n'
+            '%s'
+            '    <p class="amdg">To God be the glory</p>\n'
+            '  </div>\n</footer>') % ('<span aria-hidden="true">·</span>'.join(links), '    <p class="fnote warn" id="storeFoot" hidden></p>\n' if store_id else "", notes,
+                                       '    <p class="fnote credits">%s</p>\n' % RSV_NOTICE if scripture else "")
+
+
 def read(p):
     with open(p, encoding="utf-8") as f:
         return f.read()
@@ -147,7 +186,8 @@ def page(n, mode):
     faces = "".join('<img src="%s" alt="">' % src(s["id"] + "_face") for s in n["saints"])
     litany = "\n".join(
         '          <p>%s%s, <span class="resp">pray for us.</span></p>' % (
-            ('<img class="av" src="%s" alt="">' % src(l["img"] + "_face")) if l.get("img") else "", esc(l["text"]))
+            ('<img class="av" src="%s" alt="">' % src(l["img"] + "_face")) if l.get("img") else
+            '<span class="av av-none" aria-hidden="true"><svg class="i" focusable="false"><use href="#i-cross"/></svg></span>', esc(l["text"]))
         for l in n["litany"])
     saints = "\n".join(
         '      <article class="saint"><img class="portrait" src="%s" alt="%s" width="92" height="115"><div><h3>%s</h3>'
@@ -183,25 +223,28 @@ def page(n, mode):
         ])
         back = ('    <a class="back" href="../index.html"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
                 'All novenas</a>\n')
-        foot = ('<p class="more"><a href="../index.html">More novenas</a><span aria-hidden="true">&ensp;·&ensp;</span>'
-                '<a href="../about/index.html">What is a novena?</a></p>\n')
-        title_tag = esc(n["barTitle"])
-        home = ('href="../index.html" aria-label="All novenas"', '<svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>')
+        title_tag = esc(n["barTitle"]) + " | Catholic Novenas"
+        back = ""  # the top bar reads "← All novenas › <title>" on every size, so the hero needs no back link of its own
+        home = ('href="../index.html"', '<svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>')
     else:
         home = ('href="#top" aria-label="Back to top"', "")
-        head, back, foot, title_tag = "", "", "", esc(n["barTitle"])
+        head, back, title_tag = "", "", esc(n["barTitle"])
         home = ('href="#top" aria-label="Back to top"', "")
 
+    # a rubric for "N." wherever a prayer asks for a name, so nobody stumbles over it when praying aloud
+    texts = [n["openingPrayer"], n["closingPrayer"]] + [d["prayer"] for d in n["days"]]
+    name_rubric = " Where you see N., say the name of the person you are praying for." if any(re.search(r"\bN\.", t) for t in texts) else ""
     vals = {
         "TITLE_TAG": title_tag, "HEAD_META": head, "BAR_TITLE": esc(n["barTitle"]), "BAR_SHORT": esc(n["barShort"]),
-        "BACK_LINK": back, "FOOT_LINK": foot, "HOME_ATTRS": home[0], "HOME_ARROW": home[1], "KICKER": esc(n["kicker"]), "TITLE": esc(n["title"]),
+        "BACK_LINK": back, "NAME_RUBRIC": name_rubric, "HOME_LABEL": "All novenas" if mode == "site" else "",
+        "FOOTER": site_footer("../" if mode == "site" else SITE_URL + "/", credits=[n["credits"]], store_id=True), "FOOTER_CSS": FOOTER_CSS, "HOME_ATTRS": home[0], "HOME_ARROW": home[1], "KICKER": esc(n["kicker"]), "TITLE": esc(n["title"]),
         "SAINT_LINE": saint_line(n["saints"]), "EPI_TEXT": scripture(n["epigraph"]["text"]), "EPI_REF": esc(n["epigraph"]["ref"]),
         "FACES": faces, "DAY1_TITLE": esc(n["days"][0]["title"]), "OPENING_PRAYER": esc(n["openingPrayer"]),
         "INTENT_PH": esc(n.get("intentionPlaceholder", "Write the intention you are praying for.")),
         "LITANY": litany, "CLOSING_PRAYER": esc(n["closingPrayer"]), "MEMORARE_TITLE": esc(mem_title),
         "MEMORARE_TEXT": esc(mem_text), "HOW_MEMORARE": how_mem, "TIPS": tips,
         "SAINTS_HEAD": NUMWORD[len(n["saints"])], "SAINTS": saints, "CLOSE_TEXT": scripture(n["closingVerse"]["text"]),
-        "CLOSE_REF": esc(n["closingVerse"]["ref"]), "CREDITS": n["credits"],
+        "CLOSE_REF": esc(n["closingVerse"]["ref"]),
         "ICONS": json.dumps(n["icons"]), "KEY": json.dumps(n["storageKey"] + ("-artifact" if mode == "artifact" else "")),
         "DAYS": json.dumps(n["days"], ensure_ascii=False),
         "SPRITE": sprite(BASE_ICONS + n["icons"]),
@@ -271,7 +314,7 @@ def library(novenas, search=None):
     used = [n["category"] for n in pub]
     chips = ""
     if len(pub) >= CHIPS_MIN and len(set(used)) > 1:
-        btn = '<button type="button" class="chip" data-cat="%s" aria-pressed="%s">%s<span class="n">%d</span></button>'
+        btn = '<button type="button" class="chip" data-cat="%s" aria-pressed="%s">%s<span class="n"><span class="sr">, </span>%d<span class="sr"> novenas</span></span></button>'
         chips = ('<div class="chips" id="chips" role="group" aria-label="Filter by intention">' + btn % ("all", "true", "All", len(pub))
                  + "".join(btn % (k, "false", esc(v), used.count(k)) for k, v in CATEGORIES if k in used) + "</div>")
     if search is None:
@@ -289,6 +332,7 @@ def library(novenas, search=None):
     t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
     t = t.replace("{{FONTS}}", local_fonts("")).replace("{{SW}}", sw_register(""))
+    t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer("", current="index.html"))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line", "magnifying-glass", "x"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
@@ -296,6 +340,12 @@ def library(novenas, search=None):
 
 
 ABOUT_DIR = os.path.join(ROOT, "pages", "about")
+ABOUT_IMAGES = ("Images: El Greco, <i>Pentecost</i>, Museo del Prado; Jean-François Millet, <i>The Angelus</i>, Musée d’Orsay; "
+                "Hubert and Jan van Eyck, <i>Ghent Altarpiece</i>, St. Bavo’s Cathedral; Caravaggio, <i>The Conversion on the Way to Damascus</i>, "
+                "Santa Maria del Popolo; Philippe de Champaigne, <i>Saint Augustine</i>, Los Angeles County Museum of Art; Carlo Crivelli, "
+                "<i>Saint Thomas Aquinas</i>, National Gallery, London; Cristóbal Lozano, <i>Ecstasy of Saint Camillus de Lellis</i>; "
+                "Placido Costanzi, <i>A Miracle of Saint Joseph of Cupertino</i>, Metropolitan Museum of Art; photograph of Bartolo Longo. "
+                "Public domain, via Wikimedia Commons.")
 
 
 def about(novenas, mode="site"):
@@ -363,9 +413,10 @@ def about(novenas, mode="site"):
         ])
     else:
         head = ""
-    t = t.replace("{{HEAD_META}}", head).replace("{{HOME_HREF}}", up + "index.html" if mode == "site" else live)
+    t = t.replace("{{HEAD_META}}", head).replace("{{HOME_HREF}}", up + "index.html" if mode == "site" else live).replace("{{UP}}", up)
     t = t.replace("{{FONTS}}", local_fonts("../") if mode == "site" else GOOGLE_FONTS)
     t = t.replace("{{SW}}", sw_register("../") if mode == "site" else "")
+    t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer(up, current="about/index.html", credits=[ABOUT_IMAGES, CCC_NOTICE]))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-left", "arrow-right"]))
     left = re.findall(r"\{\{[A-Z0-9_:a-z-]+\}\}", t)
     assert not left, left
@@ -382,6 +433,40 @@ def build_about(novenas, site):
     with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
         f.write(about(novenas))
     print("built about")
+
+
+def privacy(mode="site"):
+    """the privacy page: what is kept on the device, what is not collected, and a button to clear it all"""
+    t = read(os.path.join(ROOT, "templates", "privacy.html"))
+    up = "../" if mode == "site" else SITE_URL + "/"
+    url = SITE_URL + "/privacy/"
+    head = "\n".join([
+        '<meta property="og:type" content="website">',
+        '<meta property="og:site_name" content="Catholic Novenas">',
+        '<meta property="og:url" content="%s">' % url,
+        '<meta property="og:title" content="Privacy | Catholic Novenas">',
+        '<meta property="og:description" content="Your progress and intentions stay on your device. No accounts, ads or tracking.">',
+        '<link rel="canonical" href="%s">' % url,
+        '<link rel="icon" href="../favicon.svg" type="image/svg+xml">',
+        '<link rel="apple-touch-icon" href="../apple-touch-icon.png">',
+        '<link rel="manifest" href="../manifest.webmanifest">',
+    ]) if mode == "site" else ""
+    t = t.replace("{{HEAD_META}}", head).replace("{{HOME_HREF}}", up + "index.html").replace("{{UP}}", up)
+    t = t.replace("{{FONTS}}", local_fonts("../") if mode == "site" else GOOGLE_FONTS)
+    t = t.replace("{{SW}}", sw_register("../") if mode == "site" else "")
+    t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer(up, current="privacy/index.html", scripture=False))
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-left"]))
+    left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
+    assert not left, left
+    return t
+
+
+def build_privacy(site):
+    d = os.path.join(site, "privacy")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+        f.write(privacy())
+    print("built privacy")
 
 
 def build_site(search=None):
@@ -406,6 +491,7 @@ def build_site(search=None):
         f.write(library(novenas, search))
     print("built library with", sum(1 for n in novenas if n.get("status") == "published"), "published novenas")
     build_about(novenas, site)
+    build_privacy(site)
     build_sw(site)
 
 
