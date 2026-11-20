@@ -121,7 +121,13 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
 
 ## 7. Print layout (Google Docs, 4 pages or fewer)
 
-- **Template:** Doc `1XUCutiQexpVtGP8w_eaT1nzfjXx3h6Xb-VrQNfrgkkU` ("Novena print template"), tab `t.m63jflj0vk3u`, in the Drive folder "[12] 🙏 Faith". It holds the approved debt layout: Folio pages, two columns from Daily Prayers on, EB Garamond. Never edit it; copy it.
+- **Template:** Doc `1XUCutiQexpVtGP8w_eaT1nzfjXx3h6Xb-VrQNfrgkkU` ("Novena print template"), tab `t.m63jflj0vk3u`, in the Drive folder "[12] 🙏 Faith". It holds the approved layout:
+  - Folio pages, EB Garamond.
+  - Page 1: title, the intercessors, how to pray, the intention box, then the Scripture notice and image credits in small type.
+  - From Daily Prayers on: two columns.
+  - The end: the Graces box and the closing verse.
+
+  Never edit the template; copy it.
 - **Copy it** with Drive `copy_file`, named "<Title> — print". The template has one tab; keep it that way, because the PDF export renders every tab.
 - **Fill it** with `tools/print_fill.py`. Read the copy (`read_doc`; the result is saved to a file), run the script on that file plus `novena.json`, and send the batch with `writeControl.requiredRevisionId` set to the read's `revisionId`. The script replaces text paragraph by paragraph, keeping every style. Print gets `refl` only; `more` stays in the app.
 - **Portraits:** the script also swaps the three page-1 images for the deployed portrait URLs at 120pt height. For fewer than 3 saints, delete the extra table columns.
@@ -131,7 +137,9 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
   - Google Docs ignores "keep with next" inside columns, so fix strands by hand, top-down, re-exporting after each fix:
     - **At a page bottom:** set `pageBreakBefore` on that day's header paragraph.
     - **At a column bottom mid-page:** raise `spaceBelow` on the previous day's Today's-step paragraph, using the smallest value that works (usually 45–75pt). If the previous prayer and step jump to the next column, the value is too big.
+- **If it runs to 5 pages,** win back space in this order: shorten the image credits, shorten a long "Alongside prayer" tip, then trim the longest reflections by a sentence. Never shrink the type or remove a section.
 - **Text check:** `python3 tools/check_print.py <pdf> <slug>` confirms every title, ref, verse, reflection, prayer and step appears in pages 1–4.
+- **Portrait images** for the print come from public URLs. Before the site is live, use the raw GitHub URLs of the pushed branch with `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/<repo>/<branch>/novenas/<slug>/img`.
 
 ## 8. Review before publishing
 

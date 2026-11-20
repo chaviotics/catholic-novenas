@@ -10,7 +10,8 @@ update_doc and writeControl.requiredRevisionId = revisionId. Requests run bottom
 What it replaces: page-1 kicker, title (2 lines), subtitle, epigraph, intercessor heading and cards
 (portraits from --images-base, default the live site), the "Alongside prayer" tip, the Memorare wording,
 the daily prayers (opening, litany, closing, Memorare), and for each day: icon, title, verse, ref,
-reflection (paragraph 1 only), prayer and step; then the closing verse and the image credits.
+reflection (paragraph 1 only), prayer and step; then the closing verse and the image credits
+(at the bottom of page 1, under the Scripture notice).
 It also clears the manual layout fixes (page breaks before days, extra space after steps) so the
 layout can be re-checked from scratch.
 
@@ -193,6 +194,7 @@ def main():
         img, name, meta, pat, bio = ps[:5]
         whole(bio, s["bio"]); whole(pat, s["patron"]); whole(meta, s["dates"] + " · " + s["feast"]); whole(name, s["name"])
         reqs, i = swap_image(img, "%s/%s.jpg" % (base, s["id"]), 120)
+        reqs[1]["insertInlineImage"]["objectSize"]["width"]["magnitude"] = 96  # portraits are 480x600 (4:5)
         groups.append((i, reqs))
 
     # how-to: Memorare wording, "Alongside prayer" tip
@@ -287,7 +289,7 @@ def main():
     replace_run(c1, 1, l1)
     whole(c2, l2 + "”")
     whole(cite, (n["closingVerse"]["ref"] + " · RSV-CE").upper())
-    _, cred = D.find("Images", start=cite["startIndex"])
+    _, cred = D.find("Images")  # image credits sit at the bottom of page 1 (older copies: at the end)
     segs = segments(n["credits"])
     txt = "".join(s for s, _ in segs)
 
