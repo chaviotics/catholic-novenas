@@ -129,6 +129,14 @@ q,.q{font-style:italic}
 .people .nv{display:block;margin-top:2px;font-size:calc(14.5px * var(--scale));font-weight:600;color:var(--gold-text)}
 
 /* ---- unlikely saints ---- */
+/* ---- about this site: the saints who inspired it ---- */
+.inspire{list-style:none;margin:12px 0 4px;padding:0;display:grid;gap:10px}
+.inspire li{display:grid;grid-template-columns:22px 1fr;column-gap:12px;padding:14px 16px 14px 14px;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--card-shadow)}
+.inspire .i{grid-row:1 / span 2;font-size:22px;color:var(--gold);margin-top:2px}
+.inspire h4{margin:0;font-family:var(--display);font-weight:700;font-size:calc(21px * var(--scale));line-height:1.2;color:var(--wine)}
+.inspire .dt{font-family:var(--body);font-weight:500;font-size:calc(14.5px * var(--scale));color:var(--muted);white-space:nowrap;margin-left:6px}
+.inspire p{grid-column:2;margin:4px 0 0;font-size:calc(17px * var(--scale));line-height:1.5}
+
 .stories{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
 .stories li{display:grid;grid-template-columns:104px 1fr;gap:14px;align-items:start;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:12px;box-shadow:var(--card-shadow)}
 .stories img{display:block;width:104px;height:104px;object-fit:cover;border-radius:10px;background:var(--wash)}
@@ -323,6 +331,15 @@ q,.q{font-style:italic}
     <h2 class="h2">About this site</h2>
     <div class="body">
       <p class="lead">Catholic Novenas is a small, free library of novenas, made by Chav so that anyone can pray one day at a time. It is a personal project, not an official Church publication, and it has no ads, no accounts and nothing to buy.</p>
+      <h3 class="h3">Why I made this</h3>
+      <p>I’m Chav, a grateful Roman Catholic. My faith took root at Don Bosco Technical Center in Cebu, Philippines, so I am a Bosconian at heart, and today I serve at The Feast, a Catholic prayer gathering of the Light of Jesus Family.</p>
+      <p>I work in computer science, software engineering and AI. Inspired by St.&nbsp;Carlo Acutis, I want to use those gifts to help people pray, and to give all the glory to God.</p>
+      <h3 class="h3">Saints who inspired this site</h3>
+      <ul class="inspire">
+        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. John Bosco <span class="dt">1815–1888</span></h4><p>A priest in Turin who gave his life to poor and abandoned young people and founded the Salesians. He taught through reason, religion and loving kindness.</p></li>
+        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. Dominic Savio <span class="dt">1842–1857</span></h4><p>A student of Don Bosco in Turin who resolved at his First Communion that he would rather die than sin. He died at 14, one of the youngest saints who were not martyrs.</p></li>
+        <li><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><h4>St. Carlo Acutis <span class="dt">1991–2006</span></h4><p>A teenager from Milan who loved the Eucharist and used his computer skills to build a website about Eucharistic miracles. He died at 15 and was canonized in 2025.</p></li>
+      </ul>
       <h3 class="h3">About these prayers</h3>
       <p>The traditional prayers here, such as the Our Father, the Hail Mary, the Glory Be and the Memorare, are the Church’s own. Scripture is quoted from the Revised Standard Version, Catholic Edition, and checked word for word.</p>
       <p>The opening prayers, reflections and daily prayers are new, written for this site with the help of AI. They aim to be faithful to Scripture and the teaching of the Church, but no priest has reviewed them yet, and they carry no imprimatur (a bishop’s approval to publish). Pray them as a private devotion, and take any question to your parish priest.</p>

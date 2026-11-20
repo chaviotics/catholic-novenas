@@ -34,3 +34,15 @@ Cited by reference or paraphrase only: Acts 1:4–5, Acts 2:1–4, Matthew 6:7, 
 
 - Leo XIII, *Divinum Illud Munus* (1897), §13 "An Annual Novena Decreed": "We decree and command that throughout the whole Catholic Church, this year and in every subsequent year, a Novena shall take place before Whit-Sunday, in all parish churches." https://www.vatican.va/content/leo-xiii/en/encyclicals/documents/hf_l-xiii_enc_09051897_divinum-illud-munus.html
 - St. Bartolo Longo: canonized by Pope Leo XIV on 19 October 2025 (Dominican Order news, op.org; CBS News).
+
+## About this site: saints who inspired it (added 2026-11-20)
+
+Facts checked against Wikipedia (John Bosco, Dominic Savio), read 2026-11-20. No quotations; paraphrase only.
+
+| Saint | Stated on the page | Source note |
+|---|---|---|
+| St. John Bosco (1815–1888) | priest in Turin; gave his life to poor and abandoned young people; founded the Salesians; taught through reason, religion and loving kindness | Wikipedia: education of "street children, juvenile delinquents, and other disadvantaged youth"; Society of St. Francis de Sales formed 1859, "the nucleus of the Salesians"; Preventive System "reason, religion, and loving kindness" |
+| St. Dominic Savio (1842–1857) | student of Don Bosco in Turin; resolved at First Communion he would rather die than sin; died at 14; one of the youngest saints who were not martyrs | Wikipedia: born 2 April 1842, died 9 March 1857 aged 14; resolution "Death rather than sin"; youngest non-martyr canonized until the Marto siblings (2017), so "one of the youngest" |
+| St. Carlo Acutis (1991–2006) | teenager from Milan; loved the Eucharist; built a website about Eucharistic miracles; died at 15; canonized 2025 | Widely reported: died 12 October 2006 aged 15; canonized 7 September 2025 by Pope Leo XIV |
+
+No portraits on purpose: there is no public-domain photograph of Carlo Acutis, and a public-domain portrait of Dominic Savio could not be confirmed from the sandbox (Wikimedia Commons is blocked here). Don Bosco's 1880 photograph is public domain if portraits are wanted later; add all three or none.
