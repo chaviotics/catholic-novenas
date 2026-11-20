@@ -184,7 +184,7 @@ def main():
     et = n["epigraph"]["text"]
     whole(epi, "“" + et.replace("LORD", "Lord") + "”", sc_lord(et, 1))
     ei = D.paras.index(epi)
-    whole(D.paras[ei + 1], (n["epigraph"]["ref"] + " · RSV-CE").upper())
+    whole(D.paras[ei + 1], n["epigraph"]["ref"].upper())
     _, ih = D.find("The 3 Intercessors")
     whole(ih, NUMWORD[len(saints)])
 
@@ -288,7 +288,7 @@ def main():
     l1, l2 = n.get("printClosing") or split_two(n["closingVerse"]["text"])
     replace_run(c1, 1, l1)
     whole(c2, l2 + "”")
-    whole(cite, (n["closingVerse"]["ref"] + " · RSV-CE").upper())
+    whole(cite, n["closingVerse"]["ref"].upper())
     _, cred = D.find("Images")  # image credits sit at the bottom of page 1 (older copies: at the end)
     segs = segments(n["credits"])
     txt = "".join(s for s, _ in segs)

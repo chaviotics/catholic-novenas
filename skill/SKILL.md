@@ -1,6 +1,6 @@
 ---
 name: novena-maker
-description: Make a new nine-day Catholic novena for an intention (phone app page in the Catholic Novenas library plus a 4-page Google Docs print layout). Use when the user names an intention for a novena.
+description: Make a new 9-day Catholic novena for an intention (phone app page in the Catholic Novenas library plus a 4-page Google Docs print layout). Use when the user names an intention for a novena.
 ---
 
 # Novena maker
@@ -55,12 +55,12 @@ Copy an example's shape. Field rules:
 |---|---|
 | `title` | "Novena for …", up to about 60 characters |
 | `barTitle` / `barShort` | Shown in the top bar: up to 28 and up to 14 characters |
-| `kicker` | "Nine days of …", up to 45 characters |
+| `kicker` | "9 days of …", up to 45 characters |
 | `card` | One sentence for the library card, up to 140 characters |
 | `description` | Meta description, up to 160 characters |
 | `status` | `"draft"` (page builds, no library card) until the user approves, then `"published"` |
 | `order` | Position on the library page |
-| `epigraph`, `closingVerse` | RSV-CE, up to about 25 words each: `{"text", "ref"}` |
+| `epigraph`, `closingVerse` | RSV-CE text, up to about 25 words each: `{"text", "ref"}` |
 | `printTitle`, `printClosing` | Two lines each, for the print title and the closing verse |
 | `saints[]` | `id` (image file stem), `name`, `dates`, `feast`, `patron`, `bio` (up to 35 words, facts only), `alt` (describes the artwork), `openingRole` |
 | `litany[]` | `{"img", "text"}`, Marian title first. `img` is optional and points to `img/<img>_face.jpg` |
@@ -74,7 +74,7 @@ Copy an example's shape. Field rules:
 Each day has these fields:
 
 - `title`: 2–5 words.
-- `ref`: "Book c:v–v" with an en dash, and no "RSV-CE" (the template adds it).
+- `ref`: "Book c:v–v" with an en dash. Never add a version label ("RSV-CE") after a reference, in the app or in print; the RSV-CE permission notice appears once, in the footer and on print page 1.
 - `verse`: RSV-CE, exact. Put " / " between poetry lines, and keep "LORD" in capitals (it shows in small caps).
 - `refl`: paragraph 1, 75–95 words. It is printed. It opens from the verse into the person's life.
 - `more`: paragraph 2, 55–75 words, app only. A saint's story, a teaching of the Church (cite CCC numbers only if certain), or a gentle application.
@@ -82,6 +82,8 @@ Each day has these fields:
 - `step`: one concrete, doable action, up to 30 words.
 
 **The arc of the days:** start with honest fear or need, then trust, then the specific graces asked for, and end on **Day 9: gratitude and surrender to God's will**. Day 9's step is always "Write down three graces you noticed during these nine days, and thank God for them together." The print layout has a "Graces I have noticed" box after it.
+
+**Numbers:** in everything the reader scans (kickers, card text, headings, labels, tips, how-to text), write numbers as digits: "9 days", "Day 3", "10 minutes", "The 3 Intercessors". Prayers, reflections and steps, which are read aloud, keep words ("these nine days", "on this ninth day").
 
 **Voice and faith rules:**
 - Write in warm, plain US English, saying "we" for the family. Use the honorific capitals of the examples: You, Your, Him.
