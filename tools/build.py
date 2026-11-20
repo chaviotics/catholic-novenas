@@ -129,13 +129,13 @@ def page(n, mode):
             '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
             '<meta name="twitter:card" content="summary_large_image">',
             '<link rel="canonical" href="%s">' % url,
-            '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
-            '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
-            '<link rel="manifest" href="/manifest.webmanifest">',
+            '<link rel="icon" href="../favicon.svg" type="image/svg+xml">',
+            '<link rel="apple-touch-icon" href="../apple-touch-icon.png">',
+            '<link rel="manifest" href="../manifest.webmanifest">',
         ])
-        back = ('    <a class="back" href="/"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
+        back = ('    <a class="back" href="../"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
                 'All novenas</a>\n')
-        foot = '<p class="more"><a href="/">More novenas</a></p>\n'
+        foot = '<p class="more"><a href="../">More novenas</a></p>\n'
         title_tag = esc(n["barTitle"])
     else:
         head, back, foot, title_tag = "", "", "", esc(n["barTitle"])
@@ -178,7 +178,7 @@ def library(novenas):
             '<span class="go" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></span></a></li>' % (
                 esc(n["storageKey"]), n["slug"], faces, esc(n["kicker"]), esc(n["title"]),
                 saint_line(n["saints"]), esc(n["card"])))
-    t = t.replace("{{CARDS}}", "\n".join(cards)).replace("{{COUNT}}", str(len(cards)))
+    t = t.replace("{{CARDS}}", "\n".join(cards)).replace("{{COUNT}}", "%d NOVENA%s" % (len(cards), "" if len(cards) == 1 else "S"))
     t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"]))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left

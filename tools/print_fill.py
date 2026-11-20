@@ -133,6 +133,19 @@ def main():
         end = r["endIndex"] - (1 if r["textRun"]["content"].endswith("\n") else 0)
         return r["startIndex"], end
 
+    STYLE_KEYS = ("bold", "italic", "underline", "smallCaps", "foregroundColor", "fontSize", "weightedFontFamily")
+
+    def replace_run(p, k, new):
+        """replace run k's text; a run after the first would inherit the previous run's style, so restate its own"""
+        r = D.runs(p)[k]
+        a, b = run_span(p, k)
+        if k == 0:
+            return replace(a, b, new)
+        st = r["textRun"].get("textStyle", {})
+        style = {key: st.get(key, False) for key in STYLE_KEYS if key in st or key in ("bold", "italic", "smallCaps")}
+        fields = ",".join(style)
+        replace(a, b, new, lambda a0, L: [{"updateTextStyle": {"range": T((a0, a0 + L)), "textStyle": style, "fields": fields}}])
+
     def swap_image(p, uri, height):
         for e in p["paragraph"]["elements"]:
             if "inlineObjectElement" in e:
@@ -176,7 +189,7 @@ def main():
     _, how4 = D.find("Pray the Closing Prayer")
     for r in D.runs(how4):
         if r["textRun"]["content"].startswith("Memorare"):
-            replace(r["startIndex"], r["endIndex"], "Memorare" if mem.get("to") == "Mary" else "Memorare to " + mem["to"])
+            replace_run(how4, D.runs(how4).index(r), "Memorare" if mem.get("to") == "Mary" else "Memorare to " + mem["to"])
     _, along = D.find("ALONGSIDE PRAYER")
     tip = [t for t in n["tips"] if t["h"].lower().startswith("alongside")][0]
     whole(D.paras[D.paras.index(along) + 1], plain(tip["p"]))
@@ -227,7 +240,7 @@ def main():
         title, verse, ref, refl, pray, prayer, step = D.paras[i + 1:i + 8]
         assert D.text(pray).startswith("PRAY") and D.text(step).startswith("TODAY"), k
         # step text (run 2), keep the label run
-        a, b = run_span(step, 1); replace(a, b, d["step"])
+        replace_run(step, 1, d["step"])
         # prayer (run 1), keep the soft break and "(Name your intention.) Amen."
         a, b = run_span(prayer, 0); replace(a, b, d["prayer"])
         whole(refl, d["refl"])
@@ -260,7 +273,7 @@ def main():
     c2 = D.paras[D.paras.index(c1) + 1]
     cite = D.paras[D.paras.index(c1) + 2]
     l1, l2 = n.get("printClosing") or split_two(n["closingVerse"]["text"])
-    a, b = run_span(c1, 1); replace(a, b, l1)
+    replace_run(c1, 1, l1)
     whole(c2, l2 + "”")
     whole(cite, (n["closingVerse"]["ref"] + " · RSV-CE").upper())
     _, cred = D.find("Images", start=cite["startIndex"])
