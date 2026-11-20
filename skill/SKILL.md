@@ -102,7 +102,7 @@ Each day has these fields:
 - Use Wikimedia Commons: paintings, sculpture, mosaics or icons by artists who died more than 100 years ago, and photos of such 2D works. Avoid modern devotional art and recent photographs.
 - **Getting the files.** The workspace can't reach Wikimedia, so let Google fetch them, using `tools/wm_images.py`:
   1. Add a scratch tab to any working Doc (`addDocumentTab`; the "Novena scratch doc" in the Faith folder is meant for this).
-  2. `python3 tools/wm_images.py requests <tabId> "File_A.jpg" "File_B.jpg"` prints Docs requests that insert Wikimedia thumbnails. Send them with `update_doc`. If one fails, the original is narrower than the thumbnail: pass a smaller `--width`.
+  2. `python3 tools/wm_images.py requests <tabId> "File_A.jpg" "File_B.jpg"` prints Docs requests that insert Wikimedia thumbnails. Send them with `update_doc`. Wikimedia serves only standard thumbnail widths, so keep the default 960. If an image fails, its original is narrower: use `--width 500`, or insert the original file URL.
   3. Export the Doc with Drive `download_file_content`, `exportMimeType: "application/zip"`, then `python3 tools/wm_images.py unzip <zip> <dir>` (files come out in insertion order).
   4. Delete the scratch tab.
 - **Crop** with PIL: portrait `img/<id>.jpg` at 480×600 with the face in the upper third, and face `img/<id>_face.jpg` at 112×112, tight on the face. Use JPEG quality 85. For a litany-only image, such as a Marian title that isn't a saint card, make just `<id>_face.jpg`. Look at every crop.

@@ -2,9 +2,11 @@
 """Get Wikimedia Commons images into the workspace (the sandbox can't reach Wikimedia directly).
 
 Step 1: print Docs requests that insert the images into a scratch tab:
-  python3 tools/wm_images.py requests <tabId> "File_one.jpg" "File two.jpg" ... [--width 800]
+  python3 tools/wm_images.py requests <tabId> "File_one.jpg" "File two.jpg" ... [--width 960]
   -> send with Docs update_doc (insertInlineImage needs URLs Google can fetch; Wikimedia thumbs work).
-     Thumbs can't be wider than the original; use a smaller --width if a request fails.
+     Wikimedia only serves standard thumbnail widths (e.g. 330, 500, 960, 1280): 960 is the default.
+     For an original narrower than 960 px use --width 500, or insert the original file URL
+     https://upload.wikimedia.org/wikipedia/commons/{h[0]}/{h[:2]}/<name> (see `url`).
 
 Step 2: export that Doc with Drive download_file_content, exportMimeType "application/zip", then:
   python3 tools/wm_images.py unzip <export.zip> <outdir>
@@ -16,7 +18,7 @@ Step 3: delete the scratch tab (deleteTab) and crop with PIL:
 import hashlib, json, os, re, sys, urllib.parse, zipfile
 
 
-def thumb(name, width=800):
+def thumb(name, width=960):
     name = name.replace(" ", "_")
     if name.lower().startswith("file:"):
         name = name[5:]
@@ -55,7 +57,7 @@ def unzip(zpath, outdir):
 if __name__ == "__main__":
     a = sys.argv[1:]
     if a and a[0] == "requests":
-        w = 800
+        w = 960
         if "--width" in a:
             k = a.index("--width"); w = int(a[k + 1]); del a[k:k + 2]
         print(json.dumps(requests(a[1], a[2:], w), ensure_ascii=False))
