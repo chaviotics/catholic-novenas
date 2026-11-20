@@ -512,7 +512,7 @@ blockquote.passage{margin:0}
     var d = DAYS[sel-1], done = isDone(sel), n = dayFromStart(), count = state.done.length, st;
     $("tNum").firstChild.nodeValue = sel;
     $("tTitle").textContent = d.title;
-    $("dCap").innerHTML = "<b>DAY " + sel + "</b> · " + d.title.replace(/[&<>]/g, "") + (done ? " · prayed" : (sel === n ? " · today" : ""));
+    $("dCap").innerHTML = "<b>DAY " + sel + "</b> · " + esc(d.title) + (done ? " · prayed" : (sel === n ? " · today" : ""));
     if (count === 9) st = "All nine days prayed. Thanks be to God.";
     else if (n !== null && n > 9) st = "Your nine days have passed. Finish any day you missed, or reset to begin again.";
     else if (n !== null && n < 1) st = "Your novena begins on " + fmt(state.start) + ".";

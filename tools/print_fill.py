@@ -169,8 +169,19 @@ def main():
     whole(D.paras[3], t2)
     _, sub = D.find("through the intercession of")
     whole(sub, "through the intercession of " + saint_line(saints))
+    def sc_lord(text, offset):
+        """small caps for LORD (written as Lord), as the RSV prints the divine name"""
+        def f(a, L):
+            reqs = [{"updateTextStyle": {"range": T((a, a + L)), "textStyle": {"smallCaps": False}, "fields": "smallCaps"}}]
+            for m in re.finditer("LORD", text):
+                s0 = a + offset + u16(text[:m.start()])
+                reqs.append({"updateTextStyle": {"range": T((s0, s0 + 4)), "textStyle": {"smallCaps": True}, "fields": "smallCaps"}})
+            return reqs
+        return f
+
     _, epi = D.find("“")
-    whole(epi, "“" + n["epigraph"]["text"] + "”")
+    et = n["epigraph"]["text"]
+    whole(epi, "“" + et.replace("LORD", "Lord") + "”", sc_lord(et, 1))
     ei = D.paras.index(epi)
     whole(D.paras[ei + 1], (n["epigraph"]["ref"] + " · RSV-CE").upper())
     _, ih = D.find("The 3 Intercessors")

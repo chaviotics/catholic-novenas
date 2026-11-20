@@ -10,19 +10,7 @@ import asyncio, base64, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
-from shots import FACES, F  # noqa: E402
-
-
-def font_css():
-    """fonts as data URIs (a page set with set_content can't load file:// URLs)"""
-    out = []
-    for fam, w, st, path in FACES:
-        fp = F.replace("file://", "") + path
-        if os.path.exists(fp):
-            with open(fp, "rb") as f:
-                b64 = base64.b64encode(f.read()).decode()
-            out.append("@font-face{font-family:'%s';font-weight:%d;font-style:%s;src:url(data:font/ttf;base64,%s)}" % (fam, w, st, b64))
-    return "".join(out)
+from shots import font_css  # noqa: E402
 
 CSS = """
 *{box-sizing:border-box}html,body{margin:0}

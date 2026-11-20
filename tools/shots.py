@@ -23,10 +23,15 @@ FACES = [("Cormorant Garamond", 700, "normal", "cormorant-garamond/700Bold/Cormo
 
 
 def font_css():
+    """local fonts as data URIs (an http page can't load file:// fonts)"""
+    import base64
     out = []
     for fam, w, st, path in FACES:
-        if os.path.exists(F.replace("file://", "") + path):
-            out.append("@font-face{font-family:'%s';font-weight:%d;font-style:%s;src:url('%s%s')}" % (fam, w, st, F, path))
+        fp = F.replace("file://", "") + path
+        if os.path.exists(fp):
+            with open(fp, "rb") as f:
+                b64 = base64.b64encode(f.read()).decode()
+            out.append("@font-face{font-family:'%s';font-weight:%d;font-style:%s;src:url(data:font/ttf;base64,%s)}" % (fam, w, st, b64))
     return "".join(out)
 
 

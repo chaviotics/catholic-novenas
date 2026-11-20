@@ -92,6 +92,7 @@ Each day has these fields:
 ## 4. Verify every Scripture text (RSV-CE, word for word)
 
 - Fetch each passage, including the epigraph and closing verse, from BibleGateway with WebFetch: `https://www.biblegateway.com/passage/?search=<Book+c:v-v>&version=RSVCE`. Ask for the exact text with no verse numbers, footnote letters or headings.
+- A URL you build yourself may need the user's approval to fetch. If nobody is there to approve, run WebSearch first (for example "Mark 2:3-5 RSVCE") and fetch only URLs that appear in its results. For the Old Testament (except the deuterocanonical books), `biblestudytools.com/rsv/...` has the same text as RSV-CE. The New Testament has Catholic Edition changes, so use an RSVCE source there.
 - Copy punctuation exactly, including "LORD" and "thee/thou" in Psalms. Check the verse range: the passage must not start or end in the middle of a quotation (a dangling quote mark means choose a different range).
 - If a fetch looks paraphrased or partial, fetch it again or use a second RSV-CE source. Record what you verified in `novenas/<slug>/sources.md`.
 - **Permission limits:** under 500 verses in total, no whole book, under 25% of any book. The required notice is already in the template.
@@ -99,10 +100,10 @@ Each day has these fields:
 ## 5. Images (public domain only)
 
 - Use Wikimedia Commons: paintings, sculpture, mosaics or icons by artists who died more than 100 years ago, and photos of such 2D works. Avoid modern devotional art and recent photographs.
-- **Getting the files.** The workspace can't reach Wikimedia, so:
-  1. Build the thumbnail URL: `https://upload.wikimedia.org/wikipedia/commons/thumb/{h[0]}/{h[:2]}/{quote(name)}/960px-{quote(name)}`, where `h = md5(name)` and `name` uses underscores.
-  2. Insert it with Docs `insertInlineImage` into a scratch tab of any working Doc (add one with `addDocumentTab`).
-  3. Export that Doc with Drive `download_file_content`, `exportMimeType: "application/zip"`, and unzip `images/`.
+- **Getting the files.** The workspace can't reach Wikimedia, so let Google fetch them, using `tools/wm_images.py`:
+  1. Add a scratch tab to any working Doc (`addDocumentTab`; the "Novena scratch doc" in the Faith folder is meant for this).
+  2. `python3 tools/wm_images.py requests <tabId> "File_A.jpg" "File_B.jpg"` prints Docs requests that insert Wikimedia thumbnails. Send them with `update_doc`. If one fails, the original is narrower than the thumbnail: pass a smaller `--width`.
+  3. Export the Doc with Drive `download_file_content`, `exportMimeType: "application/zip"`, then `python3 tools/wm_images.py unzip <zip> <dir>` (files come out in insertion order).
   4. Delete the scratch tab.
 - **Crop** with PIL: portrait `img/<id>.jpg` at 480×600 with the face in the upper third, and face `img/<id>_face.jpg` at 112×112, tight on the face. Use JPEG quality 85. For a litany-only image, such as a Marian title that isn't a saint card, make just `<id>_face.jpg`. Look at every crop.
 - After deploy, the images are public at `https://catholic-novenas.netlify.app/<slug>/img/<id>.jpg`. Use these URLs for the print portraits.

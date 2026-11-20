@@ -80,6 +80,11 @@ def validate(n):
             assert os.path.exists(os.path.join(imgdir, l["img"] + "_face.jpg")), (n["slug"], "missing face", l["img"])
 
 
+def scripture(t):
+    """escape, and show the divine name LORD in small caps as the RSV prints it"""
+    return esc(t).replace("LORD", '<span class="sc">Lord</span>')
+
+
 def saint_line(saints):
     names = [esc(s["name"]) for s in saints]
     if len(names) == 1:
@@ -143,12 +148,12 @@ def page(n, mode):
     vals = {
         "TITLE_TAG": title_tag, "HEAD_META": head, "BAR_TITLE": esc(n["barTitle"]), "BAR_SHORT": esc(n["barShort"]),
         "BACK_LINK": back, "FOOT_LINK": foot, "KICKER": esc(n["kicker"]), "TITLE": esc(n["title"]),
-        "SAINT_LINE": saint_line(n["saints"]), "EPI_TEXT": esc(n["epigraph"]["text"]), "EPI_REF": esc(n["epigraph"]["ref"]),
+        "SAINT_LINE": saint_line(n["saints"]), "EPI_TEXT": scripture(n["epigraph"]["text"]), "EPI_REF": esc(n["epigraph"]["ref"]),
         "FACES": faces, "DAY1_TITLE": esc(n["days"][0]["title"]), "OPENING_PRAYER": esc(n["openingPrayer"]),
         "INTENT_PH": esc(n.get("intentionPlaceholder", "Write the intention you are praying for.")),
         "LITANY": litany, "CLOSING_PRAYER": esc(n["closingPrayer"]), "MEMORARE_TITLE": esc(mem_title),
         "MEMORARE_TEXT": esc(mem_text), "HOW_MEMORARE": how_mem, "TIPS": tips,
-        "SAINTS_HEAD": NUMWORD[len(n["saints"])], "SAINTS": saints, "CLOSE_TEXT": esc(n["closingVerse"]["text"]),
+        "SAINTS_HEAD": NUMWORD[len(n["saints"])], "SAINTS": saints, "CLOSE_TEXT": scripture(n["closingVerse"]["text"]),
         "CLOSE_REF": esc(n["closingVerse"]["ref"]), "CREDITS": n["credits"],
         "ICONS": json.dumps(n["icons"]), "KEY": json.dumps(n["storageKey"] + ("-artifact" if mode == "artifact" else "")),
         "DAYS": json.dumps(n["days"], ensure_ascii=False),

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novena for Healing</title>
+<meta name="description" content="A nine-day Catholic novena for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis and St. Bernadette.">
+<meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1524" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Catholic Novenas">
+<meta property="og:url" content="https://catholic-novenas.netlify.app/healing/">
+<meta property="og:title" content="Novena for Healing">
+<meta property="og:description" content="Nine days of hope in Christ who heals, through St. Raphael, St. Camillus de Lellis &amp; St. Bernadette.">
+<meta property="og:image" content="https://catholic-novenas.netlify.app/healing/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://catholic-novenas.netlify.app/healing/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one prayer-book column; a "today" card, a nine-day strip, then the day's prayers in the order you pray them. */
+:root{
+  --paper:#FFFDF9;      /* page */
+  --sheet:#FFFFFF;      /* raised surfaces */
+  --ink:#2A2521;        /* text */
+  --muted:#675E57;      /* secondary text */
+  --wine:#6E1F2B;       /* spoken responses, headings */
+  --gold:#94702A;       /* labels, icons, rules of emphasis */
+  --rule:#E3D8C6;       /* hairlines */
+  --wash:#F6F0E6;       /* soft fills */
+  --cta:#6E1F2B; --on-cta:#FFFDF9;
+  --gold-text:#896725; --rule-strong:#9C8B70;
+  --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;
+  --scale:1;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]):not([data-mode="light"]){
+    --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2;
+    --wine:#EBCF95; --gold:#C9A45A; --rule:#26324C; --wash:#1B2740; --cta:#C9A45A; --on-cta:#0E1524; --gold-text:#D0AD66; --rule-strong:#5E6E90; --frame:color-mix(in srgb,#C9A45A 75%,transparent); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]:not([data-mode="light"]),:root[data-mode="dark"]{
+  --paper:#0E1524; --sheet:#162036; --ink:#ECE6DA; --muted:#A7B0C2;
+    --wine:#EBCF95; --gold:#C9A45A; --rule:#26324C; --wash:#1B2740; --cta:#C9A45A; --on-cta:#0E1524; --gold-text:#D0AD66; --rule-strong:#5E6E90; --frame:color-mix(in srgb,#C9A45A 75%,transparent); color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:calc(18px * var(--scale));line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,textarea{font:inherit;color:inherit}
+a{color:var(--wine)}
+svg.i{width:1em;height:1em;fill:currentColor;flex:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:5;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.bar .mark{color:var(--wine);font-size:22px;line-height:1}
+.bar .name{font-family:var(--display);font-weight:600;font-size:18px;color:var(--wine);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font-size:15px}
+.iconbtn svg{font-size:19px;color:var(--gold)}
+.iconbtn:hover{border-color:var(--gold)}
+
+/* hero */
+.hero{padding:40px 0 12px;text-align:center}
+.cross{color:var(--wine);font-size:26px;line-height:1}
+.kicker{margin:10px 0 0;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(34px,8vw,46px);line-height:1.05;margin:10px 0 8px;text-wrap:balance}
+.sub{font-family:var(--display);font-style:italic;font-size:clamp(16.5px,4.6vw,20px);line-height:1.35;color:var(--muted);margin:0 auto}
+.sub .l2{white-space:nowrap}
+.epi{margin:18px auto 0;font-style:italic;font-size:17px;max-width:34ch}
+.cite{display:block;font-style:normal;font-size:11.5px;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+
+/* today card */
+.today{margin:28px 0 8px;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:14px;padding:20px 20px 18px}
+.today-top{display:flex;align-items:flex-start;gap:16px}
+.daynum{font-family:var(--display);font-weight:700;color:var(--wine);font-size:60px;line-height:.85;min-width:56px;text-align:center}
+.daynum small{display:block;white-space:nowrap;font-family:var(--body);font-weight:600;font-size:11px;letter-spacing:.14em;color:var(--gold);margin-top:6px}
+.today h2{font-family:var(--display);font-weight:700;font-size:25px;line-height:1.15;margin:2px 0 4px;color:var(--ink);text-wrap:balance}
+.today .status{margin:0;color:var(--muted);font-size:16px}
+.track{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:18px 0 4px;padding:0;list-style:none}
+.track button{width:100%;aspect-ratio:1;max-width:44px;margin:0 auto;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--rule);background:transparent;color:var(--muted);cursor:pointer;font-size:14px;font-weight:600;padding:0;font-variant-numeric:tabular-nums}
+.track button.done{background:var(--gold);border-color:var(--gold);color:var(--sheet)}
+.track button.sel{border-color:var(--wine);box-shadow:0 0 0 2px var(--wine) inset;color:var(--wine)}
+.track button.done.sel{color:var(--sheet);box-shadow:0 0 0 2px var(--sheet) inset,0 0 0 2px var(--wine)}
+.startrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:15px;color:var(--muted)}
+.startrow input{border:1px solid var(--rule);border-radius:8px;background:var(--paper);padding:6px 10px;font-size:15px}
+.startrow .link{background:none;border:0;color:var(--wine);text-decoration:underline;cursor:pointer;padding:4px 0}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:16px;border:0;border-radius:12px;background:var(--cta);color:var(--on-cta);font-size:18px;font-weight:600;padding:14px 18px;cursor:pointer}
+.cta svg{font-size:22px}
+
+/* sections */
+section{padding:30px 0 8px}
+.h2{display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:700;color:var(--wine);font-size:27px;margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
+.h2 .n{font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--gold);margin-left:auto}
+.flow{font-size:14.5px;color:var(--muted);margin:-6px 0 18px}
+
+/* prayer steps */
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.step{position:relative;padding:18px 0 20px 40px;border-bottom:1px solid var(--rule)}
+.step:last-child{border-bottom:0}
+.step .num{position:absolute;left:0;top:19px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.label{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:2px 0 8px;display:flex;align-items:center;gap:8px}
+.label svg{font-size:17px}
+.read{font-size:calc(19px * var(--scale));line-height:1.6}
+.read p{margin:0 0 .6em}
+.read p:last-child{margin-bottom:0}
+.resp{color:var(--wine);font-style:italic}
+.rubric{color:var(--wine);font-style:italic;font-size:calc(17px * var(--scale))}
+.verse{font-style:italic;font-size:calc(20px * var(--scale));line-height:1.5;margin:0}
+.ref{font-size:12.5px;letter-spacing:.12em;color:var(--gold);margin:6px 0 12px}
+.refl{font-size:calc(20px * var(--scale));line-height:1.6;margin:0}
+.refl2{margin-top:.75em}
+.daytitle{font-family:var(--display);font-weight:700;color:var(--wine);font-size:calc(27px * var(--scale));line-height:1.15;margin:0 0 10px;text-wrap:balance}
+.dayicon{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold)}
+.dayicon svg{font-size:20px}
+.pray .read{font-size:calc(21px * var(--scale));line-height:1.6}
+.litany p{margin:0 0 .25em}
+.sub-h{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:16px 0 6px}
+
+details.prayer{border:1px solid var(--rule);border-radius:10px;background:var(--sheet);margin:8px 0}
+details.prayer summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:600;font-size:calc(18px * var(--scale))}
+details.prayer summary::-webkit-details-marker{display:none}
+details.prayer summary svg{margin-left:auto;color:var(--gold);transition:transform .2s}
+details.prayer[open] summary svg{transform:rotate(180deg)}
+details.prayer .read{padding:0 14px 14px;font-size:calc(18px * var(--scale))}
+.hint{font-size:14px;color:var(--muted);margin:4px 0 0}
+
+.markdone{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:22px 0 0;border:1.5px solid var(--gold);border-radius:12px;background:transparent;color:var(--ink);font-size:18px;font-weight:600;padding:13px 16px;cursor:pointer}
+.markdone svg{color:var(--gold);font-size:22px}
+.markdone.is-done{background:var(--gold);color:var(--sheet)}
+.markdone.is-done svg{color:var(--sheet)}
+.daynav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.daynav button{flex:1;border:1px solid var(--rule);background:var(--sheet);border-radius:10px;padding:10px;cursor:pointer;font-size:15.5px;color:var(--ink)}
+.daynav button:disabled{opacity:.4;cursor:default}
+
+/* intention */
+.intent{background:var(--wash);border-radius:12px;padding:14px 16px;margin-top:6px}
+.intent label{display:block;font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.intent textarea{width:100%;min-height:76px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);padding:10px 12px;font-size:17px;line-height:1.5;resize:vertical}
+.intent .hint{margin-top:6px}
+
+/* guide sections */
+ol.how{margin:0;padding-left:1.3em}
+ol.how li{margin:0 0 6px;padding-left:4px}
+ol.how li::marker{color:var(--gold);font-weight:600}
+.saints{display:grid;gap:12px}
+.saint{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 16px}
+.saint h3{font-family:var(--display);font-weight:700;color:var(--wine);font-size:22px;margin:0}
+.saint .meta{font-size:13px;color:var(--muted);margin:2px 0 0}
+.saint .pat{font-style:italic;color:var(--gold);margin:2px 0 6px;font-size:16px}
+.saint p{margin:0;font-size:16.5px}
+.tips{display:grid;gap:14px}
+.tip h3{font-size:12.5px;letter-spacing:.14em;font-weight:600;color:var(--gold);text-transform:uppercase;margin:0 0 4px}
+.tip p{margin:0;font-size:17px}
+.close{text-align:center;padding:36px 0 18px}
+.close blockquote{margin:0;font-family:var(--display);font-style:italic;color:var(--wine);font-size:23px;line-height:1.35;text-wrap:balance}
+.note{font-size:13px;font-style:italic;color:var(--muted);margin:14px 0 0}
+footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
+
+/* text size popover */
+.sizer{display:none;position:absolute;right:20px;top:56px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px;gap:6px;box-shadow:0 8px 24px rgb(0 0 0 / .12)}
+.sizer.open{display:flex}
+.sizer button{min-width:48px;height:40px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);cursor:pointer;font-family:var(--display);font-weight:700;color:var(--wine)}
+.sizer button[aria-pressed="true"]{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine) inset}
+.bar{position:sticky}
+.barwrap{position:relative}
+
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:15px;white-space:nowrap;max-width:calc(100vw - 32px);opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.show{opacity:1}
+
+@media (max-width:420px){
+  body{font-size:calc(17px * var(--scale))}
+  .wrap{padding:0 16px}
+  .step{padding-left:0}
+  .step .num{position:static;display:inline-grid;flex:none}
+  .daynum{font-size:52px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.bar,.today .cta,.markdone,.daynav,.intent,.startrow{display:none}}
+
+/* review fixes: readable gold, 3:1 control borders, scalable text, 44px targets */
+.kicker,.label,.ref,.sub-h,.intent label,.tip h3,.saint .pat,.daynum small,.dayicon,.h2 .n{color:var(--gold-text)}
+.label svg,.dayicon svg{color:var(--gold)}
+.status{font-size:calc(16px * var(--scale))}
+.label,.ref,.sub-h,.intent label,.tip h3{font-size:calc(12.5px * var(--scale))}
+.tip p{font-size:calc(17px * var(--scale))}
+.saint p{font-size:calc(16.5px * var(--scale))}
+.saint .meta{font-size:calc(13px * var(--scale))}
+.hint,.flow{font-size:calc(14.5px * var(--scale))}
+.today h2{font-size:calc(25px * var(--scale))}
+.h2{font-size:calc(27px * var(--scale))}
+.step .num{letter-spacing:0}
+/* modern (lining) numerals for counters, so "1" never reads as Roman "I" */
+body{font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+.daynum,.track button,.step .num,.h2 .n,.dcap,.daynum small{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.cross svg{font-size:30px}
+.name .short{display:none}
+.track{gap:4px}
+.track button{aspect-ratio:auto;height:44px;max-width:none;border-radius:12px;border-color:var(--rule-strong);font-size:15px}
+.startrow input{font-size:16px;min-height:44px;border-color:var(--rule-strong)}
+.startrow .link{min-height:44px;padding:0 6px;font-size:16px}
+#resetAll{margin-left:auto}
+.intent textarea{border-color:var(--rule-strong)}
+details.prayer{border-color:var(--rule-strong)}
+#prayer{scroll-margin-top:124px}
+.home{display:flex;align-items:center;gap:12px;flex:1;min-width:0;text-decoration:none;min-height:44px}
+.days{position:sticky;top:53px;z-index:4;background:var(--paper);border-bottom:1px solid var(--rule)}
+.days .track{margin:0;padding:6px 0 7px}
+.dcap{display:none;margin:0;padding-top:7px;font-size:13px;letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.dcap b{color:var(--gold-text);font-weight:600;letter-spacing:.14em}
+/* phones: the nine days become a bottom tab bar, in thumb reach */
+@media (max-width:600px){
+  .days{position:fixed;top:auto;bottom:0;left:0;right:0;border-bottom:0;border-top:1px solid var(--rule);box-shadow:0 -6px 18px rgb(0 0 0 / .06);padding-bottom:env(safe-area-inset-bottom)}
+  .dcap{display:block}
+  .days .track{padding:5px 0 8px}
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  #prayer{scroll-margin-top:64px}
+  .toast{bottom:calc(108px + env(safe-area-inset-bottom))}
+}
+.track button{position:relative}
+.track button.today::after{content:"";position:absolute;left:50%;bottom:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:currentColor}
+.track button.today:not(.sel):not(.done){color:var(--wine);border-color:var(--wine)}
+.today{margin-top:24px}
+.wake{margin:-4px 0 14px;font-size:15px}
+.wake[aria-pressed="true"]{border-color:var(--gold);background:var(--wash)}
+@media (max-width:600px){.bar .name{display:none}.bar .mark{font-size:26px}#sizeBtn>span,#themeLabel{display:none}.bar .iconbtn{width:44px;min-width:44px;padding:0}.bar .iconbtn svg{font-size:21px}}
+@media (max-width:420px){.today{padding:18px 14px}.name .long{display:none}.name .short{display:inline}}
+
+/* step headings: readable wayfinding while praying aloud */
+.step>.label{font-family:var(--display);font-weight:700;font-size:calc(24px * var(--scale));letter-spacing:0;text-transform:none;color:var(--ink);line-height:1.15;margin:0 0 12px;gap:12px}
+.step .num{width:32px;height:32px;font-family:var(--body);font-size:15px;top:15px}
+.step{padding-left:46px}
+@media (max-width:420px){.step{padding-left:0}}
+
+/* v2: passage, go deeper, today's step, portraits */
+.passage{font-style:italic;font-size:calc(19.5px * var(--scale));line-height:1.55;margin:0;padding-left:14px;border-left:2px solid var(--gold)}
+.sc{font-variant:small-caps;letter-spacing:.02em}
+.passage .ln{display:block;padding-left:1.1em;text-indent:-1.1em}
+.ref{text-transform:uppercase}
+details.deeper{margin:14px 0 0;border-top:1px solid var(--rule)}
+details.deeper summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:44px;color:var(--gold-text);font-weight:600;font-size:calc(15px * var(--scale));letter-spacing:.08em;text-transform:uppercase}
+details.deeper summary::-webkit-details-marker{display:none}
+details.deeper summary svg{font-size:18px;color:var(--gold)}
+details.deeper summary .caret{margin-left:auto;transition:transform .2s}
+details.deeper[open] summary .caret{transform:rotate(180deg)}
+details.deeper p{margin:4px 0 6px;font-size:calc(18px * var(--scale));line-height:1.6}
+.todaystep{margin:14px 0 0;background:var(--wash);border-radius:12px;padding:12px 16px 14px;border-left:3px solid var(--gold)}
+.todaystep .tslabel{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:calc(12.5px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
+.todaystep .tslabel svg{font-size:18px;color:var(--gold)}
+.todaystep p:last-child{margin:0;font-size:calc(18px * var(--scale));line-height:1.5}
+.faces{display:flex;justify-content:center;margin:20px 0 0}
+.faces img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2.5px solid var(--paper);margin:0 -5px;box-shadow:0 0 0 1px var(--rule-strong)}
+.av{width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin:-3px 10px 0 0;box-shadow:0 0 0 1px var(--rule-strong)}
+.saint{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:start}
+.portrait{width:92px;height:115px;object-fit:cover;border-radius:46px 46px 8px 8px;border:1px solid var(--rule-strong);background:var(--wash)}
+.credits{font-size:12px}
+@media print{details.deeper{display:none}}
+
+/* review fixes v2 */
+.todaystep{margin:22px 0 0}
+details.deeper summary{color:var(--muted);font-weight:400;font-style:italic;letter-spacing:0;text-transform:none;font-size:calc(17px * var(--scale))}
+:root{--frame:var(--gold)}
+.portrait{border-color:var(--frame)}
+.av,.faces img{box-shadow:0 0 0 1px var(--frame)}
+.faces{gap:10px}.faces img{margin:0;border:0}
+.litany p{position:relative;padding-left:calc(38px * var(--scale))}
+
+.litany .av{position:absolute;left:0;top:.15em;margin:0;width:calc(28px * var(--scale));height:calc(28px * var(--scale))}
+.litany .resp{white-space:nowrap}
+html{scroll-padding-top:124px}
+@media (max-width:600px){html{scroll-padding-top:64px;scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom))}}
+blockquote.passage{margin:0}
+.passage{text-wrap:pretty}
+.passage .ln{text-wrap:balance;padding-left:1.5em;text-indent:-1.5em}
+.passage .ln:nth-child(even){padding-left:2.6em}
+.dayicon span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.daytitle{margin-bottom:14px}
+/* library links (site build only) */
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px;margin:-8px 0 6px;color:var(--gold-text);font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:600}
+.back .i{width:16px;height:16px}
+.back:hover,.back:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.more{text-align:center;margin:8px 0 0;font-size:16px}
+.more a{display:inline-flex;align-items:center;min-height:44px;color:var(--wine);font-weight:600;text-underline-offset:3px}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-cross" viewBox="0 0 256 256"><path d="M200,72H160V32a16,16,0,0,0-16-16H112A16,16,0,0,0,96,32V72H56A16,16,0,0,0,40,88v32a16,16,0,0,0,16,16H96v88a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V136h40a16,16,0,0,0,16-16V88A16,16,0,0,0,200,72Zm0,48H152a8,8,0,0,0-8,8v96H112V128a8,8,0,0,0-8-8H56V88h48a8,8,0,0,0,8-8V32h32V80a8,8,0,0,0,8,8h48Z"/></symbol><symbol id="i-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol><symbol id="i-moon" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol><symbol id="i-text-aa" viewBox="0 0 256 256"><path d="M87.24,52.59a8,8,0,0,0-14.48,0l-64,136a8,8,0,1,0,14.48,6.81L39.9,160h80.2l16.66,35.4a8,8,0,1,0,14.48-6.81ZM47.43,144,80,74.79,112.57,144ZM200,96c-12.76,0-22.73,3.47-29.63,10.32a8,8,0,0,0,11.26,11.36c3.8-3.77,10-5.68,18.37-5.68,13.23,0,24,9,24,20v3.22A42.76,42.76,0,0,0,200,128c-22.06,0-40,16.15-40,36s17.94,36,40,36a42.73,42.73,0,0,0,24-7.25,8,8,0,0,0,16-.75V132C240,112.15,222.06,96,200,96Zm0,88c-13.23,0-24-9-24-20s10.77-20,24-20,24,9,24,20S213.23,184,200,184Z"/></symbol><symbol id="i-check" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-caret-down" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-footprints" viewBox="0 0 256 256"><path d="M208.06,184H152a8,8,0,0,0-8,8v12a36,36,0,0,0,72.05,0V192A8,8,0,0,0,208.06,184Zm-8,20a20,20,0,0,1-40,0v-4h40ZM104,160h-56a8,8,0,0,0-8,8v12A36,36,0,0,0,112,180V168A8,8,0,0,0,104,160Zm-8,20a20,20,0,0,1-40,0v-4H96ZM76,16C64.36,16,53.07,26.31,44.2,45c-13.93,29.38-18.56,73,.29,96a8,8,0,0,0,6.2,2.93h50.55a8,8,0,0,0,6.2-2.93c18.85-23,14.22-66.65.29-96C98.85,26.31,87.57,16,76,16ZM97.15,128H54.78c-11.4-18.1-7.21-52.7,3.89-76.11C65.14,38.22,72.17,32,76,32s10.82,6.22,17.3,19.89C104.36,75.3,108.55,109.9,97.15,128Zm57.61,40h50.55a8,8,0,0,0,6.2-2.93c18.85-23,14.22-66.65.29-96C202.93,50.31,191.64,40,180,40s-22.89,10.31-31.77,29c-13.93,29.38-18.56,73,.29,96A8.05,8.05,0,0,0,154.76,168Zm8-92.11C169.22,62.22,176.25,56,180,56s10.82,6.22,17.29,19.89c11.1,23.41,15.29,58,3.9,76.11H158.85C147.45,133.9,151.64,99.3,162.74,75.89Z"/></symbol><symbol id="i-hands-praying" viewBox="0 0 256 256"><path d="M235.32,180l-36.24-36.25L162.62,23.46A21.76,21.76,0,0,0,128,12.93,21.76,21.76,0,0,0,93.38,23.46L56.92,143.76,20.68,180a16,16,0,0,0,0,22.62l32.69,32.69a16,16,0,0,0,22.63,0L124.28,187a40.68,40.68,0,0,0,3.72-4.29,40.68,40.68,0,0,0,3.72,4.29L180,235.32a16,16,0,0,0,22.63,0l32.69-32.69A16,16,0,0,0,235.32,180ZM64.68,224,32,191.32l12.69-12.69,32.69,32.69ZM120,158.75a23.85,23.85,0,0,1-7,17L88.68,200,56,167.32l13.65-13.66a8,8,0,0,0,2-3.34l37-122.22A5.78,5.78,0,0,1,120,29.78Zm23,17a23.85,23.85,0,0,1-7-17v-129a5.78,5.78,0,0,1,11.31-1.68l37,122.22a8,8,0,0,0,2,3.34l14.49,14.49-33.4,32ZM191.32,224l-12.56-12.57,33.39-32L224,191.32Z"/></symbol><symbol id="i-arrow-left" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></symbol><symbol id="i-book-open" viewBox="0 0 256 256"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64Z"/></symbol><symbol id="i-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol><symbol id="i-mountains" viewBox="0 0 256 256"><path d="M164,80a28,28,0,1,0-28-28A28,28,0,0,0,164,80Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,40Zm90.88,155.92-54.56-92.08A15.87,15.87,0,0,0,186.55,96h0a15.85,15.85,0,0,0-13.76,7.84L146.63,148l-44.84-76.1a16,16,0,0,0-27.58,0L1.11,195.94A8,8,0,0,0,8,208H248a8,8,0,0,0,6.88-12.08ZM88,80l23.57,40H64.43ZM22,192l33-56h66l18.74,31.8,0,0L154,192Zm150.57,0-16.66-28.28L186.55,112,234,192Z"/></symbol><symbol id="i-hand" viewBox="0 0 256 256"><path d="M188,48a27.75,27.75,0,0,0-12,2.71V44a28,28,0,0,0-54.65-8.6A28,28,0,0,0,80,60v64l-3.82-6.13a28,28,0,0,0-48.6,27.82c16,33.77,28.93,57.72,43.72,72.69C86.24,233.54,103.2,240,128,240a88.1,88.1,0,0,0,88-88V76A28,28,0,0,0,188,48Zm12,104a72.08,72.08,0,0,1-72,72c-20.38,0-33.51-4.88-45.33-16.85C69.44,193.74,57.26,171,41.9,138.58a6.36,6.36,0,0,0-.3-.58,12,12,0,0,1,20.79-12,1.76,1.76,0,0,0,.14.23l18.67,30A8,8,0,0,0,96,152V60a12,12,0,0,1,24,0v60a8,8,0,0,0,16,0V44a12,12,0,0,1,24,0v76a8,8,0,0,0,16,0V76a12,12,0,0,1,24,0Z"/></symbol><symbol id="i-stethoscope" viewBox="0 0 256 256"><path d="M220,160a12,12,0,1,1-12-12A12,12,0,0,1,220,160Zm-4.55,39.29A48.08,48.08,0,0,1,168,240H144a48.05,48.05,0,0,1-48-48V151.49A64,64,0,0,1,40,88V40a8,8,0,0,1,8-8H72a8,8,0,0,1,0,16H56V88a48,48,0,0,0,48.64,48c26.11-.34,47.36-22.25,47.36-48.83V48H136a8,8,0,0,1,0-16h24a8,8,0,0,1,8,8V87.17c0,32.84-24.53,60.29-56,64.31V192a32,32,0,0,0,32,32h24a32.06,32.06,0,0,0,31.22-25,40,40,0,1,1,16.23.27ZM232,160a24,24,0,1,0-24,24A24,24,0,0,0,232,160Z"/></symbol><symbol id="i-hand-heart" viewBox="0 0 256 256"><path d="M230.33,141.06a24.34,24.34,0,0,0-18.61-4.77C230.5,117.33,240,98.48,240,80c0-26.47-21.29-48-47.46-48A47.58,47.58,0,0,0,156,48.75,47.58,47.58,0,0,0,119.46,32C93.29,32,72,53.53,72,80c0,11,3.24,21.69,10.06,33a31.87,31.87,0,0,0-14.75,8.4L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM119.46,48A31.15,31.15,0,0,1,148.6,67a8,8,0,0,0,14.8,0,31.15,31.15,0,0,1,29.14-19C209.59,48,224,62.65,224,80c0,19.51-15.79,41.58-45.66,63.9l-11.09,2.55A28,28,0,0,0,140,112H100.68C92.05,100.36,88,90.12,88,80,88,62.65,102.41,48,119.46,48ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9Z"/></symbol><symbol id="i-heart" viewBox="0 0 256 256"><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"/></symbol><symbol id="i-sun-horizon" viewBox="0 0 256 256"><path d="M240,152H199.55a73.54,73.54,0,0,0,.45-8,72,72,0,0,0-144,0,73.54,73.54,0,0,0,.45,8H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM72,144a56,56,0,1,1,111.41,8H72.59A56.13,56.13,0,0,1,72,144Zm144,56a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H208A8,8,0,0,1,216,200ZM72.84,43.58a8,8,0,0,1,14.32-7.16l8,16a8,8,0,0,1-14.32,7.16Zm-56,48.84a8,8,0,0,1,10.74-3.57l16,8a8,8,0,0,1-7.16,14.31l-16-8A8,8,0,0,1,16.84,92.42Zm192,15.16a8,8,0,0,1,3.58-10.73l16-8a8,8,0,1,1,7.16,14.31l-16,8a8,8,0,0,1-10.74-3.58Zm-48-55.16,8-16a8,8,0,0,1,14.32,7.16l-8,16a8,8,0,1,1-14.32-7.16Z"/></symbol></svg>
+<header class="bar">
+  <div class="wrap barwrap">
+    <a class="home" href="#top" id="homeLink" aria-label="Back to top"><svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg><span class="name"><span class="long">Novena for Healing</span><span class="short">Healing Novena</span></span></a>
+    <button class="iconbtn" id="sizeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
+    <button class="iconbtn" id="themeBtn" title="Switch light or dark"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
+    <div class="sizer" id="sizer" role="group" aria-label="Text size">
+      <button type="button" data-scale="1" aria-label="Normal text" style="font-size:15px">A</button>
+      <button type="button" data-scale="1.15" aria-label="Larger text" style="font-size:19px">A</button>
+      <button type="button" data-scale="1.35" aria-label="Largest text" style="font-size:24px">A</button>
+    </div>
+  </div>
+</header>
+<nav class="days" aria-label="The nine days">
+  <div class="wrap"><p class="dcap" id="dCap" aria-hidden="true"></p><ol class="track" id="track"></ol></div>
+</nav>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <a class="back" href="../"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>All novenas</a>
+    <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
+    <p class="kicker">Nine days of hope in Christ who heals</p>
+    <h1>Novena for the Healing of the Sick</h1>
+    <p class="sub">through the intercession of<br><span class="l2">St. Raphael, St. Camillus de Lellis &amp; St. Bernadette</span></p>
+    <p class="epi">“Heal me, O <span class="sc">Lord</span>, and I shall be healed; save me, and I shall be saved; for thou art my praise.”<span class="cite">Jeremiah 17:14 · RSV-CE</span></p>
+    <div class="faces" aria-hidden="true"><img src="img/raphael_face.jpg" alt=""><img src="img/camillus_face.jpg" alt=""><img src="img/bernadette_face.jpg" alt=""></div>
+  </div>
+
+  <div class="today" id="today">
+    <div class="today-top">
+      <div class="daynum" id="tNum">1<small>OF 9</small></div>
+      <div>
+        <h2 id="tTitle">Bringing Our Fear to Jesus</h2>
+        <p class="status" id="tStatus" aria-live="polite">Begin on any day. Each day takes about 10 minutes.</p>
+      </div>
+    </div>
+    <button class="cta" id="beginBtn" type="button"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-hands-praying"/></svg><span id="beginLabel">Pray Day 1</span></button>
+    <div class="startrow">
+      <label for="startDate">Started on</label>
+      <input type="date" id="startDate">
+      <button class="link" type="button" id="startToday">Start today</button>
+      <button class="link" type="button" id="resetAll">Reset</button>
+    </div>
+  </div>
+
+  <section id="prayer" aria-labelledby="prayHead">
+    <h2 class="h2" id="prayHead"><span id="prayHeadText">Pray Day 1</span><span class="n" id="prayHeadN">DAY 1 OF 9</span></h2>
+    <button class="iconbtn wake" id="wakeBtn" type="button" hidden aria-pressed="false"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg><span id="wakeLabel">Keep screen on while praying</span></button>
+    <p class="flow">Opening Prayer › Scripture &amp; Reflection › Prayer › Closing Prayer &amp; Memorare › Our Father · Hail Mary · Glory Be</p>
+
+    <ol class="steps">
+      <li class="step">
+        <p class="label"><span class="num">1</span>Opening Prayer</p>
+        <div class="read">
+          <p class="rubric">Pause for a moment of silence before God, then make the Sign of the Cross.</p>
+          <p>In the name of the Father, and of the Son, and of the Holy Spirit. <span class="resp">Amen.</span></p>
+          <p><em>Come, Holy Spirit, fill the hearts of Your faithful and kindle in them the fire of Your love.</em></p>
+          <p>Heavenly Father, You know the illness that N. is carrying: the pain and weariness of body and spirit, and the worry of all who love them. We bring this suffering to You, the Lord who heals, and we trust in Your loving care more than in our fear. Bless all who tend the sick. Today we ask St. Raphael, messenger of Your healing; St. Camillus de Lellis, servant of the sick; and St. Bernadette, patient in suffering, to join their prayers with ours before Your throne, through Christ our Lord. <span class="resp">Amen.</span></p>
+        </div>
+      </li>
+
+      <li class="step">
+        <p class="label"><span class="num">2</span>Scripture &amp; Reflection</p>
+        <div class="dayicon" id="dIconLabel"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-hands-praying"/></svg><span>DAY 1</span></div>
+        <h3 class="daytitle" id="dTitle">Bringing Our Fear to Jesus</h3>
+        <blockquote class="passage" id="dVerse"></blockquote>
+        <p class="ref"><span id="dRef"></span> · RSV-CE</p>
+        <p class="refl" id="dRefl"></p>
+        <p class="refl refl2" id="dMore"></p>
+      </li>
+
+      <li class="step pray">
+        <p class="label"><span class="num">3</span>Pray</p>
+        <div class="read">
+          <p id="dPrayer"></p>
+          <p class="rubric">(Name your intention.) <span class="resp">Amen.</span></p>
+        </div>
+        <div class="intent">
+          <label for="intention">Our intention</label>
+          <textarea id="intention" placeholder="Write the name of the person you are praying for and the healing you ask."></textarea>
+          <p class="hint" id="storeHint">Saved only on this phone. Nobody else can see it.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <p class="label"><span class="num">4</span>Closing Prayer</p>
+        <div class="read litany">
+          <p><img class="av" src="img/mary_face.jpg" alt="">Our Lady of Lourdes, <span class="resp">pray for us.</span></p>
+          <p><img class="av" src="img/raphael_face.jpg" alt="">St. Raphael, <span class="resp">pray for us.</span></p>
+          <p><img class="av" src="img/camillus_face.jpg" alt="">St. Camillus de Lellis, <span class="resp">pray for us.</span></p>
+          <p><img class="av" src="img/bernadette_face.jpg" alt="">St. Bernadette, <span class="resp">pray for us.</span></p>
+        </div>
+        <div class="read" style="margin-top:.6em">
+          <p>Lord Jesus, Divine Physician, lay Your healing hand on N. and on all the sick. Guide those who care for them, give us strength and peace, and let Your holy will be done. <span class="resp">Amen.</span></p>
+        </div>
+        <p class="sub-h">Memorare</p>
+        <div class="read">
+          <p>Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to your protection, implored your help, or sought your intercession was left unaided. Inspired by this confidence, I fly unto you, O Virgin of virgins, my Mother. To you do I come; before you I stand, sinful and sorrowful. O Mother of the Word Incarnate, despise not my petitions, but in your mercy hear and answer me. <span class="resp">Amen.</span></p>
+        </div>
+      </li>
+
+      <li class="step">
+        <p class="label"><span class="num">5</span>Pray together</p>
+        <details class="prayer" open><summary>Our Father <svg class="i" aria-hidden="true" focusable="false"><use href="#i-caret-down"/></svg></summary>
+          <div class="read"><p>Our Father, who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. <span class="resp">Amen.</span></p></div>
+        </details>
+        <details class="prayer" open><summary>Hail Mary <svg class="i" aria-hidden="true" focusable="false"><use href="#i-caret-down"/></svg></summary>
+          <div class="read"><p>Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. <span class="resp">Amen.</span></p></div>
+        </details>
+        <details class="prayer" open><summary>Glory Be <svg class="i" aria-hidden="true" focusable="false"><use href="#i-caret-down"/></svg></summary>
+          <div class="read"><p>Glory be to the Father, and to the Son, and to the Holy Spirit, as it was in the beginning, is now, and ever shall be, world without end. <span class="resp">Amen.</span></p></div>
+        </details>
+        <p class="rubric" style="margin-top:12px">Close with the Sign of the Cross.</p>
+<div class="todaystep"><p class="tslabel"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-footprints"/></svg>Today’s step</p><p id="dStep"></p></div>
+        <button class="markdone" id="markBtn" type="button"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span id="markLabel">Mark Day 1 as prayed</span></button>
+        <div class="daynav">
+          <button type="button" id="prevBtn">‹ Day 0</button>
+          <button type="button" id="nextBtn">Day 2 ›</button>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="howHead">
+    <h2 class="h2" id="howHead">How to Pray This Novena</h2>
+    <ol class="how">
+      <li>Pause for a moment of silence before God.</li>
+      <li>Pray the <strong>Opening Prayer</strong>, beginning with the Sign of the Cross.</li>
+      <li>Read the day’s <strong>Scripture</strong> and reflection, then pray the day’s <strong>prayer</strong>, naming your intention.</li>
+      <li>Pray the <strong>Closing Prayer</strong> and the <strong>Memorare</strong>.</li>
+      <li>End with one Our Father, one Hail Mary and one Glory Be, and the Sign of the Cross. Then take <strong>today’s step</strong> with you.</li>
+    </ol>
+    <div class="tips" style="margin-top:18px">
+      <div class="tip"><h3>As a family</h3><p>One person leads each part; all respond <span class="resp">pray for us</span> and <span class="resp">Amen</span>, and say the closing prayers together. The prayers say “we” for the family; if you pray alone, say “I”.</p></div>
+      <div class="tip"><h3>Alongside prayer</h3><p>If you can, go to Confession and attend Mass during these nine days. Ask a priest about the Anointing of the Sick, which is for anyone seriously ill or facing major surgery, not only the dying. Pair prayer with good care: follow medical advice, offer practical help (Day&nbsp;6), and be wary of anyone who promises a sure cure. At “N.”, say the sick person’s name; if you are praying for yourself, say “me”.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="saintsHead">
+    <h2 class="h2" id="saintsHead">The 3 Intercessors</h2>
+    <div class="saints">
+      <article class="saint"><img class="portrait" src="img/raphael.jpg" alt="Painting: the Archangel Raphael, by Giovanni Biliverti" width="92" height="115"><div><h3>St. Raphael</h3><p class="meta">Archangel · Feast · Sep 29 (with Sts. Michael &amp; Gabriel)</p><p class="pat">Patron of healing &amp; the sick</p><p>Archangel of the Book of Tobit, one of the seven holy angels who present the prayers of the saints. His name means “God heals”; he guided young Tobias and brought healing to Tobit’s eyes.</p></div></article>
+      <article class="saint"><img class="portrait" src="img/camillus.jpg" alt="Painting: St. Camillus de Lellis wearing the red cross of his order, by Cristóbal Lozano" width="92" height="115"><div><h3>St. Camillus de Lellis</h3><p class="meta">1550–1614 · Feast · Jul 14</p><p class="pat">Patron of the sick, nurses &amp; hospitals</p><p>Soldier and gambler, converted in 1575, who gave his life to the sick. Though a leg wound troubled him for the rest of his life, he founded the Camillians, the Ministers of the Sick.</p></div></article>
+      <article class="saint"><img class="portrait" src="img/bernadette.jpg" alt="Photograph: St. Bernadette Soubirous in 1863" width="92" height="115"><div><h3>St. Bernadette</h3><p class="meta">1844–1879 · Feast · Apr 16</p><p class="pat">Patron of the sick</p><p>Miller’s daughter to whom Our Lady appeared at Lourdes in 1858. As a Sister of Charity at Nevers she bore long illness with patience, and died at 35.</p></div></article>
+    </div>
+  </section>
+
+  <div class="close">
+    <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
+    <blockquote>“Beloved, I pray that all may go well with you and that you may be in health; I know that it is well with your soul.”</blockquote>
+    <span class="cite">3 John 2 · RSV-CE</span>
+    <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
+    <p class="note credits">Images: Giovanni Biliverti, <em>The Archangel Raphael Refusing Tobias’s Gift</em>, early 17th century, Palatine Gallery, Pitti Palace, Florence · Cristóbal Lozano, <em>The Ecstasy of St. Camillus de Lellis</em>, 18th century · St. Bernadette Soubirous, photograph by Billard-Perrin, 1863 · Virgilio Tojetti, <em>Our Lady of Lourdes</em>, 1877. Public domain, via Wikimedia Commons.</p>
+  </div>
+</main>
+<p class="more"><a href="../">More novenas</a></p>
+<footer id="storeFoot">Your progress, start date and intention are kept only on this device.</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var DAYS = [{"title": "Bringing Our Fear to Jesus", "ref": "John 11:3", "verse": "So the sisters sent to him, saying, “Lord, he whom you love is ill.”", "refl": "Martha and Mary did not send Jesus a plan or a demand. They sent Him the plain truth: the one You love is ill. We can begin there too. Illness frightens us: the waiting for results, the pain we cannot take away, the questions no one can answer yet. We do not need to hide that fear or dress it up. We simply bring the one we love to Jesus, who loves them even more than we do.", "more": "Fear in the face of illness is not a failure of faith. Grieving for His friend Lazarus, Jesus Himself wept (John 11:35). He does not ask us to pretend to be strong. St. Bernadette knew sickness from childhood: she survived cholera as a girl and lived with asthma for the rest of her life. Like her, we can bring our weakness to God honestly, and let Him meet us there.", "prayer": "Heavenly Father, You know N. by name, and You know how heavy this illness is for them and for all of us who love them. We are afraid, and we tell You so. With Martha and Mary, we bring N. to Jesus with simple trust. Through the prayers of St. Raphael, St. Camillus and St. Bernadette, calm our fears, comfort N. in body and spirit, and help us take each day as it comes.", "step": "Write the name of the person you are praying for on a card, and keep it where you pray these nine days."}, {"title": "Carried by Friends", "ref": "Mark 2:3–4", "verse": "And they came, bringing to him a paralytic carried by four men. And when they could not get near him because of the crowd, they removed the roof above him; and when they had made an opening, they let down the pallet on which the paralytic lay.", "refl": "The paralyzed man could not reach Jesus on his own, so his friends carried him, and when the crowd blocked the way, they climbed up and opened the roof. Mark tells us that Jesus saw their faith. When someone we love is too tired or in too much pain to pray, our prayer can carry them. This novena is our stretcher: nine days of bringing them, together and with love, to the feet of the Lord who heals.", "more": "St. Camillus de Lellis knew what it meant to carry the sick. When the Tiber flooded Rome in 1598, he and his brothers went into the Hospital of the Holy Spirit and carried the patients to safety. Intercession is like that: we lend our strength to someone who has little left. No one needs to pray alone, and no sick person is ever forgotten by God.", "prayer": "Lord Jesus, as four friends once carried a paralyzed man to You, we carry N. to You today. When they are too weary to pray, let our prayer be their stretcher, and let them feel the love of everyone who prays for them. Through the prayers of St. Camillus, who carried the sick in their need, and of St. Raphael and St. Bernadette, keep us faithful in bringing N. to You every day.", "step": "Send N. or their family a short message, call or visit today, so they know N. is being prayed for."}, {"title": "Not Alone in the Valley", "ref": "Psalm 23:4", "verse": "Even though I walk through the valley of the shadow of death, / I fear no evil; / for thou art with me; / thy rod and thy staff, / they comfort me.", "refl": "The psalm does not promise that there will be no valley. It promises company in it. A hospital corridor, a sleepless night, a long recovery, a diagnosis we did not want: these can feel like dark valleys. Yet the Good Shepherd walks them with us. In the Book of Tobit, God sent St. Raphael to walk beside young Tobias on a long and dangerous road, though Tobias did not yet know who his companion really was.", "more": "Tobias learned only at the end of the journey that his companion was an angel sent by God (Tobit 12). Often we, too, recognize God’s presence only when we look back. For now, it is enough to trust that Christ is with the sick in their pain and with all who love them. Even the last valley is not walked alone: Christ has passed through death and opened the way to eternal life.", "prayer": "Good Shepherd, walk with N. through this dark valley. When the road is long and the way ahead is unclear, let them sense that You are near. As St. Raphael guided Tobias on his journey, send Your holy angels to guard N. and all who care for them. With St. Camillus and St. Bernadette praying for us, drive away our fear and fill our hearts with quiet trust in You.", "step": "Pray Psalm 23 slowly today, for N. or with them, and rest for a moment on the words “for thou art with me.”"}, {"title": "Asking Boldly for Healing", "ref": "Mark 1:40–41", "verse": "And a leper came to him beseeching him, and kneeling said to him, “If you will, you can make me clean.” Moved with pity, he stretched out his hand and touched him, and said to him, “I will; be clean.”", "refl": "The leper kneels and asks plainly, with confidence and humility together: “If you will, you can.” Jesus is moved with pity, and He touches the man no one else would touch. We, too, may ask boldly for healing. God wants us to bring Him the desires of our hearts. So today we ask, without holding back, that the one we love be healed in body, and we leave the “if you will” in His loving hands.", "more": "At Lourdes in 1858, Our Lady told St. Bernadette to drink at the spring and wash there; she scraped the muddy ground and a spring began to flow. Some pilgrims have been cured there; many more have gone home with peace. If healing does not come, it is never a sign of weak faith: St. Paul begged three times to be freed of his affliction, and was answered with grace (2 Corinthians 12:8–9).", "prayer": "Lord Jesus, You were moved with pity and stretched out Your hand to heal. We ask You boldly: if it is Your will, heal N. of this illness and restore their health. Bless every treatment and every medicine they receive. With Our Lady of Lourdes, Health of the Sick, and with St. Bernadette, St. Raphael and St. Camillus praying for us, we place our request in Your hands with confidence and love.", "step": "Ask your parish, a prayer group or your family to remember N. in their prayers this week, or have a Mass offered for N."}, {"title": "Skill for Doctors & Nurses", "ref": "Sirach 38:13–14", "verse": "There is a time when success lies in the hands of physicians, for they too will pray to the Lord that he should grant them success in diagnosis and in healing, for the sake of preserving life.", "refl": "Sirach honors physicians as servants of the Lord, and reminds us that they, too, need prayer. God often heals through ordinary means: an accurate diagnosis, the right medicine, a careful surgeon, a nurse who notices a change in the night. Faith and medicine are not rivals. When we pray for the doctors and nurses who care for the one we love, we join our prayer to their skill and ask God to guide their minds and hands.", "more": "In the Book of Tobit, St. Raphael did not heal with a word alone. He told Tobias to keep the gall of a fish, and when Tobias put it on his father’s eyes, Tobit’s sight returned (Tobit 11). God used a remedy, a son’s care and an angel’s guidance together. This is one reason St. Raphael has long been invoked for physicians and for all who work for healing.", "prayer": "Lord, Giver of life, we pray for the doctors, nurses and all who care for N. Give them wisdom in diagnosis, skill in treatment, and gentleness in every word and touch. Through the prayers of St. Raphael, companion of Tobias, St. Camillus, patron of nurses and hospitals, and St. Bernadette, guide their decisions, protect them from tiredness and mistakes, and make their work an instrument of Your healing for N. and for all the sick.", "step": "Pray by name for one doctor, nurse or health worker caring for N., and thank someone in health care this week."}, {"title": "Strength for Caregivers", "ref": "Galatians 6:2", "verse": "Bear one another’s burdens, and so fulfil the law of Christ.", "refl": "Illness is never carried by one person alone. Around every sick person there are others: a spouse at the bedside, parents or children rearranging their days, friends who drive, cook and sit through long waits. St. Paul says that bearing one another’s burdens is how we live the law of Christ. Caregiving is holy work, often hidden and tiring. Today we pray for everyone who looks after the one we love, and ask God to strengthen them.", "more": "St. Camillus asked his brothers to care for each sick person with the tenderness of a mother caring for her only sick child. He served the sick for decades while in pain himself, so he knew how tiring that love can be. Caregivers need care too: rest, food, someone to talk to, and time to pray. Accepting help is not weakness, and a tired caregiver’s quiet faithfulness is itself a prayer God sees.", "prayer": "Loving Father, bless all who care for N.: those at the bedside, those who cook and drive and wait, and those who pray from far away. Renew their strength when they are tired, their patience when they are stretched, and their hope when they are discouraged. With St. Camillus, servant of the sick, and St. Raphael and St. Bernadette praying for us, help us bear this burden together in love.", "step": "Offer a caregiver one practical help today: a meal, an errand, or an hour so they can rest."}, {"title": "Christ Carries Our Weakness", "ref": "Matthew 8:17", "verse": "This was to fulfil what was spoken by the prophet Isaiah, “He took our infirmities and bore our diseases.”", "refl": "Jesus did not keep His distance from human suffering. He touched the sick, and on the Cross He took our pain into Himself. No sickness is outside His reach, and no sick person suffers alone. Those who are ill can join their pain to His and offer it with love for others. This does not make suffering good in itself, but in Christ it is never wasted. It can become a prayer, even on days when words will not come.", "more": "St. Bernadette was not cured of her own illnesses. When she could no longer work, she said that her work now was to be sick, and she offered her sufferings for sinners. On the feast of Our Lady of Lourdes in 1984, Pope St. John Paul II taught that suffering joined to Christ shares in His work of redemption (Salvifici Doloris). We may pray for healing and offer our pain at the same time.", "prayer": "Lord Jesus, You took our infirmities and bore our diseases. Stay close to N. in every moment of pain, especially in long nights and anxious waiting, and give them the grace to join their suffering to Yours. Through the prayers of St. Bernadette, who offered her illness with love, and of St. Raphael and St. Camillus, give N. courage and peace. We trust that nothing they endure is wasted in Your loving hands.", "step": "Pause before a crucifix today, and offer Jesus one pain or worry of your own for N."}, {"title": "Healing of Heart & Spirit", "ref": "Psalm 147:3", "verse": "He heals the brokenhearted, / and binds up their wounds.", "refl": "Some wounds do not show on a scan: fear, discouragement, anger, the loneliness of a long illness, the strain it puts on a family. The Lord who heals bodies also binds up hearts. Today we ask for that deeper healing, for the one we love and for ourselves. Healing of the spirit may come before healing of the body, or alongside it, or as His gift even when the body does not recover. God’s care reaches every part of us.", "more": "The greatest healing in St. Camillus’s life happened inside. A soldier with a quick temper and a gambling habit, he was converted in 1575 and gave the rest of his life to God and the sick. The wound in his leg troubled him until he died, yet his heart was made new. The Church offers us this healing too, above all in Confession and in the Anointing of the Sick.", "prayer": "Lord, You heal the brokenhearted and bind up their wounds. Heal N. in spirit as well as in body: free them from fear and discouragement, and fill them with Your peace. Heal our hearts, too, of worry, impatience and anything that divides us, and make our home a place of peace. Through the prayers of St. Camillus, whose heart You made new, and of St. Raphael and St. Bernadette, make us whole in You.", "step": "If you can, go to Confession this week, and gently ask N. or their family whether they would like a priest to bring Communion or the Anointing of the Sick."}, {"title": "Gratitude & Trust in God’s Will", "ref": "Romans 8:28", "verse": "We know that in everything God works for good with those who love him, who are called according to his purpose.", "refl": "St. Paul does not say that everything that happens is good. He says that God is at work for good in everything, even in illness. We end these nine days not by demanding an outcome, but by giving thanks, because God has heard every prayer and answers in the way that is truly best. With Our Lady of Lourdes, St. Raphael, St. Camillus and St. Bernadette, we place the one we love in the hands of a faithful Father.", "more": "Looking back over these nine days, we may notice small graces: a good night’s sleep, a kind nurse, a clearer diagnosis, a calmer heart, a family drawn closer. Before St. Raphael told Tobit and Tobias who he was, he urged them to praise God and give thanks for all He had done (Tobit 12:6). Trusting God’s will does not mean we stop praying for healing; it means we keep praying in peace.", "prayer": "Lord, on this ninth day we thank You for Your faithfulness and for every grace, seen and unseen, that You have given N. and all of us. Thank you, Our Lady of Lourdes, St. Raphael, St. Camillus and St. Bernadette, for carrying our prayers before Jesus. We entrust N.’s health, their healing and their whole life to Your loving will, trusting that You will give what is truly good for N. and for us.", "step": "Write down three graces you noticed during these nine days, and thank God for them together."}];
+  var ICONS = ["hands-praying", "users", "mountains", "hand", "stethoscope", "hand-heart", "cross", "heart", "sun-horizon"];
+  var KEY = "novena-healing", MODEKEY = "novenas-mode", canStore = true;
+  function load(){ try{ var v = localStorage.getItem(KEY); return v ? JSON.parse(v) : {}; }catch(e){ canStore = false; return {}; } }
+  function save(s){ if (!canStore) return; try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){ canStore = false; noteStore(); } }
+  var state = load(); if (!state || typeof state !== "object") state = {};
+  state.done = Array.isArray(state.done) ? state.done : [];
+  var $ = function(id){ return document.getElementById(id); };
+  var root = document.documentElement;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function noteStore(){
+    if (canStore) return;
+    $("storeHint").textContent = "This page cannot save on this phone, so the intention clears when you close it.";
+    $("storeFoot").textContent = "This page cannot save here, so progress resets when you close it.";
+  }
+  noteStore();
+
+  /* theme: follow the phone (or the host page) until someone picks one */
+  function isDark(){ try{ return getComputedStyle(root).colorScheme.indexOf("dark") >= 0; }catch(e){ return false; } }
+  function paintTheme(){
+    var gm = null; try{ gm = localStorage.getItem(MODEKEY); }catch(e){}
+    var md = state.mode || gm;
+    if (md) root.setAttribute("data-mode", md); else root.removeAttribute("data-mode");
+    var d = isDark();
+    $("themeIcon").firstElementChild.setAttribute("href", d ? "#i-sun" : "#i-moon");
+    $("themeLabel").textContent = d ? "Light" : "Dark";
+    $("themeBtn").setAttribute("aria-label", d ? "Switch to light mode" : "Switch to dark mode");
+  }
+  $("themeBtn").addEventListener("click", function(){ state.mode = isDark() ? "light" : "dark"; save(state); try{ localStorage.setItem(MODEKEY, state.mode); }catch(e){} paintTheme(); });
+  if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", paintTheme); }
+  try{ new MutationObserver(paintTheme).observe(root, {attributes:true, attributeFilter:["data-theme"]}); }catch(e){}
+
+  /* text size */
+  var SCALES = [1, 1.15, 1.35], sizeBtns = [].slice.call(document.querySelectorAll("#sizer button"));
+  function paintScale(){
+    var s = SCALES.indexOf(state.scale) >= 0 ? state.scale : 1;
+    root.style.setProperty("--scale", s);
+    sizeBtns.forEach(function(b){ b.setAttribute("aria-pressed", String(+b.dataset.scale === s)); });
+  }
+  function closeSizer(){ $("sizer").classList.remove("open"); $("sizeBtn").setAttribute("aria-expanded", "false"); }
+  $("sizeBtn").addEventListener("click", function(e){ e.stopPropagation(); var o = $("sizer").classList.toggle("open"); $("sizeBtn").setAttribute("aria-expanded", String(o)); });
+  sizeBtns.forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); state.scale = +b.dataset.scale; save(state); paintScale(); }); });
+  document.addEventListener("click", closeSizer);
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && $("sizer").classList.contains("open")){ closeSizer(); $("sizeBtn").focus(); } });
+
+  /* which day */
+  function todayISO(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+  function dayFromStart(){
+    if (!state.start) return null;
+    var a = new Date(state.start + "T00:00:00"), b = new Date(todayISO() + "T00:00:00");
+    return Math.round((b - a) / 86400000) + 1;
+  }
+  function isDone(i){ return state.done.indexOf(i) >= 0; }
+  function firstOpen(){ for (var i = 1; i <= 9; i++) if (!isDone(i)) return i; return 9; }
+  function suggested(){ var n = dayFromStart(); if (n === null || n > 9) return firstOpen(); return Math.max(n, 1); }
+  function fmt(iso){ try{ return new Date(iso + "T00:00:00").toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}); }catch(e){ return iso; } }
+
+  var sel = suggested();
+  var m = /^#day-([1-9])$/.exec(location.hash);
+  if (m){ sel = +m[1]; try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} }
+
+  /* the nine day buttons, built once so focus stays put */
+  var chips = [];
+  for (var i = 1; i <= 9; i++){
+    var li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button"; b.textContent = i;
+    (function(k){ b.addEventListener("click", function(){
+      var reading = $("prayer").getBoundingClientRect().top < 140;
+      choose(k);
+      if (reading) $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+    }); })(i);
+    li.appendChild(b); $("track").appendChild(li); chips.push(b);
+  }
+
+  var unarm = null, shownDay = 0;
+  function render(){
+    if (unarm){ clearTimeout(unarm); unarm = null; }
+    var d = DAYS[sel-1], done = isDone(sel), n = dayFromStart(), count = state.done.length, st;
+    $("tNum").firstChild.nodeValue = sel;
+    $("tTitle").textContent = d.title;
+    $("dCap").innerHTML = "<b>DAY " + sel + "</b> · " + esc(d.title) + (done ? " · prayed" : (sel === n ? " · today" : ""));
+    if (count === 9) st = "All nine days prayed. Thanks be to God.";
+    else if (n !== null && n > 9) st = "Your nine days have passed. Finish any day you missed, or reset to begin again.";
+    else if (n !== null && n < 1) st = "Your novena begins on " + fmt(state.start) + ".";
+    else if (n !== null && sel === n && !done && firstOpen() < n) st = "Today is Day " + n + ". Pray it today, or catch up on Day " + firstOpen() + " first. Either is fine.";
+    else if (n !== null && sel === n) st = (done ? "Today’s prayer is done. " : "Today is Day " + n + ". ") + count + " of 9 days prayed.";
+    else st = (done ? "Prayed. " : "") + count + " of 9 days prayed." + (n === null ? " Set a start date to follow the days on the calendar." : "");
+    $("tStatus").textContent = st;
+    $("beginLabel").textContent = done ? "Pray Day " + sel + " again" : "Pray Day " + sel;
+    $("prayHeadText").textContent = "Pray Day " + sel;
+    $("prayHeadN").textContent = "DAY " + sel + " OF 9";
+    var lab = $("dIconLabel"); lab.querySelector("use").setAttribute("href", "#i-" + ICONS[sel-1]); lab.querySelector("span").textContent = "DAY " + sel;
+    $("dTitle").textContent = d.title; $("dVerse").innerHTML = fmtVerse(d.verse); $("dRef").textContent = d.ref; $("dMore").textContent = d.more; $("dStep").textContent = d.step; 
+    $("dRefl").textContent = d.refl; $("dPrayer").textContent = d.prayer;
+    var mb = $("markBtn"); mb.classList.toggle("is-done", done); mb.setAttribute("aria-pressed", String(done));
+    $("markLabel").textContent = done ? "Day " + sel + " prayed" : "Mark Day " + sel + " as prayed";
+    $("prevBtn").disabled = sel === 1; $("prevBtn").textContent = sel > 1 ? "‹ Day " + (sel-1) : "‹";
+    $("nextBtn").disabled = sel === 9; $("nextBtn").textContent = sel < 9 ? "Day " + (sel+1) + " ›" : "›";
+    $("startDate").value = state.start || "";
+    chips.forEach(function(c, j){
+      var k = j + 1, dn = isDone(k);
+      c.classList.toggle("done", dn); c.classList.toggle("sel", k === sel); c.classList.toggle("today", k === n);
+      c.setAttribute("aria-label", "Day " + k + ": " + DAYS[j].title + (k === n ? ", today" : "") + (dn ? ", prayed" : ""));
+      if (k === sel) c.setAttribute("aria-current", "step"); else c.removeAttribute("aria-current");
+    });
+  }
+  function esc(t){ return t.replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+  function fmtVerse(t){ var h = esc(t).replace(/LORD/g, '<span class="sc">Lord</span>'); var parts = h.split(" / "); return parts.length > 1 ? parts.map(function(l){ return '<span class="ln">' + l + '</span>'; }).join("") : h; }
+  function choose(k){ sel = k; render(); }
+  function toast(msg){ var el = $("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove("show"); }, 2400); }
+  function goPrayer(){ $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"}); }
+
+  $("beginBtn").addEventListener("click", goPrayer);
+  $("homeLink").addEventListener("click", function(e){ e.preventDefault(); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); });
+  $("prevBtn").addEventListener("click", function(){ if (sel > 1){ choose(sel-1); $("prayer").scrollIntoView(); } });
+  $("nextBtn").addEventListener("click", function(){ if (sel < 9){ choose(sel+1); $("prayer").scrollIntoView(); } });
+  $("markBtn").addEventListener("click", function(){
+    if (isDone(sel)){
+      if (!unarm){ $("markLabel").textContent = "Tap again to unmark Day " + sel; unarm = setTimeout(function(){ unarm = null; render(); }, 3000); return; }
+      state.done.splice(state.done.indexOf(sel), 1); save(state); render(); return;
+    }
+    state.done.push(sel); if (!state.start && sel === 1) state.start = todayISO();
+    save(state); render();
+    toast(state.done.length === 9 ? "All nine days prayed. Thanks be to God." : "Day " + sel + " prayed. God bless you.");
+  });
+  $("startDate").addEventListener("change", function(e){ state.start = e.target.value || null; save(state); sel = suggested(); render(); });
+  $("startToday").addEventListener("click", function(){ state.start = todayISO(); save(state); sel = suggested(); render(); });
+  var armT = null;
+  $("resetAll").addEventListener("click", function(){
+    var r = $("resetAll");
+    if (!armT){ r.textContent = "Tap again to clear"; armT = setTimeout(function(){ armT = null; r.textContent = "Reset"; }, 3500); return; }
+    clearTimeout(armT); armT = null; r.textContent = "Reset";
+    state.done = []; state.start = null; save(state); sel = 1; render(); toast("Progress cleared.");
+  });
+  var it = $("intention"); it.value = state.intention || "";
+  it.addEventListener("input", function(){ state.intention = it.value; save(state); });
+  window.addEventListener("hashchange", function(){ var h = /^#day-([1-9])$/.exec(location.hash); if (h) choose(+h[1]); });
+
+  /* a page left open overnight moves to the new day */
+  var lastDay = todayISO();
+  function refreshDay(){ if (todayISO() !== lastDay){ lastDay = todayISO(); sel = suggested(); render(); } }
+  document.addEventListener("visibilitychange", function(){ if (!document.hidden) refreshDay(); });
+  window.addEventListener("pageshow", refreshDay);
+  setInterval(refreshDay, 60000);
+
+  /* keep the screen awake, only where the phone and page allow it */
+  var lock = null, want = false, wb = $("wakeBtn");
+  function paintWake(){ wb.setAttribute("aria-pressed", String(want)); $("wakeLabel").textContent = want ? "Screen stays on" : "Keep screen on while praying"; }
+  function acquire(){ navigator.wakeLock.request("screen").then(function(l){ lock = l; l.addEventListener("release", function(){ lock = null; }); })
+    .catch(function(){ want = false; paintWake(); wb.hidden = true; }); }
+  var allowed = true; try{ if (document.featurePolicy) allowed = document.featurePolicy.allowsFeature("screen-wake-lock"); }catch(e){}
+  if ("wakeLock" in navigator && allowed){
+    wb.hidden = false;
+    wb.addEventListener("click", function(){ want = !want; paintWake(); if (want) acquire(); else if (lock) lock.release(); });
+    document.addEventListener("visibilitychange", function(){ if (!document.hidden && want && !lock) acquire(); });
+  }
+
+  paintTheme(); paintScale(); render();
+})();
+</script>
+</body>
+</html>
