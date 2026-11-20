@@ -183,7 +183,8 @@ def page(n, mode):
         ])
         back = ('    <a class="back" href="../index.html"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
                 'All novenas</a>\n')
-        foot = '<p class="more"><a href="../index.html">More novenas</a></p>\n'
+        foot = ('<p class="more"><a href="../index.html">More novenas</a><span aria-hidden="true">&ensp;·&ensp;</span>'
+                '<a href="../about/index.html">What is a novena?</a></p>\n')
         title_tag = esc(n["barTitle"])
         home = ('href="../index.html" aria-label="All novenas"', '<svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>')
     else:
@@ -286,6 +287,95 @@ def library(novenas, search=None):
     return t
 
 
+ABOUT_DIR = os.path.join(ROOT, "pages", "about")
+
+
+def about(novenas, mode="site"):
+    """the About page: what a novena is, how to pray one, the saints. mode 'artifact' inlines images and links to the live site."""
+    t = read(os.path.join(ROOT, "templates", "about.html"))
+    pub = [n for n in novenas if n.get("status") == "published"]
+    live = SITE_URL + "/"
+    up = "../" if mode == "site" else live
+
+    def img(rel):  # rel: path under site/ (about images are 'about/img/x.jpg')
+        if mode == "artifact":
+            src = os.path.join(ABOUT_DIR, "img", rel.split("/")[-1]) if rel.startswith("about/") else \
+                os.path.join(ROOT, "novenas", rel.split("/")[0], "img", rel.split("/")[-1])
+            with open(src, "rb") as f:
+                return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
+        return rel[len("about/"):] if rel.startswith("about/") else "../" + rel
+
+    t = re.sub(r"\{\{IMG:([a-z0-9-]+)\}\}", lambda m: img("about/img/%s.jpg" % m.group(1)), t)
+
+    # each saint once, with every novena that asks their prayers
+    people, order = {}, []
+    for n in pub:
+        for s in n["saints"]:
+            if s["id"] not in people:
+                people[s["id"]] = {"s": s, "faceof": n["slug"], "novenas": []}; order.append(s["id"])
+            people[s["id"]]["novenas"].append(n)
+
+    def card_title(n):
+        return n.get("cardTitle") or re.sub(r"^Novena for (the )?", "", n["title"])
+
+    def pray(m):
+        p = people.get(m.group(1))
+        if not p:
+            return ""
+        n = p["novenas"][0]
+        return ('<a class="pray" href="%s%s/index.html">Pray with him: %s<svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>'
+                % (up, n["slug"], esc(card_title(n))))
+    t = re.sub(r"\{\{PRAY:([a-z0-9-]+)\}\}", pray, t)
+
+    rows = []
+    for sid in order:
+        p = people[sid]; s = p["s"]; first = p["novenas"][0]
+        names = " · ".join(esc(card_title(n)) for n in p["novenas"])
+        rows.append('      <li><a href="%s%s/index.html"><img src="%s" alt="" width="56" height="56" loading="lazy"><span><span class="nm">%s</span>'
+                    '<span class="pt">%s</span><span class="nv">%s</span></span></a></li>' % (
+                        up, first["slug"], img("%s/img/%s_face.jpg" % (p["faceof"], sid)), esc(s["name"] + ("" if re.search(r"\d", s["dates"]) else " the " + s["dates"])), esc(s["patron"]), names))
+    t = t.replace("{{PEOPLE}}", "\n".join(rows))
+
+    url = SITE_URL + "/about/"
+    if mode == "site":
+        head = "\n".join([
+            '<meta property="og:type" content="website">',
+            '<meta property="og:site_name" content="Catholic Novenas">',
+            '<meta property="og:url" content="%s">' % url,
+            '<meta property="og:title" content="What is a novena? | Catholic Novenas">',
+            '<meta property="og:description" content="What a novena is, how to pray one, and why Catholics ask the saints to pray for us.">',
+            '<meta property="og:image" content="%sog.jpg?v=%s">' % (live, og_ver(os.path.join(ROOT, "site", "og.jpg"))),
+            '<meta property="og:image:alt" content="Catholic Novenas: pray one day at a time">',
+            '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
+            '<meta name="twitter:card" content="summary_large_image">',
+            '<link rel="canonical" href="%s">' % url,
+            '<link rel="icon" href="../favicon.svg" type="image/svg+xml">',
+            '<link rel="apple-touch-icon" href="../apple-touch-icon.png">',
+            '<link rel="manifest" href="../manifest.webmanifest">',
+        ])
+    else:
+        head = ""
+    t = t.replace("{{HEAD_META}}", head).replace("{{HOME_HREF}}", up + "index.html" if mode == "site" else live)
+    t = t.replace("{{FONTS}}", local_fonts("../") if mode == "site" else GOOGLE_FONTS)
+    t = t.replace("{{SW}}", sw_register("../") if mode == "site" else "")
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-left", "arrow-right"]))
+    left = re.findall(r"\{\{[A-Z0-9_:a-z-]+\}\}", t)
+    assert not left, left
+    return t
+
+
+def build_about(novenas, site):
+    d = os.path.join(site, "about")
+    if os.path.isdir(d):
+        shutil.rmtree(d)
+    os.makedirs(os.path.join(d, "img"))
+    for f in os.listdir(os.path.join(ABOUT_DIR, "img")):
+        shutil.copy(os.path.join(ABOUT_DIR, "img", f), os.path.join(d, "img", f))
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+        f.write(about(novenas))
+    print("built about")
+
+
 def build_site(search=None):
     novenas = load_novenas()
     site = os.path.join(ROOT, "site")
@@ -307,6 +397,7 @@ def build_site(search=None):
     with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
         f.write(library(novenas, search))
     print("built library with", sum(1 for n in novenas if n.get("status") == "published"), "published novenas")
+    build_about(novenas, site)
     build_sw(site)
 
 

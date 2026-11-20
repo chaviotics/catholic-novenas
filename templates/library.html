@@ -57,6 +57,20 @@ svg.i{width:1em;height:1em;fill:currentColor;flex:none}
 .bar .mark{color:var(--wine);font-size:22px}
 .bar .name{font-family:var(--display);font-weight:600;font-size:19px;color:var(--wine);flex:1}
 .bar .spacer{flex:1}
+.navlink{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:999px;color:var(--wine);font-weight:600;font-size:16px;text-decoration:none}
+.navlink:hover{background:var(--wash)}
+.h2 .more{font-family:var(--body);font-size:calc(15.5px * var(--scale));font-weight:600;white-space:nowrap;text-underline-offset:3px}
+.faq-h{font-family:var(--display);font-weight:700;font-size:calc(22px * var(--scale));color:var(--ink);margin:28px 0 8px}
+.faq{border-top:1px solid var(--rule)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:10px 2px;cursor:pointer;list-style:none;font-size:calc(17.5px * var(--scale));font-weight:600;color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg) translate(-2px,-2px);transition:transform .15s}
+.faq details[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
+.faq summary:hover{color:var(--wine)}
+.faq p{margin:0 0 14px;padding-right:24px;font-size:calc(17px * var(--scale));line-height:1.5}
+.foot-links{margin:0 0 14px;font-size:15px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;text-underline-offset:3px}
 .iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);cursor:pointer;font:inherit;font-size:15px}
 .iconbtn svg{font-size:19px;color:var(--gold)}
 .iconbtn:hover{border-color:var(--gold)}
@@ -150,6 +164,8 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
 }
 @media (min-width:960px){
   .how{grid-template-columns:repeat(3,1fr);gap:32px}
+  .faq,.faq-h{max-width:780px}
+  .faq-h{margin-top:40px}
   .how li{grid-template-columns:1fr;gap:12px}
   .how .ic{width:48px;height:48px;font-size:24px}
   .close{padding-top:64px}
@@ -165,6 +181,7 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
     <svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg>
     <span class="name">Catholic Novenas</span>
     <span class="spacer"></span>
+    <a class="navlink" href="about/index.html">About</a>
     <button class="iconbtn" id="sizeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sizer" aria-label="Text size" title="Text size"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg><span>Text</span></button>
     <button class="iconbtn" id="themeBtn" type="button"><svg class="i" aria-hidden="true" focusable="false" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span></button>
     <div class="sizer" id="sizer" role="group" aria-label="Text size">
@@ -190,12 +207,20 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   </ul>
   <p class="empty" id="empty" hidden>No novena matches “<span id="emptyQ"></span>”. Try another word, like a saint’s name or what you are praying for. <button type="button" class="linkbtn" id="showAll">Show all novenas</button></p>
 
-  <h2 class="h2">How a novena works</h2>
+  <h2 class="h2">How a novena works <a class="more" href="about/index.html">Learn more</a></h2>
   <ul class="how">
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>9&nbsp;days, 1&nbsp;intention</h3><p>A novena is 9&nbsp;days of prayer for a single intention, after the Apostles and Mary, who prayed together before Pentecost (Acts 1:14).</p></div></li>
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About 10&nbsp;minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
     <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-house-line"/></svg></span><div><h3>Stays on your device</h3><p>Your progress, start date and intention are saved only on your phone or computer, never uploaded.</p></div></li>
   </ul>
+
+  <h3 class="faq-h" id="faqHead">Common questions</h3>
+  <div class="faq" aria-labelledby="faqHead">
+    <details><summary>Can I pray more than 1 novena at a time?</summary><p>Yes. You can pray 2&nbsp;novenas side by side, say one for healing and one for finances, and each keeps its own progress here. Keep to what you can pray with attention. Or pray one novena and bring both intentions to it.</p></details>
+    <details><summary>What if I miss a day?</summary><p>Simply pick up where you left off. A novena is a devotion, not a test.</p></details>
+    <details><summary>Are we praying to the saints instead of God?</summary><p>No. We worship God alone. When we pray to a saint, we are asking that saint to pray for us, the way we ask a friend, because the saints are alive with God. <a href="about/index.html#saints">Why we ask the saints</a></p></details>
+    <details><summary>Does a novena guarantee an answer?</summary><p>No novena comes with a guarantee. We bring our intention to God and trust His answer, which may be yes, not yet, or a grace we did not expect.</p></details>
+  </div>
 
   <div class="close">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
@@ -204,6 +229,7 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   </div>
 </main>
 <footer class="wrap">
+  <p class="foot-links"><a href="about/index.html">What is a novena?</a></p>
   <p class="note offline" id="offlineNote" hidden>Saved on this device, so it opens even without signal.</p>
   <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
 </footer>
