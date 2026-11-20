@@ -16,7 +16,7 @@ Every novena uses the same prayer structure and design. Only the content changes
 
 ## 0. Get set up
 
-- **Repo:** `chaviotics/catholic-novenas`. If it doesn't exist yet, the code is on branch `catholic-novenas` of `chaviotics/novena-finances`. Never push to `main` of `novena-finances`: it is the family's live site.
+- **Repo:** `chaviotics/catholic-novenas` (branch `main`; Netlify deploys every push). Never push to `chaviotics/novena-finances`: it is the family's live debt novena.
 - **Netlify:** site `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`). Never deploy to `novena-finances` unless the user asks.
 - **Read first:** `novenas/relief-from-debt/novena.json` and `novenas/healing/novena.json`. They are the approved examples: match their tone, lengths and polish.
 - **Tools:** `tools/build.py` (site and artifact), `tools/print_fill.py` (print doc requests), `tools/check_print.py` (print text check), `tools/shots.py` (screenshots), `tools/og.py` (link-preview images), `tools/wm_images.py` (Wikimedia images). Read each one's docstring before using it.
@@ -132,7 +132,7 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
   Never edit the template; copy it.
 - **Copy it** with Drive `copy_file`, named "<Title> — print". The template has one tab; keep it that way, because the PDF export renders every tab.
 - **Fill it** with `tools/print_fill.py`. Read the copy (`read_doc`; the result is saved to a file), run the script on that file plus the slug, and send the batch with `writeControl.requiredRevisionId` set to the read's `revisionId`. The script replaces text paragraph by paragraph, keeping every style. Print gets `refl` only; `more` stays in the app. A large batch can be sent in two parts: first the requests for the bottom half of the document, then the top half.
-- **Portraits:** the script also swaps the three page-1 images for portrait URLs at 120×96pt. They must be public URLs: the live site, or before it's live, the raw GitHub URLs of the pushed branch via `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/<repo>/<branch>/novenas/<slug>/img`. For fewer than 3 saints, delete the extra table columns.
+- **Portraits:** the script also swaps the three page-1 images for portrait URLs at 120×96pt. They must be public URLs: the live site, or before it's live, the raw GitHub URLs via `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/catholic-novenas/main/novenas/<slug>/img`. For fewer than 3 saints, delete the extra table columns.
 - **Check the layout.** Export a PDF (`download_file_content`, `application/pdf`), render it with `pdftoppm -r 70`, and look at every page. The rules:
   - 4 pages or fewer, with Daily Prayers starting page 2.
   - No day heading or title left alone at the bottom of a column.
@@ -156,9 +156,8 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
 ## 9. Publish
 
 1. Set `"status": "published"`, then run `python3 tools/build.py`.
-2. Deploy `site/` to the Netlify site `catholic-novenas`: call the Netlify MCP `deploy-site`, then run the `npx @netlify/mcp …` command it returns from the repo root (`netlify.toml` publishes `site/`). That command may need the user's approval. If nobody is there to approve it, publish `site/` as a Claude artifact instead (every file, keeping its path) so the user can review the novena, and deploy when they are back. Once the site is linked to GitHub in Netlify, a push to its branch deploys it on its own.
-3. Open the live page to confirm it works.
-4. Commit and push. Commit messages carry no Co-Authored-By trailer.
+2. Commit and push to `main`. Netlify builds nothing: it publishes `site/` (see `netlify.toml`), so always commit the built `site/`. If the site isn't linked to GitHub yet, deploy with the Netlify MCP `deploy-site` command instead (it may need the user's approval), or publish `site/` as a Claude artifact for review.
+3. Open the live page to confirm it works. Commit messages carry no Co-Authored-By trailer.
 
 ## Report
 
