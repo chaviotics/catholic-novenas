@@ -38,7 +38,7 @@ Read this at the start of a work session. Update it at the end when something ch
 - **Footer:** one footer on every page from `site_footer()` in `tools/build.py` (All novenas · About · Privacy, credits, the RSV notice except on Privacy), ending with "To God be the glory". Change it there, not in the templates. No privacy line in the footer (Chav): that reassurance lives under the intention box, in the library's "Stays on your device" step and on the Privacy page. The footer shows a warning only when the browser cannot save.
 - **Credit and contact:** About says the site is made by Chav, a personal project and not an official Church publication. Corrections and questions go to hey.there.chav@gmail.com (Chav's public contact address for the site; approved by Chav for publishing). Never publish any other address.
 - **AI and review disclosure:** About says the new prayers were written with the help of AI and have no priest review or imprimatur yet. Change that line only when a review has actually happened.
-- **Privacy:** no analytics, cookies or third-party requests; fonts and pictures self-hosted. `netlify.toml` sets a Content-Security-Policy that allows only the site's own files, so anything external (fonts, scripts, embeds) needs a CSP change and a Privacy page update.
+- **Privacy:** no cookies, analytics scripts or third-party requests in the browser; fonts and pictures self-hosted. Netlify's server logs do count visits (Observability, on by default; IP address, page, browser type), and the Privacy page says so under "Visits and hosting" (Chav). Don't claim "no tracking" or "no analytics" without that qualifier. `netlify.toml` sets a Content-Security-Policy that allows only the site's own files, so anything external (fonts, scripts, embeds) needs a CSP change and a Privacy page update.
 - **Workflow:** finish new work as a Claude artifact preview first; commit and push only after approval.
 - **Commits:** no Co-Authored-By lines.
 
@@ -79,6 +79,7 @@ Read this at the start of a work session. Update it at the end when something ch
   - Offline: visits with `?fbclid=…` are cached under the plain address; offline, `/healing` (no slash) and unknown pages fall back to the saved copy or the library.
   - `netlify.toml`: a Content-Security-Policy that allows only the site's own files (checked locally: no violations on any page). Manifest: `id`, `scope`, `lang`. Debt novena's intention placeholder no longer says "your family". Helpline link is `noopener noreferrer`.
   - axe-core WCAG 2.2 AA: clean on every page (before: footer links outside a landmark on novena pages).
+- **Footer and Privacy follow-ups** (Chav): footer privacy line removed (warning kept for browsers that cannot save); About credit "made by Chav" with hey.there.chav@gmail.com for corrections and questions; Privacy page "Visits and hosting" now says Netlify logs each request (time, page, referring site, browser type, IP address) and we see only totals; "No accounts, ads or cookies" replaces "…or tracking" in the Privacy page's description and link preview.
 
 ## Open items
 
@@ -91,6 +92,5 @@ Read this at the start of a work session. Update it at the end when something ch
 ## Ideas to weigh (not decided)
 
 - From the audit: a priest review of the new prayers (then update the About disclosure), an "add to calendar" reminder for the 9 days, novenas timed to feast days.
-- Chav to confirm the Netlify Analytics add-on is off (the Privacy page says there is no analytics).
 - When the family finishes their current round, point novena-finances to the library's debt novena so there is one version to maintain.
 - Next intentions to consider: see the roadmap doc (https://claude.ai/artifact/Nuhwhpne8JEqxcwkwA9nDA). Print docs for the 4 new novenas are still to make.

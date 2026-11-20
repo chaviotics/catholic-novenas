@@ -445,7 +445,7 @@ def privacy(mode="site"):
         '<meta property="og:site_name" content="Catholic Novenas">',
         '<meta property="og:url" content="%s">' % url,
         '<meta property="og:title" content="Privacy | Catholic Novenas">',
-        '<meta property="og:description" content="Your progress and intentions stay on your device. No accounts, ads or tracking.">',
+        '<meta property="og:description" content="Your progress and intentions stay on your device. No accounts, ads or cookies.">',
         '<link rel="canonical" href="%s">' % url,
         '<link rel="icon" href="../favicon.svg" type="image/svg+xml">',
         '<link rel="apple-touch-icon" href="../apple-touch-icon.png">',
