@@ -160,6 +160,7 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
 1. Set `"status": "published"`, then run `python3 tools/build.py`.
 2. Commit and push to `main`. Netlify builds nothing: it publishes `site/` (see `netlify.toml`), so always commit the built `site/`. If the site isn't linked to GitHub yet, deploy with the Netlify MCP `deploy-site` command instead (it may need the user's approval), or publish `site/` as a Claude artifact for review.
 3. Open the live page to confirm it works. Commit messages carry no Co-Authored-By trailer.
+4. Update `PROJECT_LOG.md`: add the novena to the table and a dated log entry, and move any finished open items out.
 
 ## Report
 
