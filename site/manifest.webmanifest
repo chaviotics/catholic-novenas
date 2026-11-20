@@ -1,7 +1,7 @@
 {
-  "name": "Catholic Novenas",
+  "name": "Pray a Novena",
   "short_name": "Novenas",
-  "description": "9-day Catholic novenas to pray one day at a time.",
+  "description": "Catholic novenas for every intention. 9 days of prayer, one day at a time.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

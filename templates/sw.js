@@ -1,4 +1,4 @@
-/* Catholic Novenas service worker: keeps the whole library on this device so it opens without signal.
+/* Pray a Novena service worker: keeps the whole library on this device so it opens without signal.
    Pages: network first (corrections arrive right away), the saved copy when offline or after {{TIMEOUT}} ms.
    Everything else (images, fonts, icons): saved once and reused. Built by tools/build.py; do not edit site/sw.js. */
 var VERSION = "{{VERSION}}";

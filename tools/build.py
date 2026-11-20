@@ -10,7 +10,7 @@ and img/<id>_face.jpg (round avatar, 112x112) for every saint and litany image.
 import base64, hashlib, html, json, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_URL = "https://catholic-novenas.netlify.app"
+SITE_URL = "https://catholic-novenas.netlify.app"  # becomes https://prayanovena.com at go-live (PROJECT_LOG, "Rename")
 ICON_DIRS = [os.path.join(ROOT, "tools", "icons")]
 BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
 NUMWORD = {1: "The Intercessor", 2: "The 2 Intercessors", 3: "The 3 Intercessors"}
@@ -207,7 +207,7 @@ def page(n, mode):
             '<meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">',
             '<meta name="theme-color" content="#0E1524" media="(prefers-color-scheme: dark)">',
             '<meta property="og:type" content="website">',
-            '<meta property="og:site_name" content="Catholic Novenas">',
+            '<meta property="og:site_name" content="Pray a Novena">',
             '<meta property="og:url" content="%s">' % url,
             '<meta property="og:title" content="%s">' % esc(og_title(n)),
             '<meta property="og:description" content="%s">' % esc(n.get("ogDescription") or n["description"]),
@@ -223,7 +223,7 @@ def page(n, mode):
         ])
         back = ('    <a class="back" href="../index.html"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>'
                 'All novenas</a>\n')
-        title_tag = esc(n["barTitle"]) + " | Catholic Novenas"
+        title_tag = esc(n["barTitle"]) + " | Pray a Novena"
         back = ""  # the top bar reads "← All novenas › <title>" on every size, so the hero needs no back link of its own
         home = ('href="../index.html"', '<svg class="i back-ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg>')
     else:
@@ -269,7 +269,7 @@ def share(n):
 
 def og_title(n):
     """a fuller link-preview title: add the site name when it still fits in 60 characters"""
-    t = n["title"] + " | Catholic Novenas"
+    t = n["title"] + " | Pray a Novena"
     return t if len(t) <= 60 else n["title"]
 
 
@@ -398,12 +398,12 @@ def about(novenas, mode="site"):
     if mode == "site":
         head = "\n".join([
             '<meta property="og:type" content="website">',
-            '<meta property="og:site_name" content="Catholic Novenas">',
+            '<meta property="og:site_name" content="Pray a Novena">',
             '<meta property="og:url" content="%s">' % url,
-            '<meta property="og:title" content="What is a novena? | Catholic Novenas">',
+            '<meta property="og:title" content="What is a novena? | Pray a Novena">',
             '<meta property="og:description" content="What a novena is, how to pray one, and why Catholics ask the saints to pray for us.">',
             '<meta property="og:image" content="%sog.jpg?v=%s">' % (live, og_ver(os.path.join(ROOT, "site", "og.jpg"))),
-            '<meta property="og:image:alt" content="Catholic Novenas: pray one day at a time">',
+            '<meta property="og:image:alt" content="Pray a Novena: Catholic novenas for every intention">',
             '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
             '<meta name="twitter:card" content="summary_large_image">',
             '<link rel="canonical" href="%s">' % url,
@@ -442,9 +442,9 @@ def privacy(mode="site"):
     url = SITE_URL + "/privacy/"
     head = "\n".join([
         '<meta property="og:type" content="website">',
-        '<meta property="og:site_name" content="Catholic Novenas">',
+        '<meta property="og:site_name" content="Pray a Novena">',
         '<meta property="og:url" content="%s">' % url,
-        '<meta property="og:title" content="Privacy | Catholic Novenas">',
+        '<meta property="og:title" content="Privacy | Pray a Novena">',
         '<meta property="og:description" content="Your progress and intentions stay on your device. No accounts, ads or cookies.">',
         '<link rel="canonical" href="%s">' % url,
         '<link rel="icon" href="../favicon.svg" type="image/svg+xml">',
