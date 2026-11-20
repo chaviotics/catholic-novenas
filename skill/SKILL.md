@@ -1,6 +1,6 @@
 ---
 name: novena-maker
-description: Make a new nine-day Catholic novena for an intention (a phone app page in the Catholic Novenas library plus a 4-page Google Docs print layout). Use when the user names an intention for a novena or asks to add one to the library.
+description: Make a new nine-day Catholic novena for an intention (phone app page in the Catholic Novenas library plus a 4-page Google Docs print layout). Use when the user names an intention for a novena.
 ---
 
 # Novena maker
@@ -18,8 +18,8 @@ Every novena uses the same prayer structure and design. Only the content changes
 
 - **Repo:** `chaviotics/catholic-novenas`. If it doesn't exist yet, the code is on branch `catholic-novenas` of `chaviotics/novena-finances`. Never push to `main` of `novena-finances`: it is the family's live site.
 - **Netlify:** site `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`). Never deploy to `novena-finances` unless the user asks.
-- **Read first:** `novenas/relief-from-debt/novena.json`. It is the approved example: match its tone, lengths and polish.
-- **Tools:** `tools/build.py` (site and artifact), `tools/print_fill.py` (print doc requests), `tools/check_print.py` (print text check), `tools/shots.py` (screenshots). Read each one's docstring before using it.
+- **Read first:** `novenas/relief-from-debt/novena.json` and `novenas/healing/novena.json`. They are the approved examples: match their tone, lengths and polish.
+- **Tools:** `tools/build.py` (site and artifact), `tools/print_fill.py` (print doc requests), `tools/check_print.py` (print text check), `tools/shots.py` (screenshots), `tools/og.py` (link-preview images), `tools/wm_images.py` (Wikimedia images). Read each one's docstring before using it.
 
 ## 1. Intention → saints
 
@@ -49,7 +49,7 @@ Each day runs in this order:
 
 ## 3. Write `novena.json`
 
-Copy the debt example's shape. Field rules:
+Copy an example's shape. Field rules:
 
 | Field | Rule |
 |---|---|
@@ -61,11 +61,12 @@ Copy the debt example's shape. Field rules:
 | `status` | `"draft"` (page builds, no library card) until the user approves, then `"published"` |
 | `order` | Position on the library page |
 | `epigraph`, `closingVerse` | RSV-CE, up to about 25 words each: `{"text", "ref"}` |
+| `printTitle`, `printClosing` | Two lines each, for the print title and the closing verse |
 | `saints[]` | `id` (image file stem), `name`, `dates`, `feast`, `patron`, `bio` (up to 35 words, facts only), `alt` (describes the artwork), `openingRole` |
 | `litany[]` | `{"img", "text"}`, Marian title first. `img` is optional and points to `img/<img>_face.jpg` |
 | `openingPrayer` | 85–110 words. Addresses the Father, names the burden plainly, names each intercessor with a short role, ends "through Christ our Lord." The template adds "Amen." |
 | `closingPrayer` | 25–40 words, addressed to Jesus. The template adds "Amen." |
-| `tips` | Keep the debt example's "As a family" text word for word. "Alongside prayer" names the sacraments that fit (Confession, Mass, Anointing of the Sick…) and one prudent action for this intention |
+| `tips` | Keep the "As a family" text from the examples word for word. "Alongside prayer" names the sacraments that fit (Confession, Mass, Anointing of the Sick…) and one prudent action for this intention, plus a warning against false shortcuts if relevant (loan sharks, "sure cures") |
 | `icons` | 9 Phosphor "regular" icon names, one per day. They must exist in `tools/icons/`. Add new ones from `@phosphor-icons/core` (npm, assets/regular) |
 | `credits` | Image credits: artist, *title*, date, collection, then "Public domain, via Wikimedia Commons." |
 | `days[9]` | See below |
@@ -83,8 +84,9 @@ Each day has these fields:
 **The arc of the days:** start with honest fear or need, then trust, then the specific graces asked for, and end on **Day 9: gratitude and surrender to God's will**. Day 9's step is always "Write down three graces you noticed during these nine days, and thank God for them together." The print layout has a "Graces I have noticed" box after it.
 
 **Voice and faith rules:**
-- Write in warm, plain US English, saying "we" for the family. Use the honorific capitals of the example: You, Your, Him.
-- **Never promise outcomes.** No "this novena never fails" and no prosperity-gospel framing. Ask boldly, then trust God's will. For healing, also pray for strength, peace, the doctors' skill and the caregivers, and for the grace to unite suffering with Christ, without ever implying that the sick lack faith.
+- Write in warm, plain US English, saying "we" for the family. Use the honorific capitals of the examples: You, Your, Him.
+- **Never promise outcomes.** No "this novena never fails" and no prosperity-gospel framing. Ask boldly, then trust God's will. For healing, also pray for strength, peace, the doctors' skill and the caregivers, and for the grace to unite suffering with Christ. Say plainly that healing which doesn't come is never a sign of weak faith (CCC 1508), and keep the hope of eternal life in view.
+- When the person prayed for is unknown, write "N." and "them", and tell readers how to pray it for themselves.
 - Rotate the saints across the days so each gets about three days.
 - **Only quote a saint with a well-attested line.** Otherwise paraphrase ("St. Pio often told people to pray, hope and not worry").
 - Facts about saints must be ones you would stake your name on. If unsure, leave them out.
@@ -92,27 +94,27 @@ Each day has these fields:
 ## 4. Verify every Scripture text (RSV-CE, word for word)
 
 - Fetch each passage, including the epigraph and closing verse, from BibleGateway with WebFetch: `https://www.biblegateway.com/passage/?search=<Book+c:v-v>&version=RSVCE`. Ask for the exact text with no verse numbers, footnote letters or headings.
-- A URL you build yourself may need the user's approval to fetch. If nobody is there to approve, run WebSearch first (for example "Mark 2:3-5 RSVCE") and fetch only URLs that appear in its results. For the Old Testament (except the deuterocanonical books), `biblestudytools.com/rsv/...` has the same text as RSV-CE. The New Testament has Catholic Edition changes, so use an RSVCE source there.
+- A URL you build yourself may need the user's approval to fetch. If nobody is there to approve, run WebSearch first (for example "Mark 2:3-5 RSVCE") and fetch only URLs that appear in its results. BibleGateway's verse pages (`/verse/en/<ref>`) list the RSVCE text, and EWTN's online Bible is labeled RSV-CE. For the Old Testament (except the deuterocanonical books), `biblestudytools.com/rsv/...` has the same text as RSV-CE. The New Testament has Catholic Edition changes, so use an RSVCE source there.
 - Copy punctuation exactly, including "LORD" and "thee/thou" in Psalms. Check the verse range: the passage must not start or end in the middle of a quotation (a dangling quote mark means choose a different range).
 - If a fetch looks paraphrased or partial, fetch it again or use a second RSV-CE source. Record what you verified in `novenas/<slug>/sources.md`.
 - **Permission limits:** under 500 verses in total, no whole book, under 25% of any book. The required notice is already in the template.
 
 ## 5. Images (public domain only)
 
-- Use Wikimedia Commons: paintings, sculpture, mosaics or icons by artists who died more than 100 years ago, and photos of such 2D works. Avoid modern devotional art and recent photographs.
+- Use Wikimedia Commons: paintings, sculpture, mosaics or icons by artists who died more than 100 years ago, and photos of such 2D works or 19th-century photographs. Avoid modern devotional art and recent photographs.
 - **Getting the files.** The workspace can't reach Wikimedia, so let Google fetch them, using `tools/wm_images.py`:
   1. Add a scratch tab to any working Doc (`addDocumentTab`; the "Novena scratch doc" in the Faith folder is meant for this).
   2. `python3 tools/wm_images.py requests <tabId> "File_A.jpg" "File_B.jpg"` prints Docs requests that insert Wikimedia thumbnails. Send them with `update_doc`. Wikimedia serves only standard thumbnail widths, so keep the default 960. If an image fails, its original is narrower: use `--width 500`, or insert the original file URL.
   3. Export the Doc with Drive `download_file_content`, `exportMimeType: "application/zip"`, then `python3 tools/wm_images.py unzip <zip> <dir>` (files come out in insertion order).
   4. Delete the scratch tab.
-- **Crop** with PIL: portrait `img/<id>.jpg` at 480×600 with the face in the upper third, and face `img/<id>_face.jpg` at 112×112, tight on the face. Use JPEG quality 85. For a litany-only image, such as a Marian title that isn't a saint card, make just `<id>_face.jpg`. Look at every crop.
-- After deploy, the images are public at `https://catholic-novenas.netlify.app/<slug>/img/<id>.jpg`. Use these URLs for the print portraits.
+- **Crop** with PIL: portrait `img/<id>.jpg` at 480×600 with the face in the upper third, and face `img/<id>_face.jpg` at 112×112, tight on the face. Use JPEG quality 85. For a litany-only image, such as a Marian title that isn't a saint card, make just `<id>_face.jpg`. Look at every crop, and leave out anything immodest or distracting next to the saint. Record sources in `novenas/<slug>/images.md`.
 
 ## 6. Build and check the app
 
 ```
 python3 tools/build.py                    # site/ (library + all novenas)
 python3 tools/build.py --artifact <slug>  # out/<slug>.html, one self-contained file
+python3 tools/og.py <slug>                # link-preview image, then build again
 python3 tools/shots.py <slug>             # phone screenshots, light and dark, into out/shots/
 ```
 
@@ -129,17 +131,16 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
 
   Never edit the template; copy it.
 - **Copy it** with Drive `copy_file`, named "<Title> — print". The template has one tab; keep it that way, because the PDF export renders every tab.
-- **Fill it** with `tools/print_fill.py`. Read the copy (`read_doc`; the result is saved to a file), run the script on that file plus `novena.json`, and send the batch with `writeControl.requiredRevisionId` set to the read's `revisionId`. The script replaces text paragraph by paragraph, keeping every style. Print gets `refl` only; `more` stays in the app.
-- **Portraits:** the script also swaps the three page-1 images for the deployed portrait URLs at 120pt height. For fewer than 3 saints, delete the extra table columns.
-- **Check the layout.** Export a PDF (`download_file_content`, `application/pdf`), render it with `pdftoppm -r 80`, and look at every page. The rules:
+- **Fill it** with `tools/print_fill.py`. Read the copy (`read_doc`; the result is saved to a file), run the script on that file plus the slug, and send the batch with `writeControl.requiredRevisionId` set to the read's `revisionId`. The script replaces text paragraph by paragraph, keeping every style. Print gets `refl` only; `more` stays in the app. A large batch can be sent in two parts: first the requests for the bottom half of the document, then the top half.
+- **Portraits:** the script also swaps the three page-1 images for portrait URLs at 120×96pt. They must be public URLs: the live site, or before it's live, the raw GitHub URLs of the pushed branch via `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/<repo>/<branch>/novenas/<slug>/img`. For fewer than 3 saints, delete the extra table columns.
+- **Check the layout.** Export a PDF (`download_file_content`, `application/pdf`), render it with `pdftoppm -r 70`, and look at every page. The rules:
   - 4 pages or fewer, with Daily Prayers starting page 2.
   - No day heading or title left alone at the bottom of a column.
-  - Google Docs ignores "keep with next" inside columns, so fix strands by hand, top-down, re-exporting after each fix:
+  - Google Docs doesn't reliably keep a heading with the text after it inside columns, so fix strands by hand, top-down, re-exporting after each fix:
     - **At a page bottom:** set `pageBreakBefore` on that day's header paragraph.
     - **At a column bottom mid-page:** raise `spaceBelow` on the previous day's Today's-step paragraph, using the smallest value that works (usually 45–75pt). If the previous prayer and step jump to the next column, the value is too big.
 - **If it runs to 5 pages,** win back space in this order: shorten the image credits, shorten a long "Alongside prayer" tip, then trim the longest reflections by a sentence. Never shrink the type or remove a section.
 - **Text check:** `python3 tools/check_print.py <pdf> <slug>` confirms every title, ref, verse, reflection, prayer and step appears in pages 1–4.
-- **Portrait images** for the print come from public URLs. Before the site is live, use the raw GitHub URLs of the pushed branch with `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/<repo>/<branch>/novenas/<slug>/img`.
 
 ## 8. Review before publishing
 
@@ -150,7 +151,7 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
   - fitting sacraments
   - kindness to those who are not cured
   - correct titles
-- Fix what holds up, rebuild, and check again.
+- Fix what holds up, rebuild, and check again. Note the changes in `sources.md`.
 
 ## 9. Publish
 
