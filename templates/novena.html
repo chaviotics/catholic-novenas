@@ -292,7 +292,7 @@ blockquote.passage{margin:0}
     </div>
   </div>
 </header>
-<nav class="days" aria-label="The nine days">
+<nav class="days" aria-label="The 9 days">
   <div class="wrap"><p class="dcap" id="dCap" aria-hidden="true"></p><ol class="track" id="track"></ol></div>
 </nav>
 
@@ -302,7 +302,7 @@ blockquote.passage{margin:0}
     <p class="kicker">{{KICKER}}</p>
     <h1>{{TITLE}}</h1>
     <p class="sub">through the intercession of<br><span class="l2">{{SAINT_LINE}}</span></p>
-    <p class="epi">“{{EPI_TEXT}}”<span class="cite">{{EPI_REF}} · RSV-CE</span></p>
+    <p class="epi">“{{EPI_TEXT}}”<span class="cite">{{EPI_REF}}</span></p>
     <div class="faces" aria-hidden="true">{{FACES}}</div>
   </div>
 
@@ -344,7 +344,7 @@ blockquote.passage{margin:0}
         <div class="dayicon" id="dIconLabel"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-hands-praying"/></svg><span>DAY 1</span></div>
         <h3 class="daytitle" id="dTitle">{{DAY1_TITLE}}</h3>
         <blockquote class="passage" id="dVerse"></blockquote>
-        <p class="ref"><span id="dRef"></span> · RSV-CE</p>
+        <p class="ref"><span id="dRef"></span></p>
         <p class="refl" id="dRefl"></p>
         <p class="refl refl2" id="dMore"></p>
       </li>
@@ -405,7 +405,7 @@ blockquote.passage{margin:0}
       <li>Pray the <strong>Opening Prayer</strong>, beginning with the Sign of the Cross.</li>
       <li>Read the day’s <strong>Scripture</strong> and reflection, then pray the day’s <strong>prayer</strong>, naming your intention.</li>
       <li>Pray the <strong>Closing Prayer</strong> and the {{HOW_MEMORARE}}.</li>
-      <li>End with one Our Father, one Hail Mary and one Glory Be, and the Sign of the Cross. Then take <strong>today’s step</strong> with you.</li>
+      <li>End with an Our Father, a Hail Mary and a Glory Be, and the Sign of the Cross. Then take <strong>today’s step</strong> with you.</li>
     </ol>
     <div class="tips" style="margin-top:18px">
 {{TIPS}}
@@ -422,7 +422,7 @@ blockquote.passage{margin:0}
   <div class="close">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
     <blockquote>“{{CLOSE_TEXT}}”</blockquote>
-    <span class="cite">{{CLOSE_REF}} · RSV-CE</span>
+    <span class="cite">{{CLOSE_REF}}</span>
     <p class="note">Scripture quotations are from The Catholic Edition of the Revised Standard Version of the Bible, copyright © 1965, 1966 National Council of the Churches of Christ in the United States of America. Used by permission. All rights reserved worldwide.</p>
     <p class="note credits">{{CREDITS}}</p>
   </div>
@@ -513,8 +513,8 @@ blockquote.passage{margin:0}
     $("tNum").firstChild.nodeValue = sel;
     $("tTitle").textContent = d.title;
     $("dCap").innerHTML = "<b>DAY " + sel + "</b> · " + esc(d.title) + (done ? " · prayed" : (sel === n ? " · today" : ""));
-    if (count === 9) st = "All nine days prayed. Thanks be to God.";
-    else if (n !== null && n > 9) st = "Your nine days have passed. Finish any day you missed, or reset to begin again.";
+    if (count === 9) st = "All 9 days prayed. Thanks be to God.";
+    else if (n !== null && n > 9) st = "Your 9 days have passed. Finish any day you missed, or reset to begin again.";
     else if (n !== null && n < 1) st = "Your novena begins on " + fmt(state.start) + ".";
     else if (n !== null && sel === n && !done && firstOpen() < n) st = "Today is Day " + n + ". Pray it today, or catch up on Day " + firstOpen() + " first. Either is fine.";
     else if (n !== null && sel === n) st = (done ? "Today’s prayer is done. " : "Today is Day " + n + ". ") + count + " of 9 days prayed.";
@@ -555,7 +555,7 @@ blockquote.passage{margin:0}
     }
     state.done.push(sel); if (!state.start && sel === 1) state.start = todayISO();
     save(state); render();
-    toast(state.done.length === 9 ? "All nine days prayed. Thanks be to God." : "Day " + sel + " prayed. God bless you.");
+    toast(state.done.length === 9 ? "All 9 days prayed. Thanks be to God." : "Day " + sel + " prayed. God bless you.");
   });
   $("startDate").addEventListener("change", function(e){ state.start = e.target.value || null; save(state); sel = suggested(); render(); });
   $("startToday").addEventListener("click", function(){ state.start = todayISO(); save(state); sel = suggested(); render(); });

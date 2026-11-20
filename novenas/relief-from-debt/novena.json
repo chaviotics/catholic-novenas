@@ -5,9 +5,9 @@
  "title": "Novena for Relief from Debt and Financial Hardship",
  "barTitle": "Novena for Relief from Debt",
  "barShort": "Debt Novena",
- "kicker": "Nine days of trust in God’s providence",
- "card": "For a family carrying debt or money worries: nine days of trust, honest work and wise stewardship.",
- "description": "A nine-day Catholic novena for relief from debt and financial hardship, through St. Joseph, St. Rita of Cascia and St. Jude Thaddeus.",
+ "kicker": "9 days of trust in God’s providence",
+ "card": "For a family carrying debt or money worries: 9 days of trust, honest work and wise stewardship.",
+ "description": "A 9-day Catholic novena for relief from debt and financial hardship, through St. Joseph, St. Rita of Cascia and St. Jude Thaddeus.",
  "epigraph": {
   "text": "Cast all your anxieties on him, for he cares about you.",
   "ref": "1 Peter 5:7"
@@ -79,7 +79,7 @@
   },
   {
    "h": "Alongside prayer",
-   "p": "If you can, go to Confession and attend Mass during these nine days, and pair prayer with prudent action: an honest budget, a talk with creditors, wise counsel (Day&nbsp;4)."
+   "p": "If you can, go to Confession and attend Mass during these 9 days, and pair prayer with prudent action: an honest budget, a talk with creditors, wise counsel (Day&nbsp;4)."
   }
  ],
  "intentionPlaceholder": "Write the intention your family is praying for.",
@@ -190,5 +190,7 @@
  "printClosing": [
   "But seek first his kingdom and his righteousness,",
   "and all these things shall be yours as well."
- ]
+ ],
+ "icon": "hand-coins",
+ "cardTitle": "Relief from Debt and Financial Hardship"
 }

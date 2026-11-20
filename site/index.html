@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catholic Novenas</title>
-<meta name="description" content="Nine-day Catholic novenas to pray with your family, one day at a time, with Scripture, reflections and the prayers of the saints.">
+<meta name="description" content="9-day Catholic novenas to pray with your family, one day at a time, with Scripture, reflections and the prayers of the saints.">
 <meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1524" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Catholic Novenas">
 <meta property="og:url" content="https://catholic-novenas.netlify.app/">
 <meta property="og:title" content="Catholic Novenas">
-<meta property="og:description" content="Nine days of prayer, one day at a time. Pray with your family on your phone or on paper.">
+<meta property="og:description" content="9 days of prayer, one day at a time. Pray with your family on your phone or on paper.">
 <meta property="og:image" content="https://catholic-novenas.netlify.app/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -69,24 +69,20 @@ h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(
 .h2 .n{font-family:var(--body);font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:600}
 
 .cards{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.card a{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:14px;padding:18px 16px 18px 18px;transition:border-color .15s,transform .15s}
-.card a:hover{border-color:var(--gold)}
+.card a{display:block;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;transition:border-color .15s,box-shadow .15s}
+.card a:hover{border-color:var(--gold);box-shadow:0 2px 14px rgba(42,37,33,.06)}
 .card a:active{transform:scale(.995)}
-.card .faces{display:flex;flex-direction:column;align-items:center}
-.card .faces img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2.5px solid var(--sheet);margin:-7px 0;box-shadow:0 0 0 1px var(--rule-strong);background:var(--wash)}
-.card .kick{margin:0;font-size:11.5px;letter-spacing:.13em;font-weight:600;color:var(--gold);text-transform:uppercase}
-.card h3{font-family:var(--display);font-weight:700;font-size:clamp(22px,5.6vw,26px);line-height:1.12;color:var(--wine);margin:4px 0 4px;text-wrap:balance}
+.card .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.card .ic{flex:none;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:23px;background:var(--paper)}
+.card .faces{display:flex;padding-left:9px}
+.card .faces img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--sheet);margin-left:-9px;box-shadow:0 0 0 1px var(--rule-strong);background:var(--wash)}
+.card h3{font-family:var(--display);font-weight:700;font-size:clamp(23px,6vw,27px);line-height:1.12;color:var(--wine);margin:0 0 4px;text-wrap:balance}
 .card .through{margin:0;font-style:italic;color:var(--muted);font-size:16px;line-height:1.35}
-.card .blurb{margin:8px 0 0;font-size:16.5px;line-height:1.45}
-.card .prog{margin:10px 0 0;font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--gold-text)}
-.card .prog:empty{display:none}
-.card .go{color:var(--gold);font-size:22px;align-self:center}
-@media (max-width:480px){
-  .card a{grid-template-columns:1fr auto;padding:16px}
-  .card .faces{flex-direction:row;grid-column:1 / -1;justify-content:flex-start;margin-left:6px}
-  .card .faces img{margin:0 -6px 0 0;width:50px;height:50px}
-  .card .go{grid-row:2;grid-column:2}
-}
+.card .blurb{margin:10px 0 0;font-size:16.5px;line-height:1.45}
+.card .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:10px;border-top:1px solid var(--rule)}
+.card .prog{margin:0;font-size:14px;font-weight:600;letter-spacing:.03em;color:var(--gold-text)}
+.card .go{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:16px;color:var(--wine)}
+.card .go .i{font-size:18px}
 
 .how{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .how li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
@@ -94,11 +90,11 @@ h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(
 .how h3{margin:0;font-family:var(--display);font-size:21px;font-weight:700;color:var(--ink)}
 .how p{margin:2px 0 0;font-size:16.5px;color:var(--ink)}
 .note{font-size:13px;color:var(--muted);line-height:1.5;text-align:center;max-width:56ch;margin:14px auto 0}
-footer{padding:28px 0 44px;text-align:center}
+footer{padding:32px 0 calc(88px + env(safe-area-inset-bottom));text-align:center}
 </style>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-cross" viewBox="0 0 256 256"><path d="M200,72H160V32a16,16,0,0,0-16-16H112A16,16,0,0,0,96,32V72H56A16,16,0,0,0,40,88v32a16,16,0,0,0,16,16H96v88a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V136h40a16,16,0,0,0,16-16V88A16,16,0,0,0,200,72Zm0,48H152a8,8,0,0,0-8,8v96H112V128a8,8,0,0,0-8-8H56V88h48a8,8,0,0,0,8-8V32h32V80a8,8,0,0,0,8,8h48Z"/></symbol><symbol id="i-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol><symbol id="i-moon" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol><symbol id="i-hands-praying" viewBox="0 0 256 256"><path d="M235.32,180l-36.24-36.25L162.62,23.46A21.76,21.76,0,0,0,128,12.93,21.76,21.76,0,0,0,93.38,23.46L56.92,143.76,20.68,180a16,16,0,0,0,0,22.62l32.69,32.69a16,16,0,0,0,22.63,0L124.28,187a40.68,40.68,0,0,0,3.72-4.29,40.68,40.68,0,0,0,3.72,4.29L180,235.32a16,16,0,0,0,22.63,0l32.69-32.69A16,16,0,0,0,235.32,180ZM64.68,224,32,191.32l12.69-12.69,32.69,32.69ZM120,158.75a23.85,23.85,0,0,1-7,17L88.68,200,56,167.32l13.65-13.66a8,8,0,0,0,2-3.34l37-122.22A5.78,5.78,0,0,1,120,29.78Zm23,17a23.85,23.85,0,0,1-7-17v-129a5.78,5.78,0,0,1,11.31-1.68l37,122.22a8,8,0,0,0,2,3.34l14.49,14.49-33.4,32ZM191.32,224l-12.56-12.57,33.39-32L224,191.32Z"/></symbol><symbol id="i-calendar-check" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></symbol><symbol id="i-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-cross" viewBox="0 0 256 256"><path d="M200,72H160V32a16,16,0,0,0-16-16H112A16,16,0,0,0,96,32V72H56A16,16,0,0,0,40,88v32a16,16,0,0,0,16,16H96v88a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V136h40a16,16,0,0,0,16-16V88A16,16,0,0,0,200,72Zm0,48H152a8,8,0,0,0-8,8v96H112V128a8,8,0,0,0-8-8H56V88h48a8,8,0,0,0,8-8V32h32V80a8,8,0,0,0,8,8h48Z"/></symbol><symbol id="i-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol><symbol id="i-moon" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol><symbol id="i-hands-praying" viewBox="0 0 256 256"><path d="M235.32,180l-36.24-36.25L162.62,23.46A21.76,21.76,0,0,0,128,12.93,21.76,21.76,0,0,0,93.38,23.46L56.92,143.76,20.68,180a16,16,0,0,0,0,22.62l32.69,32.69a16,16,0,0,0,22.63,0L124.28,187a40.68,40.68,0,0,0,3.72-4.29,40.68,40.68,0,0,0,3.72,4.29L180,235.32a16,16,0,0,0,22.63,0l32.69-32.69A16,16,0,0,0,235.32,180ZM64.68,224,32,191.32l12.69-12.69,32.69,32.69ZM120,158.75a23.85,23.85,0,0,1-7,17L88.68,200,56,167.32l13.65-13.66a8,8,0,0,0,2-3.34l37-122.22A5.78,5.78,0,0,1,120,29.78Zm23,17a23.85,23.85,0,0,1-7-17v-129a5.78,5.78,0,0,1,11.31-1.68l37,122.22a8,8,0,0,0,2,3.34l14.49,14.49-33.4,32ZM191.32,224l-12.56-12.57,33.39-32L224,191.32Z"/></symbol><symbol id="i-calendar-check" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></symbol><symbol id="i-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol><symbol id="i-hand-coins" viewBox="0 0 256 256"><path d="M230.33,141.06a24.43,24.43,0,0,0-21.24-4.23l-41.84,9.62A28,28,0,0,0,140,112H89.94a31.82,31.82,0,0,0-22.63,9.37L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9ZM164,96a36,36,0,0,0,5.9-.48,36,36,0,1,0,28.22-47A36,36,0,1,0,164,96Zm60-12a20,20,0,1,1-20-20A20,20,0,0,1,224,84ZM164,40a20,20,0,0,1,19.25,14.61,36,36,0,0,0-15,24.93A20.42,20.42,0,0,1,164,80a20,20,0,0,1,0-40Z"/></symbol><symbol id="i-heartbeat" viewBox="0 0 256 256"><path d="M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"/></symbol></svg>
 <header class="bar">
   <div class="wrap">
     <svg class="i mark" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg>
@@ -110,23 +106,23 @@ footer{padding:28px 0 44px;text-align:center}
 <main class="wrap">
   <div class="hero">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
-    <p class="kicker">Nine days of prayer</p>
+    <p class="kicker">9 days of prayer</p>
     <h1>Catholic Novenas</h1>
     <p class="lede">Pray with your family, one day at a time, with the saints beside you.</p>
-    <p class="epi">“Ask, and it will be given you; seek, and you will find; knock, and it will be opened to you.”<span class="cite">Matthew 7:7 · RSV-CE</span></p>
+    <p class="epi">“Ask, and it will be given you; seek, and you will find; knock, and it will be opened to you.”<span class="cite">Matthew 7:7</span></p>
   </div>
 
   <h2 class="h2" id="listHead">Choose a novena <span class="n">2 NOVENAS</span></h2>
   <ul class="cards" aria-labelledby="listHead">
-<li class="card" data-key="novena-relief-from-debt"><a href="relief-from-debt/index.html"><div class="faces" aria-hidden="true"><img src="relief-from-debt/img/joseph_face.jpg" alt="" width="56" height="56"><img src="relief-from-debt/img/rita_face.jpg" alt="" width="56" height="56"><img src="relief-from-debt/img/jude_face.jpg" alt="" width="56" height="56"></div><div class="body"><p class="kick">Nine days of trust in God’s providence</p><h3>Novena for Relief from Debt and Financial Hardship</h3><p class="through">through St. Joseph, St. Rita of Cascia &amp; St. Jude Thaddeus</p><p class="blurb">For a family carrying debt or money worries: nine days of trust, honest work and wise stewardship.</p><p class="prog" aria-live="polite"></p></div><span class="go" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></span></a></li>
-<li class="card" data-key="novena-healing"><a href="healing/index.html"><div class="faces" aria-hidden="true"><img src="healing/img/raphael_face.jpg" alt="" width="56" height="56"><img src="healing/img/camillus_face.jpg" alt="" width="56" height="56"><img src="healing/img/bernadette_face.jpg" alt="" width="56" height="56"></div><div class="body"><p class="kick">Nine days of hope in Christ who heals</p><h3>Novena for the Healing of the Sick</h3><p class="through">through St. Raphael, St. Camillus de Lellis &amp; St. Bernadette</p><p class="blurb">For a friend or loved one who is ill: nine days asking for healing, strength for caregivers and peace in God’s will.</p><p class="prog" aria-live="polite"></p></div><span class="go" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></span></a></li>
+<li class="card" data-key="novena-relief-from-debt"><a href="relief-from-debt/index.html" aria-label="Novena for Relief from Debt and Financial Hardship"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hand-coins"/></svg></span><div class="faces" aria-hidden="true"><img src="relief-from-debt/img/joseph_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/rita_face.jpg" alt="" width="36" height="36"><img src="relief-from-debt/img/jude_face.jpg" alt="" width="36" height="36"></div></div><h3>Relief from Debt and Financial Hardship</h3><p class="through">through St. Joseph, St. Rita of Cascia &amp; St. Jude Thaddeus</p><p class="blurb">For a family carrying debt or money worries: 9 days of trust, honest work and wise stewardship.</p><div class="foot"><p class="prog" aria-live="polite"></p><span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
+<li class="card" data-key="novena-healing"><a href="healing/index.html" aria-label="Novena for Healing of the Sick"><div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-heartbeat"/></svg></span><div class="faces" aria-hidden="true"><img src="healing/img/raphael_face.jpg" alt="" width="36" height="36"><img src="healing/img/camillus_face.jpg" alt="" width="36" height="36"><img src="healing/img/bernadette_face.jpg" alt="" width="36" height="36"></div></div><h3>Healing of the Sick</h3><p class="through">through St. Raphael, St. Camillus de Lellis &amp; St. Bernadette</p><p class="blurb">For a friend or loved one who is ill: 9 days asking for healing, strength for caregivers and peace in God’s will.</p><div class="foot"><p class="prog" aria-live="polite"></p><span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>
   </ul>
 
   <h2 class="h2">How a novena works</h2>
   <ul class="how">
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>Nine days, one intention</h3><p>A novena is prayer for one intention over nine days, after the Apostles and Mary, who prayed together in the days before Pentecost (Acts 1:14).</p></div></li>
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About ten minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
-    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-users"/></svg></span><div><h3>Together or alone</h3><p>One person leads and everyone responds. Your progress, start date and intention stay only on your phone.</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-calendar-check"/></svg></span><div><h3>9 days, 1 intention</h3><p>A novena is prayer for 1 intention over 9 days, after the Apostles and Mary, who prayed together in the days before Pentecost (Acts 1:14).</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-hands-praying"/></svg></span><div><h3>About 10 minutes a day</h3><p>Each day has an opening prayer, a Scripture passage and reflection, the day’s prayer, and the closing prayers.</p></div></li>
+    <li><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-users"/></svg></span><div><h3>Together or alone</h3><p>Someone leads and everyone responds. Your progress, start date and intention stay only on your phone.</p></div></li>
   </ul>
 </main>
 <footer class="wrap">
@@ -159,7 +155,7 @@ footer{padding:28px 0 44px;text-align:center}
     var p = c.querySelector(".prog"); if (!s || !p) return;
     var done = Array.isArray(s.done) ? s.done.length : 0, n = null;
     if (s.start){ n = Math.round((new Date(today() + "T00:00:00") - new Date(s.start + "T00:00:00")) / 86400000) + 1; }
-    if (done >= 9) p.textContent = "All nine days prayed";
+    if (done >= 9) p.textContent = "All 9 days prayed";
     else if (n !== null && n >= 1 && n <= 9) p.textContent = "Today is Day " + n + " · " + done + " of 9 prayed";
     else if (done > 0) p.textContent = done + " of 9 days prayed";
   });

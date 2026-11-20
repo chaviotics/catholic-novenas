@@ -169,22 +169,25 @@ def page(n, mode):
 
 def library(novenas):
     t = read(os.path.join(ROOT, "templates", "library.html"))
-    cards = []
+    cards, icons = [], []
     for n in novenas:
         if n.get("status") != "published":
             continue
-        faces = "".join('<img src="%s/img/%s_face.jpg" alt="" width="56" height="56">' % (n["slug"], s["id"]) for s in n["saints"])
+        icons.append(n.get("icon", "cross"))
+        faces = "".join('<img src="%s/img/%s_face.jpg" alt="" width="36" height="36">' % (n["slug"], s["id"]) for s in n["saints"])
+        title = n.get("cardTitle") or re.sub(r"^Novena for (the )?", "", n["title"])
         cards.append(
-            '<li class="card" data-key="%s"><a href="%s/index.html">'
-            '<div class="faces" aria-hidden="true">%s</div>'
-            '<div class="body"><p class="kick">%s</p><h3>%s</h3>'
-            '<p class="through">through %s</p><p class="blurb">%s</p>'
-            '<p class="prog" aria-live="polite"></p></div>'
-            '<span class="go" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></span></a></li>' % (
-                esc(n["storageKey"]), n["slug"], faces, esc(n["kicker"]), esc(n["title"]),
+            '<li class="card" data-key="%s"><a href="%s/index.html" aria-label="Novena for %s">'
+            '<div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-%s"/></svg></span>'
+            '<div class="faces" aria-hidden="true">%s</div></div>'
+            '<h3>%s</h3><p class="through">through %s</p>'
+            '<p class="blurb">%s</p>'
+            '<div class="foot"><p class="prog" aria-live="polite"></p>'
+            '<span class="go" aria-hidden="true">Pray<svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>' % (
+                esc(n["storageKey"]), n["slug"], esc(title), n.get("icon", "cross"), faces, esc(title),
                 saint_line(n["saints"]), esc(n["card"])))
     t = t.replace("{{CARDS}}", "\n".join(cards)).replace("{{COUNT}}", "%d NOVENA%s" % (len(cards), "" if len(cards) == 1 else "S"))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"]))
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t

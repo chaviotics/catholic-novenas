@@ -68,7 +68,7 @@ def main():
         sub = "through " + (names[0] if len(names) == 1 else ", ".join(names[:-1]) + " &amp; " + names[-1])
         pairs.append((card_html(n["kicker"], n["barTitle"], sub, faces), os.path.join(base, slug, "og.png")))
     if not only:
-        pairs.append((card_html("Nine days of prayer", "Catholic Novenas",
+        pairs.append((card_html("9 days of prayer", "Catholic Novenas",
                                 "Pray with your family, one day at a time", all_faces[:6]), os.path.join(ROOT, "site", "og.png")))
     asyncio.run(render(pairs))
 

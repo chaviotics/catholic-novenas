@@ -6,9 +6,9 @@
  "title": "Novena for the Healing of the Sick",
  "barTitle": "Novena for Healing",
  "barShort": "Healing Novena",
- "kicker": "Nine days of hope in Christ who heals",
- "card": "For a friend or loved one who is ill: nine days asking for healing, strength for caregivers and peace in God’s will.",
- "description": "A nine-day Catholic novena for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis and St. Bernadette.",
+ "kicker": "9 days of hope in Christ who heals",
+ "card": "For a friend or loved one who is ill: 9 days asking for healing, strength for caregivers and peace in God’s will.",
+ "description": "A 9-day Catholic novena for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis and St. Bernadette.",
  "epigraph": {
   "text": "Heal me, O LORD, and I shall be healed; save me, and I shall be saved; for thou art my praise.",
   "ref": "Jeremiah 17:14"
@@ -79,7 +79,7 @@
   },
   {
    "h": "Alongside prayer",
-   "p": "If you can, go to Confession and attend Mass during these nine days. Ask a priest about the Anointing of the Sick, which is for anyone seriously ill or facing major surgery, not only the dying. Pair prayer with good care: follow medical advice, offer practical help (Day&nbsp;6), and be wary of anyone who promises a sure cure. At “N.”, say the sick person’s name; if you are praying for yourself, say “me”."
+   "p": "If you can, go to Confession and attend Mass during these 9 days. Ask a priest about the Anointing of the Sick, which is for anyone seriously ill or facing major surgery, not only the dying. Pair prayer with good care: follow medical advice, offer practical help (Day&nbsp;6), and be wary of anyone who promises a sure cure. At “N.”, say the sick person’s name; if you are praying for yourself, say “me”."
   }
  ],
  "intentionPlaceholder": "Write the name of the person you are praying for and the healing you ask.",
@@ -185,5 +185,7 @@
  "printClosing": [
   "Beloved, I pray that all may go well with you and that you may be in health;",
   "I know that it is well with your soul."
- ]
+ ],
+ "icon": "heartbeat",
+ "cardTitle": "Healing of the Sick"
 }
