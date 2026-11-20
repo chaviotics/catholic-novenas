@@ -20,25 +20,26 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from shots import font_css  # noqa: E402
 
+# Colors: the site's Wine & Gold palette, on its cream page color (wine as a full background read too red)
 CSS = """
 *{box-sizing:border-box}html,body{margin:0}
 body{width:1200px;height:630px;overflow:hidden;font-family:'Cormorant Garamond',Garamond,Georgia,serif;
-  background:radial-gradient(ellipse 70% 90% at 50% 45%,#7A2433 0%,#5E1A26 55%,#45121B 100%);color:#FFF8EC}
-.frame{position:absolute;inset:22px;border:2px solid #C9A45C;border-radius:6px}
-.frame:after{content:"";position:absolute;inset:8px;border:1px solid rgba(201,164,92,.45);border-radius:3px}
-.arch{position:absolute;top:95px;width:236px;height:440px;border-radius:118px 118px 8px 8px;overflow:hidden;
-  border:4px solid #C9A45C;box-shadow:0 0 0 6px rgba(201,164,92,.18),0 14px 40px rgba(0,0,0,.45)}
+  background:radial-gradient(ellipse 75% 95% at 50% 45%,#FFFDF9 0%,#FBF6EC 65%,#F3EADA 100%);color:#6E1F2B;
+  border-top:14px solid #94702A}
+.frame{position:absolute;inset:34px 22px 22px;border:2px solid #94702A;border-radius:6px}
+.frame:after{content:"";position:absolute;inset:8px;border:1px solid rgba(148,112,42,.4);border-radius:3px}
+.arch{position:absolute;top:100px;width:236px;height:430px;border-radius:118px 118px 8px 8px;overflow:hidden;
+  border:4px solid #94702A;box-shadow:0 0 0 6px rgba(148,112,42,.14),0 12px 30px rgba(60,40,20,.28)}
 .arch img{width:100%;height:100%;object-fit:cover}
 .l{left:52px}.r{right:52px}
 .mid{position:absolute;left:300px;width:600px;top:0;bottom:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;padding:30px 0 34px}
-.cross{color:#D9B86A;font-size:64px;line-height:1;margin-bottom:6px}
+.cross{color:#6E1F2B;font-size:64px;line-height:1;margin-bottom:6px}
 .pre{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:.2em;
-  text-transform:uppercase;color:#E2C47E;margin:6px 0 0}
-h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#FFF8EC;
-  text-shadow:0 2px 0 rgba(0,0,0,.25)}
-.rule{width:120px;height:2px;background:#C9A45C;margin:26px 0 20px}
-.sub{font-style:italic;font-weight:600;font-size:46px;line-height:1.08;color:#F1DDAE;margin:0;text-wrap:balance}
+  text-transform:uppercase;color:#94702A;margin:6px 0 0}
+h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#6E1F2B;max-width:580px;text-wrap:balance}
+.rule{width:120px;height:2px;background:#94702A;margin:26px 0 20px}
+.sub{font-style:italic;font-weight:600;font-size:46px;line-height:1.08;color:#4A3F38;margin:0;text-wrap:balance}
 """
 
 # shrink the title until it fits the column in at most 2 lines, then the subtitle if the stack is too tall.
