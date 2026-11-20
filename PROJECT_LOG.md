@@ -29,6 +29,7 @@ Read this at the start of a work session. Update it at the end when something ch
 - **Saints:** 1–3 per novena, suggested from the intention. Public-domain images in both the app and print. Facts only when certain; quote a saint only with a well-attested line.
 - **Faith:** never promise outcomes, no prosperity-gospel framing. Pray for God's will; for healing, also for strength, peace, doctors and caregivers.
 - **Print:** 3 pages, 4 at most. Made by copying the template doc and filling it with `tools/print_fill.py`; one tab per doc (the PDF export prints every tab).
+- **Link previews:** made by `tools/og.py` from each novena's title, kicker and 2 saints (`"ogSaints": [left, right]` in novena.json so they face inward). Cream background, wine and gold accents; no URL or call to action on the image.
 - **Library cards:** title without "Novena for" (the section heading already says it), icon on the left, saints' faces top right, progress line and "Pray" / "Continue Day N" button.
 - **Theme and text size** are shared across the whole site (`novenas-mode`, `novenas-scale`); progress is saved per novena (`novena-<slug>`).
 - **Workflow:** finish new work as a Claude artifact preview first; commit and push only after approval.
@@ -49,6 +50,7 @@ Read this at the start of a work session. Update it at the end when something ch
 - UI/UX review (scored 7/10 before): all 15 findings fixed. Highlights: card progress states, shared theme and text size, the cross in a novena's top bar returns to the library, larger card text, footer padding actually applied, "&" no longer dropped from day captions.
 - Print docs (template, debt v2, healing) updated to match: "9 DAYS OF …" kickers, no "· RSV-CE" on cites, "The 9 Days", "End with an Our Father, a Hail Mary and a Glory Be", "these 9 days" in the tip. Healing print still 4 pages, all text present.
 - Skill updated with the digit and reference rules; `print_fill.py` no longer adds the version label.
+- Link previews redesigned to read at chat size (`tools/og.py` → `og.jpg`): cream with a gold frame, a big wine title, one short line, 2 saints in arched frames, text kept in the centre square for apps that crop. One per novena plus the library. Fuller og:title and og:description, og:image:alt, and a `?v=` hash on og:image so chat apps refetch. JPEG about 110 KB (WhatsApp often drops images over about 300 KB). Chav tried wine as the background and found it too red; kept the Wine & Gold palette.
 
 ## Open items
 
