@@ -189,5 +189,24 @@
  ],
  "icon": "heartbeat",
  "cardTitle": "Healing of the Sick",
- "ogSaints": ["bernadette", "raphael"]
+ "ogSaints": [
+  "bernadette",
+  "raphael"
+ ],
+ "category": "healing",
+ "keywords": [
+  "healing",
+  "sick",
+  "illness",
+  "sickness",
+  "surgery",
+  "hospital",
+  "cancer",
+  "recovery",
+  "sakit",
+  "paggaling",
+  "gamot",
+  "st. raphael",
+  "lourdes"
+ ]
 }

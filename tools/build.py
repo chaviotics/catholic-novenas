@@ -26,6 +26,21 @@ GOOGLE_FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">')
 PAGE_TIMEOUT_MS = 4000  # how long a page waits for the network before showing the saved copy
 
+# Library filters. Each novena.json names one "category"; a chip shows only when a published novena uses it.
+CATEGORIES = [
+    ("exams-school", "School & exams"),
+    ("work-money", "Work & money"),
+    ("healing", "Health & healing"),
+    ("family", "Family"),
+    ("decisions-growth", "Wisdom & decisions"),
+    ("travel", "Travel & abroad"),
+    ("hard-times", "Hard times"),
+    ("departed", "The departed"),
+    ("seasons", "Seasons & feasts"),
+]
+CHIPS_MIN = 4    # show the filter chips once this many novenas are published
+SEARCH_MIN = 10  # show the search box once this many are published (chips are enough below that)
+
 
 def local_fonts(up):
     """the site's own copies of the fonts (site/fonts), so pages look right offline"""
@@ -82,10 +97,11 @@ def load_novenas():
 
 
 def validate(n):
-    req = ["slug", "storageKey", "title", "barTitle", "barShort", "kicker", "card", "description", "epigraph",
+    req = ["slug", "storageKey", "category", "title", "barTitle", "barShort", "kicker", "card", "description", "epigraph",
            "closingVerse", "saints", "litany", "openingPrayer", "closingPrayer", "memorare", "tips", "icons", "credits", "days"]
     miss = [k for k in req if k not in n]
     assert not miss, (n.get("slug"), "missing", miss)
+    assert n["category"] in dict(CATEGORIES), (n["slug"], "unknown category", n["category"])
     assert len(n["days"]) == 9 and len(n["icons"]) == 9, n["slug"]
     assert 1 <= len(n["saints"]) <= 3, n["slug"]
     for d in n["days"]:
@@ -107,10 +123,14 @@ def scripture(t):
 
 
 def saint_line(saints):
+    # each name (and the "&" before the last) stays on one line; the line breaks only between names
     names = [esc(s["name"]) for s in saints]
-    if len(names) == 1:
-        return names[0]
-    return ", ".join(names[:-1]) + " &amp; " + names[-1]
+    if len(names) > 1:
+        names[-1] = "&amp; " + names[-1]
+    names = ['<span class="nb">%s</span>' % x for x in names]
+    if len(names) <= 2:
+        return " ".join(names)
+    return ", ".join(names[:-1]) + " " + names[-1]
 
 
 def page(n, mode):
@@ -210,12 +230,19 @@ def og_ver(path):
         return hashlib.sha1(f.read()).hexdigest()[:8]
 
 
-def library(novenas):
+def search_text(n, title):
+    """what the search box matches: title, card, saints, Marian title, category and keywords"""
+    parts = [title, n["title"], n["card"], dict(CATEGORIES)[n["category"]]]
+    parts += [x["name"] for x in n["saints"]] + [l["text"] for l in n["litany"]] + n.get("keywords", [])
+    t = " ".join(parts).lower().replace("\u2019", "'")
+    return re.sub(r"\s+", " ", t)
+
+
+def library(novenas, search=None):
     t = read(os.path.join(ROOT, "templates", "library.html"))
     cards, icons = [], []
-    for n in novenas:
-        if n.get("status") != "published":
-            continue
+    pub = [n for n in novenas if n.get("status") == "published"]
+    for n in pub:
         icons.append(n.get("icon", "cross"))
         faces = "".join('<img src="%s/img/%s_face.jpg" alt="" width="36" height="36">' % (n["slug"], s["id"]) for s in n["saints"])
         title = n.get("cardTitle") or re.sub(r"^Novena for (the )?", "", n["title"])
@@ -224,24 +251,42 @@ def library(novenas):
         blurb = re.sub(r"(\d) ", r"\1&nbsp;", esc(n["card"]))
         sl = n["slug"]
         cards.append(
-            '<li class="card" data-key="%s"><a href="%s/index.html" aria-labelledby="t-%s p-%s">'
+            '<li class="card" data-key="%s" data-cat="%s" data-search="%s"><a href="%s/index.html" aria-labelledby="t-%s p-%s">'
             '<div class="top"><span class="ic" aria-hidden="true"><svg class="i"><use href="#i-%s"/></svg></span>'
             '<div class="faces" aria-hidden="true">%s</div></div>'
             '<h3 id="t-%s">%s</h3><p class="through">through %s</p>'
             '<p class="blurb">%s</p>'
             '<div class="foot"><p class="prog" id="p-%s"></p>'
             '<span class="go" aria-hidden="true"><span>Pray</span><svg class="i"><use href="#i-arrow-right"/></svg></span></div></a></li>' % (
-                esc(n["storageKey"]), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
+                esc(n["storageKey"]), n["category"], esc(search_text(n, title)), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
+    used = [n["category"] for n in pub]
+    chips = ""
+    if len(pub) >= CHIPS_MIN and len(set(used)) > 1:
+        btn = '<button type="button" class="chip" data-cat="%s" aria-pressed="%s">%s<span class="n">%d</span></button>'
+        chips = ('<div class="chips" id="chips" role="group" aria-label="Filter by intention">' + btn % ("all", "true", "All", len(pub))
+                 + "".join(btn % (k, "false", esc(v), used.count(k)) for k, v in CATEGORIES if k in used) + "</div>")
+    if search is None:
+        search = len(pub) >= SEARCH_MIN
+    box = ""
+    if search:
+        box = ('<div class="search" role="search"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"/></svg>'
+               '<label class="sr" for="q">Search novenas</label>'
+               '<input id="q" type="search" placeholder="Search by intention or saint" autocomplete="off" enterkeyhint="search">'
+               '<button type="button" class="clear" id="qClear" aria-label="Clear search" hidden><svg class="i" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button></div>')
+    tools = ""
+    if chips or box:
+        tools = '<div class="filters">%s%s</div>\n  <p class="sr" id="filterStatus" role="status" aria-live="polite"></p>' % (box, chips)
+    t = t.replace("{{FILTERS}}", tools)
     t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
     t = t.replace("{{FONTS}}", local_fonts("")).replace("{{SW}}", sw_register(""))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line"] + icons))
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line", "magnifying-glass", "x"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t
 
 
-def build_site():
+def build_site(search=None):
     novenas = load_novenas()
     site = os.path.join(ROOT, "site")
     for n in novenas:
@@ -260,7 +305,7 @@ def build_site():
             f.write(page(n, "site"))
         print("built", n["slug"], n.get("status"))
     with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
-        f.write(library(novenas))
+        f.write(library(novenas, search))
     print("built library with", sum(1 for n in novenas if n.get("status") == "published"), "published novenas")
     build_sw(site)
 
@@ -294,4 +339,5 @@ if __name__ == "__main__":
             f.write(page(n, "artifact"))
         print(p, os.path.getsize(p) // 1024, "KB")
     else:
-        build_site()
+        # --search / --no-search force the library search box on or off (default: on from SEARCH_MIN novenas)
+        build_site(True if "--search" in sys.argv else False if "--no-search" in sys.argv else None)

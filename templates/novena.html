@@ -81,7 +81,8 @@ section{padding:30px 0 8px}
 .kicker{margin:10px 0 0;font-size:12px}
 h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(34px,8vw,46px);line-height:1.05;margin:10px 0 8px;text-wrap:balance}
 .sub{font-family:var(--display);font-style:italic;font-size:clamp(16.5px,4.6vw,20px);line-height:1.35;color:var(--muted);margin:0 auto}
-.sub .l2{white-space:nowrap}
+.sub .l2{display:block;text-wrap:balance}
+.sub .nb{white-space:nowrap}
 .epi{margin:18px auto 0;font-style:italic;font-size:17px;max-width:34ch}
 .cite{display:block;font-style:normal;font-size:11.5px;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase}
 .faces{display:flex;justify-content:center;gap:10px;margin:20px 0 0}
@@ -231,7 +232,6 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   .daynum{font-size:52px}
   .step{padding-left:0}
   .step .num{position:static;display:inline-grid;flex:none}
-  .sub .l2{white-space:normal} /* long saint lines may wrap on the narrowest phones */
 }
 
 /* ---- desktop: a prayer column with a sidebar ---- */
@@ -254,7 +254,6 @@ footer{padding:10px 0 44px;text-align:center;font-size:13px;color:var(--muted)}
   .faces{grid-column:1;grid-row:4;margin:0;gap:0;padding-left:10px}
   .faces img{width:52px;height:52px;margin-left:-10px;border:2px solid var(--paper)}
   .sub{grid-column:2;grid-row:4;font-size:20px;margin:0}
-  .sub .l2{white-space:normal}
   .epi{grid-row:5;margin:20px 0 0;max-width:none;font-size:18px;padding-left:14px;border-left:2px solid var(--gold)}
   .epi .cite{margin-top:6px}
   .today{margin:0;padding:18px 18px 14px}

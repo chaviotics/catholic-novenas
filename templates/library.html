@@ -101,6 +101,29 @@ h1{font-family:var(--display);font-weight:700;color:var(--wine);font-size:clamp(
 .offline{margin-bottom:12px}
 footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
 
+/* filters: intention chips (and a search box once the library is large) */
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.filters{margin:-4px 0 18px}
+.chips{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:20px;margin:0 -20px;padding:2px 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 16px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);font:inherit;font-size:calc(16px * var(--scale));font-weight:500;cursor:pointer;white-space:nowrap;transition:border-color .15s,background-color .15s,color .15s}
+.chip .n{font-size:.82em;font-weight:600;color:var(--gold-text);font-variant-numeric:tabular-nums}
+.chip:hover{border-color:var(--gold)}
+.chip[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:var(--paper)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.8}
+.search{position:relative;margin-bottom:12px}
+.search>svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--gold)}
+.search input{width:100%;height:50px;padding:0 48px 0 46px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink);font:inherit;font-size:calc(17px * var(--scale));-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:var(--muted);opacity:1}
+.search input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 35%,transparent)}
+.search input::-webkit-search-cancel-button{display:none}
+.search .clear{position:absolute;right:3px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:18px}
+.search .clear[hidden]{display:none}
+.card[hidden]{display:none}
+.empty{margin:4px 0 0;padding:18px 20px;border:1px dashed var(--rule-strong);border-radius:14px;color:var(--muted);font-size:calc(17px * var(--scale))}
+.linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--wine);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
 /* text size popover (same as the novena pages) */
 .sizer{display:none;position:absolute;right:20px;top:56px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px;gap:6px;box-shadow:0 8px 24px rgb(0 0 0 / .12);z-index:6}
 .sizer.open{display:flex}
@@ -122,6 +145,8 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   .card.started a{padding-top:18px}
   .card .blurb{margin-bottom:14px}
   .card .foot{margin-top:auto}
+  .chips{flex-wrap:wrap;overflow:visible;margin:0;padding:2px 0 0;-webkit-mask-image:none;mask-image:none}
+  .search{max-width:520px}
 }
 @media (min-width:960px){
   .how{grid-template-columns:repeat(3,1fr);gap:32px}
@@ -159,9 +184,11 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   </div>
 
   <h2 class="h2" id="listHead">Choose a novena</h2>
-  <ul class="cards" aria-labelledby="listHead">
+  {{FILTERS}}
+  <ul class="cards" id="cards" aria-labelledby="listHead">
 {{CARDS}}
   </ul>
+  <p class="empty" id="empty" hidden>No novena matches “<span id="emptyQ"></span>”. Try another word, like a saint’s name or what you are praying for. <button type="button" class="linkbtn" id="showAll">Show all novenas</button></p>
 
   <h2 class="h2">How a novena works</h2>
   <ul class="how">
@@ -212,6 +239,44 @@ footer.wrap{text-align:center;padding-top:28px;padding-bottom:calc(88px + env(sa
   });
   if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", paint); }
   paint();
+
+  /* filters: intention chips (+ search box when present). The chip is kept in the address (#work-money) so it can be shared. */
+  var cards = [].slice.call(document.querySelectorAll(".card")), chips = [].slice.call(document.querySelectorAll(".chip")),
+      q = document.getElementById("q"), qClear = document.getElementById("qClear"), status = document.getElementById("filterStatus"),
+      empty = document.getElementById("empty"), cat = "all";
+  function norm(t){ return (t || "").toLowerCase().replace(/[\u2019']/g, "'").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); }
+  function apply(announce){
+    var words = q ? norm(q.value).split(/\s+/).filter(Boolean) : [], shown = 0;
+    cards.forEach(function(c){
+      var hay = norm(c.getAttribute("data-search"));
+      var ok = (cat === "all" || c.getAttribute("data-cat") === cat) && words.every(function(w){ return hay.indexOf(w) >= 0; });
+      c.hidden = !ok; if (ok) shown++;
+    });
+    chips.forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === cat)); });
+    if (qClear) qClear.hidden = !(q && q.value);
+    if (empty){ empty.hidden = shown > 0; document.getElementById("emptyQ").textContent = q ? q.value : ""; }
+    if (status && announce){
+      var label = cat === "all" ? "" : " for " + (document.querySelector('.chip[data-cat="' + cat + '"]').firstChild.textContent);
+      status.textContent = shown === 1 ? "1 novena" + label : shown + " novenas" + label;
+    }
+  }
+  function setCat(c, announce){
+    cat = chips.some(function(b){ return b.getAttribute("data-cat") === c; }) ? c : "all";
+    try{ history.replaceState(null, "", cat === "all" ? location.pathname + location.search : "#" + cat); }catch(e){}
+    apply(announce);
+  }
+  chips.forEach(function(b){ b.addEventListener("click", function(){ setCat(b.getAttribute("data-cat"), true); }); });
+  if (q){
+    q.addEventListener("input", function(){ apply(true); });
+    q.addEventListener("keydown", function(e){ if (e.key === "Escape" && q.value){ q.value = ""; apply(true); } });
+    qClear.addEventListener("click", function(){ q.value = ""; apply(true); q.focus(); });
+  }
+  var showAll = document.getElementById("showAll");
+  if (showAll) showAll.addEventListener("click", function(){ if (q) q.value = ""; setCat("all", true); });
+  if (chips.length && location.hash.length > 1){
+    setCat(location.hash.slice(1), false);
+    var on = document.querySelector('.chip[aria-pressed="true"]'); if (on && on.scrollIntoView) on.scrollIntoView({block:"nearest", inline:"nearest"});
+  } else if (q && q.value) apply(false);
 
   /* show where each novena stands, from what that novena saved on this phone */
   function today(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
