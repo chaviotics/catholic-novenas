@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Novena for Healing</title>
 <meta name="description" content="A 9-day Catholic novena for the healing of the sick, through Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis and St. Bernadette.">
 <meta name="theme-color" content="#FFFDF9" media="(prefers-color-scheme: light)">
@@ -293,6 +293,61 @@ blockquote.passage{margin:0}
 .back:hover,.back:focus-visible{text-decoration:underline;text-underline-offset:3px}
 .more{text-align:center;margin:8px 0 0;font-size:16px}
 .more a{display:inline-flex;align-items:center;min-height:44px;color:var(--wine);font-weight:600;text-underline-offset:3px}
+
+/* ---- layout v3: phone first; a prayer column with a sidebar from 1024px ---- */
+.toc,.grid9{display:none}
+.daynav button:disabled{visibility:hidden}
+@media (hover:hover){
+  .track button:not(.sel):not(.done):hover{border-color:var(--wine);color:var(--wine)}
+  .daynav button:not(:disabled):hover,.startrow input:hover{border-color:var(--gold)}
+  .cta:hover{filter:brightness(1.1)}
+  .markdone:not(.is-done):hover{background:var(--wash)}
+  details.prayer summary:hover{color:var(--wine)}
+}
+/* phones: the hero is shorter, so today's card and its button come into view sooner */
+@media (max-width:600px){
+  .hero{padding-top:20px}
+  .hero .back{display:none}
+  .epi{margin-top:12px}
+  .faces{margin-top:14px}
+  .faces img{width:48px;height:48px}
+  .today{margin-top:18px}
+}
+@media (min-width:1024px){
+  .wrap{max-width:1120px;padding:0 40px}
+  .days{display:none}
+  html{scroll-padding-top:80px}
+  #prayer{scroll-margin-top:80px;padding-top:0}
+  .hero{padding:44px 0 8px}
+  .hero .back{margin-bottom:10px}
+  h1{font-size:clamp(46px,4.2vw,58px)}
+  .sub{font-size:21px}
+  .epi{font-size:18px;max-width:40ch}
+  .layout{display:grid;grid-template-columns:300px minmax(0,660px);gap:64px;justify-content:center;align-items:start;margin-top:36px}
+  .side{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;padding:4px;margin:-4px;scrollbar-width:thin}
+  .today{margin:0;padding:18px 18px 14px}
+  .today-top{gap:14px}
+  .daynum{font-size:52px;min-width:44px}
+  .today h2{font-size:calc(22px * var(--scale))}
+  .today .status{font-size:calc(15px * var(--scale))}
+  .grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 0}
+  .today .cta{display:none}
+  .grid9 button{height:40px}
+  .startrow{gap:4px 10px;font-size:15px}
+  .startrow input{flex:1 1 130px}
+  .toc{display:block;margin:20px 0 0;padding:0 4px}
+  .toc-h{margin:0 0 6px;font-size:calc(12px * var(--scale));letter-spacing:.14em;font-weight:600;color:var(--gold-text);text-transform:uppercase}
+  .toc ol,.toc ul{list-style:none;margin:0 0 16px;padding:0}
+  .toc a{display:flex;align-items:center;gap:10px;min-height:38px;padding:4px 10px;margin:0 -10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:calc(16.5px * var(--scale));line-height:1.25}
+  .toc a:hover{background:var(--wash)}
+  .toc a[aria-current]{color:var(--wine);font-weight:600;background:var(--wash)}
+  .toc .num{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold-text);display:grid;place-items:center;font-size:12.5px;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
+  .toc a[aria-current] .num{background:var(--gold);color:var(--sheet)}
+  .toc ul a{padding-left:44px}
+  .flow{display:none}
+  .wake{margin:0 0 6px}
+  .close{padding-top:60px;max-width:640px;margin:0 auto}
+}
 </style>
 </head>
 <body>
@@ -324,6 +379,8 @@ blockquote.passage{margin:0}
     <div class="faces" aria-hidden="true"><img src="img/raphael_face.jpg" alt=""><img src="img/camillus_face.jpg" alt=""><img src="img/bernadette_face.jpg" alt=""></div>
   </div>
 
+  <div class="layout">
+  <aside class="side" aria-label="Your novena">
   <div class="today" id="today">
     <div class="today-top">
       <div class="daynum" id="tNum">1<small>OF 9</small></div>
@@ -332,6 +389,7 @@ blockquote.passage{margin:0}
         <p class="status" id="tStatus" aria-live="polite">Begin on any day. Each day takes about 10 minutes.</p>
       </div>
     </div>
+    <ol class="track grid9" id="track2" aria-label="The 9 days"></ol>
     <button class="cta" id="beginBtn" type="button"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-hands-praying"/></svg><span id="beginLabel">Pray Day 1</span></button>
     <div class="startrow">
       <label for="startDate">Started on</label>
@@ -340,6 +398,23 @@ blockquote.passage{margin:0}
       <button class="link" type="button" id="resetAll">Reset</button>
     </div>
   </div>
+  <nav class="toc" aria-label="On this page">
+    <p class="toc-h">Today’s prayers</p>
+    <ol>
+      <li><a href="#step-1"><span class="num">1</span>Opening Prayer</a></li>
+      <li><a href="#step-2"><span class="num">2</span>Scripture &amp; Reflection</a></li>
+      <li><a href="#step-3"><span class="num">3</span>Pray</a></li>
+      <li><a href="#step-4"><span class="num">4</span>Closing Prayer</a></li>
+      <li><a href="#step-5"><span class="num">5</span>Pray together</a></li>
+    </ol>
+    <p class="toc-h">About this novena</p>
+    <ul>
+      <li><a href="#howHead">How to pray it</a></li>
+      <li><a href="#saintsHead">The 3 Intercessors</a></li>
+    </ul>
+  </nav>
+  </aside>
+  <div class="col">
 
   <section id="prayer" aria-labelledby="prayHead">
     <h2 class="h2" id="prayHead"><span id="prayHeadText">Pray Day 1</span><span class="n" id="prayHeadN">DAY 1 OF 9</span></h2>
@@ -347,7 +422,7 @@ blockquote.passage{margin:0}
     <p class="flow">Opening Prayer › Scripture &amp; Reflection › Prayer › Closing Prayer &amp; Memorare › Our Father · Hail Mary · Glory Be</p>
 
     <ol class="steps">
-      <li class="step">
+      <li id="step-1" class="step">
         <p class="label"><span class="num">1</span>Opening Prayer</p>
         <div class="read">
           <p class="rubric">Pause for a moment of silence before God, then make the Sign of the Cross.</p>
@@ -357,7 +432,7 @@ blockquote.passage{margin:0}
         </div>
       </li>
 
-      <li class="step">
+      <li id="step-2" class="step">
         <p class="label"><span class="num">2</span>Scripture &amp; Reflection</p>
         <div class="dayicon" id="dIconLabel"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-hands-praying"/></svg><span>DAY 1</span></div>
         <h3 class="daytitle" id="dTitle">Bringing Our Fear to Jesus</h3>
@@ -367,7 +442,7 @@ blockquote.passage{margin:0}
         <p class="refl refl2" id="dMore"></p>
       </li>
 
-      <li class="step pray">
+      <li id="step-3" class="step pray">
         <p class="label"><span class="num">3</span>Pray</p>
         <div class="read">
           <p id="dPrayer"></p>
@@ -376,11 +451,11 @@ blockquote.passage{margin:0}
         <div class="intent">
           <label for="intention">Our intention</label>
           <textarea id="intention" placeholder="Write the name of the person you are praying for and the healing you ask."></textarea>
-          <p class="hint" id="storeHint">Saved only on this phone. Nobody else can see it.</p>
+          <p class="hint" id="storeHint">Saved only on this device. Nobody else can see it.</p>
         </div>
       </li>
 
-      <li class="step">
+      <li id="step-4" class="step">
         <p class="label"><span class="num">4</span>Closing Prayer</p>
         <div class="read litany">
           <p><img class="av" src="img/mary_face.jpg" alt="">Our Lady of Lourdes, <span class="resp">pray for us.</span></p>
@@ -397,7 +472,7 @@ blockquote.passage{margin:0}
         </div>
       </li>
 
-      <li class="step">
+      <li id="step-5" class="step">
         <p class="label"><span class="num">5</span>Pray together</p>
         <details class="prayer" open><summary>Our Father <svg class="i" aria-hidden="true" focusable="false"><use href="#i-caret-down"/></svg></summary>
           <div class="read"><p>Our Father, who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. <span class="resp">Amen.</span></p></div>
@@ -442,6 +517,8 @@ blockquote.passage{margin:0}
       <article class="saint"><img class="portrait" src="img/bernadette.jpg" alt="Photograph: St. Bernadette Soubirous in 1863" width="92" height="115"><div><h3>St. Bernadette</h3><p class="meta">1844–1879 · Feast · Apr 16</p><p class="pat">Patron of the sick</p><p>Miller’s daughter to whom Our Lady appeared at Lourdes in 1858. As a Sister of Charity at Nevers she bore long illness with patience, and died at 35.</p></div></article>
     </div>
   </section>
+  </div>
+  </div>
 
   <div class="close">
     <div class="cross" aria-hidden="true"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-cross"/></svg></div>
@@ -469,7 +546,7 @@ blockquote.passage{margin:0}
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   function noteStore(){
     if (canStore) return;
-    $("storeHint").textContent = "This page cannot save on this phone, so the intention clears when you close it.";
+    $("storeHint").textContent = "This page cannot save on this device, so the intention clears when you close it.";
     $("storeFoot").textContent = "This page cannot save here, so progress resets when you close it.";
   }
   noteStore();
@@ -519,18 +596,20 @@ blockquote.passage{margin:0}
   var m = /^#day-([1-9])$/.exec(location.hash);
   if (m){ sel = +m[1]; try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} }
 
-  /* the nine day buttons, built once so focus stays put */
+  /* the nine day buttons, built once so focus stays put: the top or bottom strip, and the desktop sidebar grid */
   var chips = [];
-  for (var i = 1; i <= 9; i++){
-    var li = document.createElement("li"), b = document.createElement("button");
-    b.type = "button"; b.textContent = i;
-    (function(k){ b.addEventListener("click", function(){
-      var reading = $("prayer").getBoundingClientRect().top < 140;
-      choose(k);
-      if (reading) $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
-    }); })(i);
-    li.appendChild(b); $("track").appendChild(li); chips.push(b);
-  }
+  ["track", "track2"].forEach(function(id){
+    for (var i = 1; i <= 9; i++){
+      var li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.textContent = i; b.setAttribute("data-day", i);
+      (function(k){ b.addEventListener("click", function(){
+        var reading = $("prayer").getBoundingClientRect().top < 140;
+        choose(k);
+        if (reading) $("prayer").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+      }); })(i);
+      li.appendChild(b); $(id).appendChild(li); chips.push(b);
+    }
+  });
 
   var unarm = null, shownDay = 0;
   function render(){
@@ -557,8 +636,8 @@ blockquote.passage{margin:0}
     $("prevBtn").disabled = sel === 1; $("prevBtn").textContent = sel > 1 ? "‹ Day " + (sel-1) : "‹";
     $("nextBtn").disabled = sel === 9; $("nextBtn").textContent = sel < 9 ? "Day " + (sel+1) + " ›" : "›";
     $("startDate").value = state.start || "";
-    chips.forEach(function(c, j){
-      var k = j + 1, dn = isDone(k);
+    chips.forEach(function(c){
+      var k = +c.getAttribute("data-day"), j = k - 1, dn = isDone(k);
       c.classList.toggle("done", dn); c.classList.toggle("sel", k === sel); c.classList.toggle("today", k === n);
       c.setAttribute("aria-label", "Day " + k + ": " + DAYS[j].title + (k === n ? ", today" : "") + (dn ? ", prayed" : ""));
       if (k === sel) c.setAttribute("aria-current", "step"); else c.removeAttribute("aria-current");
@@ -614,6 +693,20 @@ blockquote.passage{margin:0}
     wb.addEventListener("click", function(){ want = !want; paintWake(); if (want) acquire(); else if (lock) lock.release(); });
     document.addEventListener("visibilitychange", function(){ if (!document.hidden && want && !lock) acquire(); });
   }
+
+  /* desktop sidebar: mark the part of the prayer on screen (the last one whose top has passed under the bar) */
+  var tocLinks = [].slice.call(document.querySelectorAll(".toc a")).map(function(a){
+    var el = document.getElementById(a.getAttribute("href").slice(1)); if (el && el.tagName === "H2") el = el.parentNode; return {a: a, el: el}; });
+  var tocTick = false;
+  function paintToc(){
+    tocTick = false; var cur = null;
+    if (getComputedStyle(document.querySelector(".toc")).display === "none") return;
+    tocLinks.forEach(function(t){ if (t.el && t.el.getBoundingClientRect().top <= 140) cur = t; });
+    tocLinks.forEach(function(t){ if (t === cur) t.a.setAttribute("aria-current", "true"); else t.a.removeAttribute("aria-current"); });
+  }
+  window.addEventListener("scroll", function(){ if (!tocTick){ tocTick = true; requestAnimationFrame(paintToc); } }, {passive: true});
+  window.addEventListener("resize", paintToc);
+  paintToc();
 
   paintTheme(); paintScale(); render();
 })();

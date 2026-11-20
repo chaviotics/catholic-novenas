@@ -211,7 +211,7 @@ def library(novenas):
                 esc(n["storageKey"]), sl, sl, sl, n.get("icon", "cross"), faces, sl, esc(title), through, blurb, sl))
     t = t.replace("{{CARDS}}", "\n".join(cards))
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
+    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "users"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t
