@@ -12,10 +12,14 @@
 | camillus.jpg | (from novenas/healing/img/camillus.jpg) | Cristóbal Lozano, *Ecstasy of Saint Camillus de Lellis* | See novenas/healing/images.md |
 | cupertino.jpg | (from novenas/passing-an-exam/img/cupertino.jpg) | Placido Costanzi, oil sketch, 1750, Metropolitan Museum of Art | See novenas/passing-an-exam/images.md |
 
-**Pending (Bosco, Savio, Acutis in "Unlikely saints", 2026-11-20):** the cards show a gold cross until the files are in `img/`. Candidates:
-- bosco.jpg: Commons `Don_Bosco_@_Torino,_1880_(original).jpg`, photograph of St. John Bosco in Turin, 1880. Public domain by age (over 140 years old). Confirm the Commons licence tag when the file is fetched.
-- savio.jpg: Commons `Life_of_Dominic_Savio_(page_6_crop).jpg`, the oval portrait from an early printed *Life of Dominic Savio* (en.wikipedia's infobox image). Confirm the book's date and the licence tag.
-- Carlo Acutis: no openly licensed portrait could be confirmed, so keep the gold cross. Never use a copyrighted photo with only a credit.
+**Bosco and Savio (added 2026-11-21, Chav's choice): NOT public domain.** Chav supplied these 2 paintings and chose them over the public-domain alternatives, with a credit to where they were found. Artists unknown; both look like 20th-century devotional art and are probably still under copyright. If anyone objects, swap them for the public-domain candidates below.
+
+| File here | Source page | Work | Status |
+|---|---|---|---|
+| bosco.jpg | https://ius-sdb.com/about-us/don-bosco/ | Painted portrait of St. John Bosco, artist unknown (modern, based on his photographs) | Credited, not public domain; cropped to 3:2 (582×388) |
+| savio.jpg | https://anastpaul.com/2022/03/09/saint-of-the-day-9-march-st-dominic-savio-1842-1857-the-little-giant/ | Devotional painting of St. Dominic Savio with halo, artist unknown | Credited, not public domain; cropped to 3:2 (479×319) |
+
+Public-domain alternatives, if ever needed: Commons `Don_Bosco_@_Torino,_1880_(original).jpg` (photograph, Turin, 1880) and `Life_of_Dominic_Savio_(page_6_crop).jpg` (oval portrait from an early printed Life). Carlo Acutis: no openly licensed portrait could be confirmed, so his card keeps the gold cross.
 
 Thumbnails were fetched through a temporary Google Doc (tools/wm_images.py), then cropped with PIL: arched paintings at 720 px wide, story cards at 3:2 (720×480, smaller where the source is smaller). The temporary Docs were trashed afterwards.
 

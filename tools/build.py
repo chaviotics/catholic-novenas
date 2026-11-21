@@ -345,7 +345,8 @@ ABOUT_IMAGES = ("Images: El Greco, <i>Pentecost</i>, Museo del Prado; Jean-Fran√
                 "Santa Maria del Popolo; Philippe de Champaigne, <i>Saint Augustine</i>, Los Angeles County Museum of Art; Carlo Crivelli, "
                 "<i>Saint Thomas Aquinas</i>, National Gallery, London; Crist√≥bal Lozano, <i>Ecstasy of Saint Camillus de Lellis</i>; "
                 "Placido Costanzi, <i>A Miracle of Saint Joseph of Cupertino</i>, Metropolitan Museum of Art; photograph of Bartolo Longo. "
-                "Public domain, via Wikimedia Commons.")
+                "Public domain, via Wikimedia Commons. Portrait of St. John Bosco via ius-sdb.com; painting of St. Dominic Savio via "
+                "anastpaul.com (artists unknown).")
 
 
 def about(novenas, mode="site"):
