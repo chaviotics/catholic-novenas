@@ -52,7 +52,7 @@ body{width:1200px;height:630px;overflow:hidden;font-family:'Cormorant Garamond',
 /* text column 520px wide: at least 44px of clear cream between the words and each arch */
 .mid{position:absolute;left:340px;width:520px;top:0;bottom:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;padding:30px 0 34px}
-.cross{color:#6E1F2B;font-size:64px;line-height:1;margin-bottom:6px}
+.cross{line-height:0;margin-bottom:10px}.cross svg{display:block}
 .pre{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:.2em;
   text-transform:uppercase;color:#94702A;margin:6px 0 0}
 h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#6E1F2B;max-width:520px;text-wrap:balance}
@@ -82,13 +82,21 @@ def data(p):
         return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
 
+# the site's icon (site/favicon.svg): a wine cross in a ring of 9 gold days, without its cream tile
+MARK = ('<svg width="84" height="84" viewBox="0 0 64 64"><path fill="none" stroke="#94702A" stroke-width="4.5" stroke-linecap="round" '
+        'd="M34.86 8.68A23.5 23.5 0 0 1 44.80 12.29M49.19 15.97A23.5 23.5 0 0 1 54.47 25.13M55.47 30.77A23.5 23.5 0 0 1 53.63 41.18'
+        'M50.77 46.14A23.5 23.5 0 0 1 42.67 52.94M37.29 54.90A23.5 23.5 0 0 1 26.71 54.90M21.33 52.94A23.5 23.5 0 0 1 13.23 46.14'
+        'M10.37 41.18A23.5 23.5 0 0 1 8.53 30.77M9.53 25.13A23.5 23.5 0 0 1 14.81 15.97M19.20 12.29A23.5 23.5 0 0 1 29.14 8.68"/>'
+        '<path fill="#6E1F2B" d="M29.0 13.5h6v10.0h8.0v6h-8.0v21.0h-6v-21.0h-8.0v-6h8.0z"/></svg>')
+
+
 def card_html(pre, title, sub, left, right):
     """left/right: (image path, CSS object-position)"""
     arch = lambda cls, img: '<div class="arch %s"><img src="%s" style="object-position:%s"></div>' % (cls, data(img[0]), img[1])
     return ("<html><head><meta charset='utf-8'><style>%s%s</style></head><body><div class='frame'></div>%s%s"
-            "<div class='mid'><div class='cross'>&#10013;</div>%s<h1>%s</h1><div class='rule'></div>"
+            "<div class='mid'><div class='cross'>%s</div>%s<h1>%s</h1><div class='rule'></div>"
             "<p class='sub'>%s</p></div></body></html>") % (
-        font_css(), CSS, arch("l", left), arch("r", right),
+        font_css(), CSS, arch("l", left), arch("r", right), MARK,
         "<p class='pre'>%s</p>" % pre if pre else "", title, sub)
 
 
