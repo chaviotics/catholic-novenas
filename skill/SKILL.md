@@ -16,8 +16,8 @@ Every novena uses the same prayer structure and design. Only the content changes
 
 ## 0. Get set up
 
-- **Repo:** `chaviotics/catholic-novenas` (branch `main`; Netlify deploys every push). Never push to `chaviotics/novena-finances`: it is the family's live debt novena.
-- **Netlify:** site `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`). Never deploy to `novena-finances` unless the user asks.
+- **Repo:** `chaviotics/prayanovena` (branch `main`; Netlify deploys every push). Never push to `chaviotics/novena-finances`: it is the family's live debt novena.
+- **Netlify:** project `prayanovena` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`). Never deploy to `novena-finances` unless the user asks.
 - **Read first:** `PROJECT_LOG.md` (decisions, history, open items), then `novenas/relief-from-debt/novena.json` and `novenas/healing/novena.json`. They are the approved examples: match their tone, lengths and polish.
 - **Tools:** `tools/build.py` (site and artifact), `tools/print_fill.py` (print doc requests), `tools/check_print.py` (print text check), `tools/shots.py` (screenshots), `tools/og.py` (link-preview images), `tools/wm_images.py` (Wikimedia images). Read each one's docstring before using it.
 
@@ -137,7 +137,7 @@ python3 tools/shots.py <slug>             # phone screenshots, light and dark, i
   Never edit the template; copy it.
 - **Copy it** with Drive `copy_file`, named "<Title> — print". The template has one tab; keep it that way, because the PDF export renders every tab.
 - **Fill it** with `tools/print_fill.py`. Read the copy (`read_doc`; the result is saved to a file), run the script on that file plus the slug, and send the batch with `writeControl.requiredRevisionId` set to the read's `revisionId`. The script replaces text paragraph by paragraph, keeping every style. Print gets `refl` only; `more` stays in the app. A large batch can be sent in two parts: first the requests for the bottom half of the document, then the top half.
-- **Portraits:** the script also swaps the three page-1 images for portrait URLs at 120×96pt. They must be public URLs: the live site, or before it's live, the raw GitHub URLs via `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/catholic-novenas/main/novenas/<slug>/img`. For fewer than 3 saints, delete the extra table columns.
+- **Portraits:** the script also swaps the three page-1 images for portrait URLs at 120×96pt. They must be public URLs: the live site, or before it's live, the raw GitHub URLs via `--images-base`, for example `https://raw.githubusercontent.com/chaviotics/prayanovena/main/novenas/<slug>/img`. For fewer than 3 saints, delete the extra table columns.
 - **Check the layout.** Export a PDF (`download_file_content`, `application/pdf`), render it with `pdftoppm -r 70`, and look at every page. The rules:
   - 4 pages or fewer, with Daily Prayers starting page 2.
   - No day heading or title left alone at the bottom of a column.
