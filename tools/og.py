@@ -3,6 +3,7 @@
 
   python3 tools/og.py            # every novena + the library (site/og.jpg)
   python3 tools/og.py healing    # one novena -> novenas/healing/og.jpg
+  python3 tools/og.py --html DIR # no Python Playwright? write the cards as HTML, then: node tools/og_render.js DIR
 
 Run tools/build.py afterwards so the images are copied into site/.
 
@@ -18,7 +19,23 @@ import asyncio, base64, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
-from shots import font_css  # noqa: E402
+from shots import font_css as _ttf_css  # noqa: E402
+
+
+def font_css():
+    """the font package's TTFs when present, else the site's own woff2 files (same faces)"""
+    css = _ttf_css()
+    if css:
+        return css
+    d, out = os.path.join(ROOT, "site", "fonts"), []
+    # weights as the site's fonts.css declares them (the italic is a single 500 face, as in the TTF set)
+    for fam, st, w, f in [("Cormorant Garamond", "normal", "500 700", "cormorant-garamond.woff2"),
+                          ("Cormorant Garamond", "italic", "500", "cormorant-garamond-italic.woff2"),
+                          ("EB Garamond", "normal", "400 600", "eb-garamond.woff2"), ("EB Garamond", "italic", "400", "eb-garamond-italic.woff2")]:
+        with open(os.path.join(d, f), "rb") as fh:
+            out.append("@font-face{font-family:'%s';font-style:%s;font-weight:%s;src:url(data:font/woff2;base64,%s)}"
+                       % (fam, st, w, base64.b64encode(fh.read()).decode()))
+    return "".join(out)
 
 # Colors: the site's Wine & Gold palette, on its cream page color (wine as a full background read too red)
 CSS = """
@@ -32,26 +49,31 @@ body{width:1200px;height:630px;overflow:hidden;font-family:'Cormorant Garamond',
   border:4px solid #94702A;box-shadow:0 0 0 6px rgba(148,112,42,.14),0 12px 30px rgba(60,40,20,.28)}
 .arch img{width:100%;height:100%;object-fit:cover}
 .l{left:52px}.r{right:52px}
-.mid{position:absolute;left:300px;width:600px;top:0;bottom:0;display:flex;flex-direction:column;
+/* text column 520px wide: at least 44px of clear cream between the words and each arch */
+.mid{position:absolute;left:340px;width:520px;top:0;bottom:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;padding:30px 0 34px}
 .cross{color:#6E1F2B;font-size:64px;line-height:1;margin-bottom:6px}
 .pre{font-family:'EB Garamond',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:.2em;
   text-transform:uppercase;color:#94702A;margin:6px 0 0}
-h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#6E1F2B;max-width:580px;text-wrap:balance}
+h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:-.005em;color:#6E1F2B;max-width:520px;text-wrap:balance}
 .rule{width:120px;height:2px;background:#94702A;margin:26px 0 20px}
-.sub{font-style:italic;font-weight:600;font-size:46px;line-height:1.08;color:#4A3F38;margin:0;text-wrap:balance}
+.sub{font-style:italic;font-weight:600;font-size:44px;line-height:1.1;color:#4A3F38;margin:0;max-width:520px;white-space:nowrap}
+.sub.wrap{white-space:normal;text-wrap:balance}
 """
 
-# shrink the title until it fits the column in at most 2 lines, then the subtitle if the stack is too tall.
+# shrink the title until it fits the column in at most 2 lines. The subtitle stays on one line, shrinking to 38px;
+# a longer one wraps onto 2 balanced lines instead of getting tiny. Then shrink it more if the stack is too tall.
 # Run after the web fonts load: measuring with the fallback font gives the wrong widths.
 FIT = """async () => {
   await document.fonts.ready;
   const h = document.querySelector('h1'), mid = document.querySelector('.mid'), sub = document.querySelector('.sub');
   let s = 150;
   const lines = () => Math.round(h.getBoundingClientRect().height / (s * 0.9));
-  while ((h.scrollWidth > 580 || lines() > 2) && s > 70) { s -= 4; h.style.fontSize = s + 'px'; }
-  let t = 46;
-  while (mid.scrollHeight > 630 && t > 34) { t -= 2; sub.style.fontSize = t + 'px'; }
+  while ((h.scrollWidth > 520 || lines() > 2) && s > 70) { s -= 4; h.style.fontSize = s + 'px'; }
+  let t = 44;
+  while (sub.scrollWidth > 520 && t > 38) { t -= 2; sub.style.fontSize = t + 'px'; }
+  if (sub.scrollWidth > 520) { t = 42; sub.style.fontSize = t + 'px'; sub.classList.add('wrap'); }
+  while (mid.scrollHeight > 630 && t > 32) { t -= 2; sub.style.fontSize = t + 'px'; }
 }"""
 
 
@@ -92,7 +114,11 @@ FOCUS = {"joseph": "62% 30%", "jude": "45% 30%", "rita": "55% 30%",
 
 
 def main():
-    only = sys.argv[1] if len(sys.argv) > 1 else None
+    args = sys.argv[1:]
+    html_dir = None
+    if "--html" in args:
+        k = args.index("--html"); html_dir = args[k + 1]; del args[k:k + 2]
+    only = args[0] if args else None
     pairs, lib = [], {}
     base = os.path.join(ROOT, "novenas")
     for slug in sorted(os.listdir(base)):
@@ -116,6 +142,18 @@ def main():
         right = lib.get("raphael") or list(lib.values())[-1]
         pairs.append((card_html("", "Pray a<br>Novena", "Catholic novenas for every intention", left, right),
                       os.path.join(ROOT, "site", "og.jpg")))
+    if html_dir:
+        os.makedirs(html_dir, exist_ok=True)
+        jobs = []
+        for i, (h, out) in enumerate(pairs):
+            f = os.path.join(html_dir, "card%02d.html" % i)
+            with open(f, "w", encoding="utf-8") as fh:
+                fh.write(h)
+            jobs.append({"html": os.path.abspath(f), "out": os.path.abspath(out)})
+        with open(os.path.join(html_dir, "jobs.json"), "w") as fh:
+            json.dump({"fit": FIT, "jobs": jobs}, fh, indent=1)
+        print("wrote", len(jobs), "cards to", html_dir, "- now run: node tools/og_render.js", html_dir)
+        return
     asyncio.run(render(pairs))
 
 
