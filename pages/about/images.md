@@ -18,8 +18,9 @@
 |---|---|---|---|
 | bosco.jpg | https://ius-sdb.com/about-us/don-bosco/ | Painted portrait of St. John Bosco, artist unknown (modern, based on his photographs) | Credited, not public domain; cropped to 3:2 (582×388) |
 | savio.jpg | https://anastpaul.com/2022/03/09/saint-of-the-day-9-march-st-dominic-savio-1842-1857-the-little-giant/ | Devotional painting of St. Dominic Savio with halo, artist unknown | Credited, not public domain; cropped to 3:2 (479×319) |
+| acutis.jpg | https://www.britannica.com/biography/Carlo-Acutis (added 2026-11-21, Chav) | The well-known photograph of Carlo Acutis in a red polo shirt, released by his family | Credited, not public domain; cropped to 3:2 and resized to 720×480 |
 
-Public-domain alternatives, if ever needed: Commons `Don_Bosco_@_Torino,_1880_(original).jpg` (photograph, Turin, 1880) and `Life_of_Dominic_Savio_(page_6_crop).jpg` (oval portrait from an early printed Life). Carlo Acutis: no openly licensed portrait could be confirmed, so his card keeps the gold cross.
+Public-domain alternatives, if ever needed: Commons `Don_Bosco_@_Torino,_1880_(original).jpg` (photograph, Turin, 1880) and `Life_of_Dominic_Savio_(page_6_crop).jpg` (oval portrait from an early printed Life). Carlo Acutis: no openly licensed portrait exists on Commons; Chav chose the family photograph above.
 
 **Peter and Ignatius (2026-11-21, Chav's choice): shown straight from Wikimedia Commons, not stored here.** The sandbox cannot download from Wikimedia, so Chav chose to hotlink. `netlify.toml` allows `img-src https://upload.wikimedia.org`, the Privacy page says so, and these 2 images do not work offline (the service worker ignores other origins; the card shows its wash background).
 
