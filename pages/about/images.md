@@ -21,6 +21,15 @@
 
 Public-domain alternatives, if ever needed: Commons `Don_Bosco_@_Torino,_1880_(original).jpg` (photograph, Turin, 1880) and `Life_of_Dominic_Savio_(page_6_crop).jpg` (oval portrait from an early printed Life). Carlo Acutis: no openly licensed portrait could be confirmed, so his card keeps the gold cross.
 
+**Peter and Ignatius (2026-11-21, Chav's choice): shown straight from Wikimedia Commons, not stored here.** The sandbox cannot download from Wikimedia, so Chav chose to hotlink. `netlify.toml` allows `img-src https://upload.wikimedia.org`, the Privacy page says so, and these 2 images do not work offline (the service worker ignores other origins; the card shows its wash background).
+
+| Card | Commons file | Work | Why public domain |
+|---|---|---|---|
+| St. Peter | El_Greco_-_Saint_Peter_in_Tears_-_Google_Art_Project.jpg (500px/960px thumbs) | El Greco (1541–1614), *Saint Peter in Tears*, about 1580–1589, Bowes Museum | Artist died 1614; faithful photo of a 2D work |
+| St. Ignatius of Loyola | St._Ignatius_of_Loyola_by_Peter_Paul_Rubens.jpg (500px/960px thumbs) | Peter Paul Rubens (1577–1640), *Saint Ignatius of Loyola*, about 1620–1622, Norton Simon Museum | Artist died 1640; faithful photo of a 2D work |
+
+To store them locally later: save the 960px thumbs as `img/peter.jpg` and `img/ignatius.jpg` (3:2 crop on the face), switch the cards to `{{IMG:peter}}` / `{{IMG:ignatius}}`, then remove the Wikimedia host from the CSP and the Privacy line.
+
 Thumbnails were fetched through a temporary Google Doc (tools/wm_images.py), then cropped with PIL: arched paintings at 720 px wide, story cards at 3:2 (720×480, smaller where the source is smaller). The temporary Docs were trashed afterwards.
 
 The intercessor faces in "The intercessors in these novenas" are the novenas' own `_face.jpg` files, linked from each novena's folder.
