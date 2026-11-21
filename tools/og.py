@@ -61,7 +61,7 @@ h1{font-weight:700;font-size:150px;line-height:.9;margin:4px 0 0;letter-spacing:
 .sub.wrap{white-space:normal;text-wrap:balance}
 """
 
-# shrink the title until it fits the column in at most 2 lines. The subtitle stays on one line, shrinking to 38px;
+# shrink the title until it fits the column in at most 2 lines and the stack clears the frame. The subtitle stays on one line, shrinking to 38px;
 # a longer one wraps onto 2 balanced lines instead of getting tiny. Then shrink it more if the stack is too tall.
 # Run after the web fonts load: measuring with the fallback font gives the wrong widths.
 FIT = """async () => {
@@ -70,6 +70,15 @@ FIT = """async () => {
   let s = 150;
   const lines = () => Math.round(h.getBoundingClientRect().height / (s * 0.9));
   while ((h.scrollWidth > 520 || lines() > 2) && s > 70) { s -= 4; h.style.fontSize = s + 'px'; }
+  // keep the whole stack (mark to subtitle) clear of the gold frame: at least 24px inside it at top and bottom.
+  // The mark gives way first (down to 92px), then the title.
+  const svg = mid.querySelector('.cross svg');
+  const top = () => mid.firstElementChild.getBoundingClientRect().top, bot = () => sub.getBoundingClientRect().bottom;
+  let m = 124;
+  while ((top() < 66 || bot() > 564) && (m > 92 || s > 70)) {
+    if (m > 92) { m -= 8; svg.setAttribute('width', m); svg.setAttribute('height', m); }
+    else { s -= 4; h.style.fontSize = s + 'px'; }
+  }
   let t = 44;
   while (sub.scrollWidth > 520 && t > 38) { t -= 2; sub.style.fontSize = t + 'px'; }
   if (sub.scrollWidth > 520) { t = 42; sub.style.fontSize = t + 'px'; sub.classList.add('wrap'); }
@@ -82,12 +91,9 @@ def data(p):
         return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
 
-# the site's icon (site/favicon.svg): a wine cross in a ring of 9 gold days, without its cream tile
-MARK = ('<svg width="84" height="84" viewBox="0 0 64 64"><path fill="none" stroke="#94702A" stroke-width="4.5" stroke-linecap="round" '
-        'd="M34.86 8.68A23.5 23.5 0 0 1 44.80 12.29M49.19 15.97A23.5 23.5 0 0 1 54.47 25.13M55.47 30.77A23.5 23.5 0 0 1 53.63 41.18'
-        'M50.77 46.14A23.5 23.5 0 0 1 42.67 52.94M37.29 54.90A23.5 23.5 0 0 1 26.71 54.90M21.33 52.94A23.5 23.5 0 0 1 13.23 46.14'
-        'M10.37 41.18A23.5 23.5 0 0 1 8.53 30.77M9.53 25.13A23.5 23.5 0 0 1 14.81 15.97M19.20 12.29A23.5 23.5 0 0 1 29.14 8.68"/>'
-        '<path fill="#6E1F2B" d="M29.0 13.5h6v10.0h8.0v6h-8.0v21.0h-6v-21.0h-8.0v-6h8.0z"/></svg>')
+# the site's icon (the "9 days" mark from tools/app_icons.py) without its cream tile, so the two never drift apart
+from app_icons import LIGHT, mark  # noqa: E402
+MARK = '<svg width="124" height="124" viewBox="0 0 64 64">%s</svg>' % mark(LIGHT)
 
 
 def card_html(pre, title, sub, left, right):
