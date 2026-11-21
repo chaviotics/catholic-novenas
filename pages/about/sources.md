@@ -46,3 +46,12 @@ Chav asked for these 3 saints (who shaped Chav's faith and this site) to sit wit
 | St. Carlo Acutis (1991–2006), "The gamer" | teenager from Milan; loved video games and computers; went to Mass every day; built a website about Eucharistic miracles; died of leukemia at 15; canonized 2025 | Widely reported: daily Mass from his First Communion; limited himself to about an hour of video games a week; died of acute leukemia on 12 October 2006 aged 15; canonized 7 September 2025 by Pope Leo XIV |
 
 Pictures: Bosco and Savio use paintings Chav chose (credited, not public domain; see `images.md`). Carlo Acutis keeps the gold cross.
+
+## Unlikely saints: Peter and Ignatius (added 2026-11-21, Chav)
+
+No Scripture is quoted on these cards; references are for paraphrase only.
+
+| Saint | Stated on the page | Source note |
+|---|---|---|
+| St. Peter, "The denier" | fisherman; promised he would never deny Jesus; denied three times that he knew Him on the night of the arrest, went out and wept (Luke 22:54–62); after the Resurrection Jesus asked three times whether he loved Him and told him to feed His sheep (John 21:15–17); the rock on whom Christ built His Church (Matthew 16:18) | Promise: Matthew 26:33–35, Luke 22:33–34; fisherman: Matthew 4:18 |
+| St. Ignatius of Loyola (1491–1556), "The vain soldier" | Basque nobleman who dreamed of glory in battle and the favor of a great lady; cannonball shattered his leg at Pamplona in 1521; had a protruding bone sawn off so his boots would look fine; read a life of Christ and lives of the saints while healing (no romances available); converted; founded the Jesuits | His own *Autobiography* (dictated to Luís Gonçalves da Câmara), §1–8: "given to the vanities of the world", wounded at Pamplona (20 May 1521), the bone below the knee cut away because he wanted to wear a tight boot, asked for books of chivalry and was given Ludolph of Saxony's *Life of Christ* and a book of saints' lives, daydreamed of serving a great lady; Society of Jesus approved by Paul III in 1540 |
