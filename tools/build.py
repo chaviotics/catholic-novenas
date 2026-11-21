@@ -12,7 +12,7 @@ import base64, hashlib, html, json, os, re, shutil, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_URL = "https://prayanovena.com"
 ICON_DIRS = [os.path.join(ROOT, "tools", "icons")]
-BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
+BASE_ICONS = ["logo", "cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
 NUMWORD = {1: "The Intercessor", 2: "The 2 Intercessors", 3: "The 3 Intercessors"}
 MARIAN_MEMORARE = ("Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to your protection, "
                    "implored your help, or sought your intercession was left unaided. Inspired by this confidence, I fly unto you, "
@@ -105,6 +105,11 @@ def esc(t):
 
 
 def icon_symbol(name):
+    if name == "logo":   # the 9 days mark, same source as the favicon; cross takes currentColor, ring the theme gold
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from app_icons import ring, cross
+        return ('<symbol id="i-logo" viewBox="0 0 64 64"><path fill="none" style="stroke:var(--gold,#94702A)" stroke-width="4" '
+                'stroke-linecap="round" d="%s"/><path d="%s"/></symbol>' % (ring(), cross()))
     for d in ICON_DIRS:
         p = os.path.join(d, name + ".svg")
         if os.path.exists(p):
@@ -333,7 +338,7 @@ def library(novenas, search=None):
     t = t.replace("{{OG_VER}}", og_ver(os.path.join(ROOT, "site", "og.jpg")))
     t = t.replace("{{FONTS}}", local_fonts("")).replace("{{SW}}", sw_register(""))
     t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer("", current="index.html"))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line", "magnifying-glass", "x"] + icons))
+    t = t.replace("{{SPRITE}}", sprite(["logo", "cross", "sun", "moon", "text-aa", "arrow-right", "hands-praying", "calendar-check", "house-line", "magnifying-glass", "x"] + icons))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t
@@ -419,7 +424,7 @@ def about(novenas, mode="site"):
     t = t.replace("{{FONTS}}", local_fonts("../") if mode == "site" else GOOGLE_FONTS)
     t = t.replace("{{SW}}", sw_register("../") if mode == "site" else "")
     t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer(up, current="about/index.html", credits=[ABOUT_IMAGES, CCC_NOTICE]))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-left", "arrow-right"]))
+    t = t.replace("{{SPRITE}}", sprite(["logo", "cross", "sun", "moon", "text-aa", "arrow-left", "arrow-right"]))
     left = re.findall(r"\{\{[A-Z0-9_:a-z-]+\}\}", t)
     assert not left, left
     return t
@@ -457,7 +462,7 @@ def privacy(mode="site"):
     t = t.replace("{{FONTS}}", local_fonts("../") if mode == "site" else GOOGLE_FONTS)
     t = t.replace("{{SW}}", sw_register("../") if mode == "site" else "")
     t = t.replace("{{FOOTER_CSS}}", FOOTER_CSS).replace("{{FOOTER}}", site_footer(up, current="privacy/index.html", scripture=False))
-    t = t.replace("{{SPRITE}}", sprite(["cross", "sun", "moon", "text-aa", "arrow-left"]))
+    t = t.replace("{{SPRITE}}", sprite(["logo", "cross", "sun", "moon", "text-aa", "arrow-left"]))
     left = re.findall(r"\{\{[A-Z0-9_]+\}\}", t)
     assert not left, left
     return t
