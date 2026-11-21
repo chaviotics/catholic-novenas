@@ -15,7 +15,7 @@ Read this at the start of a work session. Update it at the end when something ch
 | Print docs | Google Drive folder "[12] 🙏 Faith". IDs are in `README.md` |
 | Original debt novena (v1) | novena-finances.netlify.app, repo `chaviotics/novena-finances`. **Separate and in use. Never change or deploy to it.** |
 
-## Rename to Pray a Novena (in progress — resume here)
+## Rename to Pray a Novena (done 2026-11-21; live at prayanovena.com)
 
 Decided by Chav on 2026-11-20: name **Pray a Novena**, domain **prayanovena.com** (bought at Cloudflare Registrar; Netlify keeps hosting), tagline **"Catholic novenas for every intention"**. "Catholic" moves out of the name into the tagline (canon 216: no undertaking claims the name "Catholic" without Church consent). Slugs, design, icons and the Netlify project name `catholic-novenas` stay. Work branch: `rename-pray-a-novena`. Icons are being redesigned in a separate thread; don't touch them here.
 
@@ -33,14 +33,14 @@ Two phases, so the new name can go live before the domain exists:
 **Phase B: the domain (only after prayanovena.com is bought and working)**
 - [x] Chav bought prayanovena.com at Cloudflare Registrar on 2026-11-20 (renews $11.17/yr, auto-renew on, expires 2027-11-21). Cloudflare Registrar keeps DNS at Cloudflare, so no Netlify DNS
 - [x] Netlify project `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`): prayanovena.com added as primary, www redirects to it. Cloudflare DNS: CNAME `@` → `apex-loadbalancer.netlify.com` (flattened) and CNAME `www` → `catholic-novenas.netlify.app`, both **DNS only** (grey cloud; orange blocks Netlify's certificate)
-- [ ] HTTPS certificate on prayanovena.com (Netlify → Domain management → HTTPS)
+- [x] HTTPS certificate on prayanovena.com (live 2026-11-21)
 - [x] **Decided 2026-11-21 (Chav): one name everywhere, `prayanovena`, now.** Done by Chav 2026-11-21 00:08 UTC. Chav renames the Netlify project to `prayanovena` (its free address becomes prayanovena.netlify.app; catholic-novenas.netlify.app stops working), changes the Cloudflare `www` CNAME target to `prayanovena.netlify.app`, and renames the GitHub repo to `chaviotics/prayanovena`. Only ~3 people had the old link; Chav sends them the new one. No progress hand-off (the old address goes away), so anyone's saved progress on the old address is not carried over.
 - [x] After the renames: repo and Netlify names updated in this log and `skill/SKILL.md`; project instructions and memory updated
 - [x] (branch) `SITE_URL` = `https://prayanovena.com`, hard-coded URLs in `templates/library.html`, `tools/print_fill.py` image base, README, skill; rebuilt
 - Note: Netlify keeps serving a project's netlify.app address after a custom domain is added; it only goes away when the project is renamed.
 - [x] ~~Progress carry-over~~ built and tested (commit 47e1021), then dropped when Chav chose to rename the Netlify project now (old address won't exist). The commit is in the branch history if ever needed.
 - [x] ~~301 from the old netlify address~~ not needed: renaming the Netlify project retires that address
-- [ ] Preview → Chav approves → push to `main` once HTTPS works on prayanovena.com
+- [x] Pushed to `main` 2026-11-21 (3ac9be3) after Chav asked to fix the link-preview images: live og:image still pointed at the retired catholic-novenas.netlify.app
 - [ ] Check on a phone: library, one novena, About, Privacy, a WhatsApp link preview
 - [ ] Update this log, the README table and project memory (`domain-name`)
 
@@ -58,7 +58,7 @@ Two phases, so the new name can go live before the domain exists:
 - **Saints:** 1–3 per novena, suggested from the intention. Public-domain images in both the app and print. Facts only when certain; quote a saint only with a well-attested line.
 - **Faith:** never promise outcomes, no prosperity-gospel framing. Pray for God's will; for healing, also for strength, peace, doctors and caregivers.
 - **Print:** 3 pages, 4 at most. Made by copying the template doc and filling it with `tools/print_fill.py`; one tab per doc (the PDF export prints every tab).
-- **Link previews:** made by `tools/og.py` from each novena's title, kicker and 2 saints (`"ogSaints": [left, right]` in novena.json so they face inward). Cream background, wine and gold accents; no URL or call to action on the image.
+- **Link previews:** made by `tools/og.py` from each novena's title, kicker and 2 saints (`"ogSaints": [left, right]` in novena.json so they face inward). Cream background, wine and gold accents; no URL or call to action on the image. The site's 9 days mark (from `tools/app_icons.py`, so it always matches the icon) sits above the title in place of a plain cross. The words sit in a 520px column with at least 44px of clear cream from each arch; the subtitle stays on one line (38px at the smallest) or goes to 2 balanced lines; on tall cards the mark shrinks first, then the title, so nothing touches the frame. Chav compared a one-saint-plus-icon card and a ring-of-9-days card and kept this one (2026-11-21). Without Python Playwright: `python3 tools/og.py --html DIR`, then `node tools/og_render.js DIR`.
 - **Library cards:** title without "Novena for" (the section heading already says it), icon on the left, saints' faces top right, progress line and "Pray" / "Continue Day N" button.
 - **Theme and text size** are shared across the whole site (`novenas-mode`, `novenas-scale`); progress is saved per novena (`novena-<slug>`).
 - **Offline:** every build regenerates `site/sw.js` with a new version, so phones pick up changes on their next online visit. Never edit `site/sw.js` by hand; change `templates/sw.js`. Fonts live in `site/fonts/` (no Google Fonts on the site; artifact previews still use Google Fonts).
@@ -115,6 +115,8 @@ Two phases, so the new name can go live before the domain exists:
 - **New app icon** (Chav): the old icon was a white cross on a full wine square, the "too red" look already turned down for link previews, with no gold. 3 cream-and-gold options previewed; Chav chose "9 days" (ring of 9 gold segments around the wine cross). Added a dark-mode tab version, `favicon.ico` for older browsers and crawlers, and a separate maskable icon so Android's crop never cuts the ring.
 
 - **Rename to Pray a Novena, phase A** (Chav approved the preview; pushed to `main`): the name, tagline, titles, link previews, manifest, library og.jpg, README, skill and this log now say Pray a Novena; `SITE_URL` deliberately still points at catholic-novenas.netlify.app until the domain works. Plan and checklist in "Rename" above.
+- **Moved to prayanovena.com** (Chav, 2026-11-21): bought at Cloudflare Registrar, DNS at Cloudflare (DNS only) pointing at Netlify; Netlify project and GitHub repo both renamed to `prayanovena`; every absolute URL switched. The old netlify address is gone (about 3 people had it). A progress hand-off was built and dropped (commit 47e1021 on the old rename branch).
+- **Link previews redone** (Chav): clear space between the words and the saint arches, the new bold 9 days mark above the title, all 7 cards re-rendered in the site's Cormorant Garamond (4 had been drawn in a fallback font).
 - **About: Bosco, Savio and Acutis moved into "Unlikely saints"** (Chav): the "Saints who inspired this site" subsection is gone; the 3 saints are story cards at the end of Unlikely saints ("The juggler", "The schoolboy", "The gamer"), and the intro no longer names Carlo in brackets. Pictures (2026-11-21, Chav's choice on a decision card): Bosco and Savio use 2 modern paintings Chav found (ius-sdb.com, anastpaul.com), credited in the About footer and `pages/about/images.md`; they are probably not public domain, which Chav accepted over the public-domain 1880 photo and old engraving. This is the one exception to "public-domain images"; novenas and print still use public domain only. Carlo Acutis keeps a gold cross (`.stories .ph`): no openly licensed portrait found.
 - **App icon refined** (Chav): the cross nearly touched the ring at top and bottom; shortened it for room, then made it thicker and the ring wider and thinner so the cross leads ("Bold"). Same mark at 124 px on the link previews (sent to the og.py work).
 
