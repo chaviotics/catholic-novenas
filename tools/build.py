@@ -10,7 +10,7 @@ and img/<id>_face.jpg (round avatar, 112x112) for every saint and litany image.
 import base64, hashlib, html, json, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_URL = "https://catholic-novenas.netlify.app"  # becomes https://prayanovena.com at go-live (PROJECT_LOG, "Rename")
+SITE_URL = "https://prayanovena.com"
 ICON_DIRS = [os.path.join(ROOT, "tools", "icons")]
 BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
 NUMWORD = {1: "The Intercessor", 2: "The 2 Intercessors", 3: "The 3 Intercessors"}

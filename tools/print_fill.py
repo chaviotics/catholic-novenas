@@ -109,7 +109,7 @@ def main():
         k = args.index("--images-base"); base = args[k + 1]; del args[k:k + 2]
     path, tab, slug = args
     n = json.load(open(os.path.join(ROOT, "novenas", slug, "novena.json"), encoding="utf-8"))
-    base = (base or "https://catholic-novenas.netlify.app/%s/img" % slug).rstrip("/")
+    base = (base or "https://prayanovena.com/%s/img" % slug).rstrip("/")
     D = Doc(path, tab)
     T = lambda r: {"startIndex": r[0], "endIndex": r[1], "tabId": tab}
     groups = []  # (sortkey, [requests]) — applied in descending sortkey order

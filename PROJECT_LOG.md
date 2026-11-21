@@ -8,16 +8,16 @@ Read this at the start of a work session. Update it at the end when something ch
 
 | What | Where |
 |---|---|
-| Live library | https://catholic-novenas.netlify.app (moving to https://prayanovena.com, see "Rename") |
-| Repo | `chaviotics/catholic-novenas`, branch `main` |
-| Netlify project | `catholic-novenas`: publishes `site/` on every push, no build step on Netlify (run `tools/build.py` and commit `site/`) |
+| Live library | https://prayanovena.com (DNS at Cloudflare; free Netlify address prayanovena.netlify.app) |
+| Repo | `chaviotics/prayanovena` (renamed from catholic-novenas on 2026-11-21; GitHub forwards the old address), branch `main` |
+| Netlify project | `prayanovena` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`, renamed from catholic-novenas): publishes `site/` on every push, no build step on Netlify (run `tools/build.py` and commit `site/`) |
 | How to make a novena | `skill/SKILL.md` (the novena-maker skill) |
 | Print docs | Google Drive folder "[12] 🙏 Faith". IDs are in `README.md` |
 | Original debt novena (v1) | novena-finances.netlify.app, repo `chaviotics/novena-finances`. **Separate and in use. Never change or deploy to it.** |
 
 ## Rename to Pray a Novena (in progress — resume here)
 
-Decided by Chav on 2026-11-20: name **Pray a Novena**, domain **prayanovena.com** (not bought yet; likely Hostinger, domain only, Netlify keeps hosting), tagline **"Catholic novenas for every intention"**. "Catholic" moves out of the name into the tagline (canon 216: no undertaking claims the name "Catholic" without Church consent). Slugs, design, icons and the Netlify project name `catholic-novenas` stay. Work branch: `rename-pray-a-novena`. Icons are being redesigned in a separate thread; don't touch them here.
+Decided by Chav on 2026-11-20: name **Pray a Novena**, domain **prayanovena.com** (bought at Cloudflare Registrar; Netlify keeps hosting), tagline **"Catholic novenas for every intention"**. "Catholic" moves out of the name into the tagline (canon 216: no undertaking claims the name "Catholic" without Church consent). Slugs, design, icons and the Netlify project name `catholic-novenas` stay. Work branch: `rename-pray-a-novena`. Icons are being redesigned in a separate thread; don't touch them here.
 
 Two phases, so the new name can go live before the domain exists:
 
@@ -31,12 +31,16 @@ Two phases, so the new name can go live before the domain exists:
 - [x] Artifact preview (https://claude.ai/artifact/5dfk9wJodJV49qkKKSfSqt) → Chav approved 2026-11-20 → pushed to `main`
 
 **Phase B: the domain (only after prayanovena.com is bought and working)**
-- [ ] Chav buys prayanovena.com (check the renewal price; skip hosting add-ons)
-- [ ] Netlify project `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`) → Domain management → add prayanovena.com as primary; DNS at the registrar (Netlify nameservers, or apex A record + `www` CNAME as Netlify shows); wait for HTTPS
-- [ ] Flip `SITE_URL` in `tools/build.py` to `https://prayanovena.com` and the default image base in `tools/print_fill.py`; README and skill URLs; rebuild
-- [ ] Note: Netlify keeps serving catholic-novenas.netlify.app after a custom domain is added ("The Netlify subdomain URLs will always work"); it only redirects if we add a rule. That is what makes the carry-over below possible.
-- [ ] Progress carry-over: saved progress, intentions, theme and text size live in localStorage, which belongs to one address. A short script on the old address hands `novena-*` / `novenas-*` keys to the new address in the URL hash (never sent to any server), the new address saves only keys it doesn't already have and strips the hash. Privacy page gets one line about it. Switch when nobody is mid-novena if this isn't built.
-- [ ] After a few weeks, a permanent 301: `[[redirects]] from = "https://catholic-novenas.netlify.app/*"`, `to = "https://prayanovena.com/:splat"`, `status = 301`, `force = true` in `netlify.toml` (full hostname in `from`, or it loops on the new domain)
+- [x] Chav bought prayanovena.com at Cloudflare Registrar on 2026-11-20 (renews $11.17/yr, auto-renew on, expires 2027-11-21). Cloudflare Registrar keeps DNS at Cloudflare, so no Netlify DNS
+- [x] Netlify project `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`): prayanovena.com added as primary, www redirects to it. Cloudflare DNS: CNAME `@` → `apex-loadbalancer.netlify.com` (flattened) and CNAME `www` → `catholic-novenas.netlify.app`, both **DNS only** (grey cloud; orange blocks Netlify's certificate)
+- [ ] HTTPS certificate on prayanovena.com (Netlify → Domain management → HTTPS)
+- [x] **Decided 2026-11-21 (Chav): one name everywhere, `prayanovena`, now.** Done by Chav 2026-11-21 00:08 UTC. Chav renames the Netlify project to `prayanovena` (its free address becomes prayanovena.netlify.app; catholic-novenas.netlify.app stops working), changes the Cloudflare `www` CNAME target to `prayanovena.netlify.app`, and renames the GitHub repo to `chaviotics/prayanovena`. Only ~3 people had the old link; Chav sends them the new one. No progress hand-off (the old address goes away), so anyone's saved progress on the old address is not carried over.
+- [x] After the renames: repo and Netlify names updated in this log and `skill/SKILL.md`; project instructions and memory updated
+- [x] (branch) `SITE_URL` = `https://prayanovena.com`, hard-coded URLs in `templates/library.html`, `tools/print_fill.py` image base, README, skill; rebuilt
+- Note: Netlify keeps serving a project's netlify.app address after a custom domain is added; it only goes away when the project is renamed.
+- [x] ~~Progress carry-over~~ built and tested (commit 47e1021), then dropped when Chav chose to rename the Netlify project now (old address won't exist). The commit is in the branch history if ever needed.
+- [x] ~~301 from the old netlify address~~ not needed: renaming the Netlify project retires that address
+- [ ] Preview → Chav approves → push to `main` once HTTPS works on prayanovena.com
 - [ ] Check on a phone: library, one novena, About, Privacy, a WhatsApp link preview
 - [ ] Update this log, the README table and project memory (`domain-name`)
 
@@ -115,7 +119,7 @@ Two phases, so the new name can go live before the domain exists:
 
 ## Open items
 
-1. **Go live:** link the Netlify project `catholic-novenas` to the repo (branch `main`, build command blank, publish directory `site`), then check catholic-novenas.netlify.app on a phone.
+1. **Go live:** done (Netlify project linked to the repo; live at prayanovena.com).
 2. **Decide:** should prayers, reflections and steps also use digits? (Now: words.)
 3. **Optional:** a personalized print copy of the healing novena with the person's name in place of "N.".
 4. **Optional cleanup:** the old `catholic-novenas` branch on the novena-finances repo, and the scratch Google Doc used for image imports (`1P0v5bN3QCc97elk4VFMVbsgMDIxItOIKzT5k9Z97Bys`).
