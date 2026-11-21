@@ -23,14 +23,14 @@ LIGHT = {"bg": "#FFFDF9", "cross": "#6E1F2B", "gold": "#94702A"}   # cream, wine
 DARK = {"bg": "#0E1524", "cross": "#EBCF95", "gold": "#C9A45A"}    # the site's dark theme
 
 
-def cross(cx=32, y0=13.5, y1=50.5, bar=6, arm=22, cy=23.5):
+def cross(cx=32, y0=16.5, y1=47.5, bar=7.5, arm=21, cy=23.5):
     """Latin cross path in a 64 x 64 box; cy is the top of the crossbar"""
     a = arm / 2 - bar / 2
     return ("M{} {}h{}v{}h{}v{}h-{}v{}h-{}v-{}h-{}v-{}h{}z"
             .format(cx - bar / 2, y0, bar, cy - y0, a, bar, a, y1 - cy - bar, bar, y1 - cy - bar, a, bar, a))
 
 
-def ring(r=23.5, gap=14):
+def ring(r=25, gap=14):
     """9 arcs, a gap centred at the top, each 40 degrees minus the gap"""
     def p(deg):
         t = math.radians(deg)
@@ -46,7 +46,7 @@ def mark(c=None):
     """the ring and the cross; colours inline (c) or from the favicon's classes (None)"""
     g = ' stroke="%s"' % c["gold"] if c else ' class="g"'
     x = ' fill="%s"' % c["cross"] if c else ' class="c"'
-    return ('<path%s fill="none" stroke-width="4.5" stroke-linecap="round" d="%s"/><path%s d="%s"/>'
+    return ('<path%s fill="none" stroke-width="4" stroke-linecap="round" d="%s"/><path%s d="%s"/>'
             % (g, ring(), x, cross()))
 
 
