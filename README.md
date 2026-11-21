@@ -1,7 +1,7 @@
 # Pray a Novena
 
 A small library of 9-day Catholic novenas, each with a phone prayer app and a 4-page print layout.
-Live at https://prayanovena.com (formerly https://catholic-novenas.netlify.app, which hands visitors and their saved progress over to the new address)
+Live at https://prayanovena.com
 
 - `novenas/<slug>/novena.json`: all of a novena's words (saints, prayers, 9 days)
 - `novenas/<slug>/img/`: portraits (480×600) and round faces (112×112), all public domain

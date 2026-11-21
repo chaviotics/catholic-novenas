@@ -11,7 +11,6 @@ import base64, hashlib, html, json, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_URL = "https://prayanovena.com"
-OLD_HOST = "catholic-novenas.netlify.app"  # the address before the rename; see move_script()
 ICON_DIRS = [os.path.join(ROOT, "tools", "icons")]
 BASE_ICONS = ["cross", "sun", "moon", "text-aa", "check", "caret-down", "footprints", "hands-praying", "arrow-left", "book-open", "paper-plane-tilt"]
 NUMWORD = {1: "The Intercessor", 2: "The 2 Intercessors", 3: "The 3 Intercessors"}
@@ -424,33 +423,6 @@ def about(novenas, mode="site"):
     return t
 
 
-def move_script():
-    """first thing in every page's <head>: a visit to the old address moves to the new one and brings this device's
-    saved progress, intentions, theme and text size along (localStorage belongs to one address). They ride in the
-    URL hash, which browsers never send to any server; the new address saves only keys it doesn't have yet, then
-    removes them from the address bar at once. Offline, the old address keeps working from its saved copy."""
-    new = SITE_URL.split("//", 1)[1]
-    return ("<script>(function(){var O=%s,N=%s,h=location.hostname,H=location.hash;"
-            "if(h===O){if(navigator.onLine===false)return;var d={},n=0;"
-            "try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);"
-            "if(/^novenas?-/.test(k)){d[k]=localStorage.getItem(k);n++}}}catch(e){}"
-            "var t=H.replace(/^#/,'');"
-            "location.replace('https://'+N+location.pathname+location.search+"
-            "(n?'#carry='+encodeURIComponent(JSON.stringify(d))+(t?'&'+t:''):H));return}"
-            "if(H.indexOf('#carry=')===0){var a=H.slice(7),j=a.indexOf('&'),r=j<0?'':a.slice(j+1);"
-            "try{var c=JSON.parse(decodeURIComponent(j<0?a:a.slice(0,j)));"
-            "for(var x in c)if(/^novenas?-/.test(x)&&localStorage.getItem(x)===null)localStorage.setItem(x,c[x])}catch(e){}"
-            "history.replaceState(null,'',location.pathname+location.search+(r?'#'+r:''))}})();</script>"
-            % (json.dumps(OLD_HOST), json.dumps(new)))
-
-
-def with_move(t):
-    """put move_script() right after the charset, before anything renders"""
-    m = '<meta charset="utf-8">\n'
-    assert t.count(m) == 1
-    return t.replace(m, m + move_script() + "\n", 1)
-
-
 def build_about(novenas, site):
     d = os.path.join(site, "about")
     if os.path.isdir(d):
@@ -459,7 +431,7 @@ def build_about(novenas, site):
     for f in os.listdir(os.path.join(ABOUT_DIR, "img")):
         shutil.copy(os.path.join(ABOUT_DIR, "img", f), os.path.join(d, "img", f))
     with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-        f.write(with_move(about(novenas)))
+        f.write(about(novenas))
     print("built about")
 
 
@@ -493,7 +465,7 @@ def build_privacy(site):
     d = os.path.join(site, "privacy")
     os.makedirs(d, exist_ok=True)
     with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-        f.write(with_move(privacy()))
+        f.write(privacy())
     print("built privacy")
 
 
@@ -513,10 +485,10 @@ def build_site(search=None):
         if os.path.exists(og):
             shutil.copy(og, os.path.join(d, "og.jpg"))
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-            f.write(with_move(page(n, "site")))
+            f.write(page(n, "site"))
         print("built", n["slug"], n.get("status"))
     with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
-        f.write(with_move(library(novenas, search)))
+        f.write(library(novenas, search))
     print("built library with", sum(1 for n in novenas if n.get("status") == "published"), "published novenas")
     build_about(novenas, site)
     build_privacy(site)
