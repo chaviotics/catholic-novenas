@@ -31,12 +31,15 @@ Two phases, so the new name can go live before the domain exists:
 - [x] Artifact preview (https://claude.ai/artifact/5dfk9wJodJV49qkKKSfSqt) → Chav approved 2026-11-20 → pushed to `main`
 
 **Phase B: the domain (only after prayanovena.com is bought and working)**
-- [ ] Chav buys prayanovena.com (check the renewal price; skip hosting add-ons)
-- [ ] Netlify project `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`) → Domain management → add prayanovena.com as primary; DNS at the registrar (Netlify nameservers, or apex A record + `www` CNAME as Netlify shows); wait for HTTPS
-- [ ] Flip `SITE_URL` in `tools/build.py` to `https://prayanovena.com` and the default image base in `tools/print_fill.py`; README and skill URLs; rebuild
+- [x] Chav bought prayanovena.com at Cloudflare Registrar on 2026-11-20 (renews $11.17/yr, auto-renew on, expires 2027-11-21). Cloudflare Registrar keeps DNS at Cloudflare, so no Netlify DNS
+- [x] Netlify project `catholic-novenas` (id `3902d84c-0c49-48e4-a0ed-e1a0c45e5d75`): prayanovena.com added as primary, www redirects to it. Cloudflare DNS: CNAME `@` → `apex-loadbalancer.netlify.com` (flattened) and CNAME `www` → `catholic-novenas.netlify.app`, both **DNS only** (grey cloud; orange blocks Netlify's certificate)
+- [ ] HTTPS certificate on prayanovena.com (Netlify → Domain management → HTTPS)
+- [ ] Keep the Netlify project name `catholic-novenas` until the hand-off has run for a few weeks (the name is the netlify.app address; renaming it kills the old address). Chav renamed it to prayanovena once and back on 2026-11-20. When it is renamed later, change the `www` CNAME target too
+- [x] (branch) `SITE_URL` = `https://prayanovena.com`, hard-coded URLs in `templates/library.html`, `tools/print_fill.py` image base, README, skill; rebuilt
 - [ ] Note: Netlify keeps serving catholic-novenas.netlify.app after a custom domain is added ("The Netlify subdomain URLs will always work"); it only redirects if we add a rule. That is what makes the carry-over below possible.
-- [ ] Progress carry-over: saved progress, intentions, theme and text size live in localStorage, which belongs to one address. A short script on the old address hands `novena-*` / `novenas-*` keys to the new address in the URL hash (never sent to any server), the new address saves only keys it doesn't already have and strips the hash. Privacy page gets one line about it. Switch when nobody is mid-novena if this isn't built.
+- [x] (branch) Progress carry-over, `move_script()` in `tools/build.py`, first in every page's `<head>`. Tested with Playwright (both hosts routed to `site/`): progress, an intention with & and #, a `#day-3` link and `?fbclid` all arrive; an existing key on the new address wins; offline the old address stays put; the hash never appears in a request. Privacy page section "Moving to our new address". Original note: saved progress, intentions, theme and text size live in localStorage, which belongs to one address. A short script on the old address hands `novena-*` / `novenas-*` keys to the new address in the URL hash (never sent to any server), the new address saves only keys it doesn't already have and strips the hash. Privacy page gets one line about it. Switch when nobody is mid-novena if this isn't built.
 - [ ] After a few weeks, a permanent 301: `[[redirects]] from = "https://catholic-novenas.netlify.app/*"`, `to = "https://prayanovena.com/:splat"`, `status = 301`, `force = true` in `netlify.toml` (full hostname in `from`, or it loops on the new domain)
+- [ ] Preview → Chav approves → push to `main` once HTTPS works on prayanovena.com
 - [ ] Check on a phone: library, one novena, About, Privacy, a WhatsApp link preview
 - [ ] Update this log, the README table and project memory (`domain-name`)
 

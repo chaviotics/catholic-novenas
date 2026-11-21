@@ -8,7 +8,7 @@ description: Make a new 9-day Catholic novena for an intention (phone app page i
 From one intention, produce a novena in the **Pray a Novena** library (Catholic novenas for every intention):
 
 1. `novenas/<slug>/novena.json` and `novenas/<slug>/img/` in the repo
-2. A page at `https://catholic-novenas.netlify.app/<slug>/` (https://prayanovena.com once the domain is live), with a card on the library home page
+2. A page at `https://prayanovena.com/<slug>/`, with a card on the library home page
 3. A Google Doc print layout of 4 pages or fewer, copied from the template doc
 4. A short report: saints chosen and why, links, anything to decide
 
