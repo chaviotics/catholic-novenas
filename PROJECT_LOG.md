@@ -50,6 +50,7 @@ Two phases, so the new name can go live before the domain exists:
 |---|---|---|---|---|
 | `relief-from-debt` | Relief from Debt and Financial Hardship | St. Joseph, St. Rita of Cascia, St. Jude Thaddeus (Memorare to St. Joseph) | Published | 4 pages, tab "With Intention" |
 | `healing` | Healing of the Sick | Our Lady of Lourdes, St. Raphael, St. Camillus de Lellis, St. Bernadette (Marian Memorare) | Published | 4 pages |
+| `expectant-parents` | Expectant Parents | Our Lady of the Visitation, St. Gerard Majella, St. Elizabeth, St. Joseph (Marian Memorare) | Published 2026-11-21 | A4 PDF made (4 pages) with the unmerged print-pdf tooling; no Google Doc |
 
 ## Decisions and rules
 
@@ -121,6 +122,10 @@ Two phases, so the new name can go live before the domain exists:
 - **App icon refined** (Chav): the cross nearly touched the ring at top and bottom; shortened it for room, then made it thicker and the ring wider and thinner so the cross leads ("Bold"). Same mark at 124 px on the link previews (sent to the og.py work).
 - **About: St. Peter ("The denier") and St. Ignatius of Loyola ("The vain soldier") added to Unlikely saints** (Chav, 2026-11-21; Augustine was already there). Gold-cross placeholders until the public-domain paintings are in `pages/about/img/` (`peter.jpg`: El Greco, *Saint Peter in Tears*, Bowes Museum, Commons `El_Greco_-_Saint_Peter_in_Tears_-_Google_Art_Project.jpg`; `ignatius.jpg`: Rubens, *Saint Ignatius of Loyola*, Norton Simon Museum, Commons `St._Ignatius_of_Loyola_by_Peter_Paul_Rubens.jpg`). Sources in `pages/about/sources.md`.
 - **Peter and Ignatius pictures hotlinked from Wikimedia** (Chav chose this over uploading, 2026-11-21): El Greco *Saint Peter in Tears* and Rubens *Saint Ignatius of Loyola* load from upload.wikimedia.org (srcset 500/960). CSP `img-src` now allows upload.wikimedia.org; the Privacy page's "Visits and hosting" says the About page asks Wikimedia for these 2 images; they don't show offline. How to bring them in-house later: `pages/about/images.md`. Carlo Acutis: Chav then supplied his well-known family photograph (red polo shirt, found on britannica.com), stored as `pages/about/img/acutis.jpg` and credited; not public domain, Chav's choice like Bosco and Savio. No About card shows the gold cross now.
+
+### 2026-11-21 (expectant parents)
+- **New novena: Expectant Parents** (`expectant-parents`, category Family; Chav asked for "upcoming parents"). Intercessors chosen by Chav on a decision card: St. Gerard Majella, St. Elizabeth, St. Joseph, with Our Lady of the Visitation in the litany. St. Gianna Beretta Molla is told on Day 6 only (no public-domain picture, and her death after childbirth is left out so anxious mothers don't feel held to it). Day 8 "When the Road Is Hard" is for a hard diagnosis or a baby lost (CCC 1261); tips cover the Church's blessing of parents before childbirth and emergency Baptism. 11 RSV-CE passages verified (`sources.md`), independent Catholic review applied (`review.md`). Images: an 1890s engraving of Gerard from a Commons PDF (fetched as a page thumbnail), Albertinelli's *Visitation* for Elizabeth and Mary, the Reni Joseph (`images.md`). Approved by Chav from the artifact preview and pushed.
+- Learned: the old "Novena scratch doc" is too big to export as a zip now; use a fresh small Doc for image downloads and trash it after. BibleGateway's passage text shows small-caps LORD as "Lord" (check EWTN or the page metadata), and the RSV's stress marks in names ("Zechari′ah") are left out.
 
 ## Open items
 
